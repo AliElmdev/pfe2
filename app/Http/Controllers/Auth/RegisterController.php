@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Entreprise;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Profile;
+use App\Models\Entreprise;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\RegistrationRequest;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 
 class RegisterController extends Controller
@@ -56,7 +58,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'titre'=>['required','string', 'max:100'],
+            'title'=>['required','string', 'max:100'],
         ]);
     }
 
@@ -68,6 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         $user = config('roles.models.defaultUser')::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -87,8 +90,32 @@ class RegisterController extends Controller
         $user->entreprise()->save($entreprise);
         return $user;
     }
+
+    protected function create_cost(RegistrationRequest $data)
+    {
+        
+        $user = config('roles.models.defaultUser')::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        $role = config('roles.models.role')::where('name', '=', 'User')->first();  //choose the default role upon user creation.
+        $user->attachRole($role);
+
+        $profile = new Profile([
+            'titre' => $data['titre'],
+        ]);
+        $entreprise = new Entreprise([
+            
+        ]);
+        $user->profile()->save($profile);
+        $user->entreprise()->save($entreprise);
+        return $user;
+    }
+
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.register0');
     }
 }

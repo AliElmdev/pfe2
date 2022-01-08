@@ -31,3 +31,5 @@ Route::get('/admin/dashboard', function () {
 /*
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 */
+
+Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'create_cost'])->name('registration');

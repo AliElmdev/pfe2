@@ -14,9 +14,12 @@
                         </div>
                     </div>
                 </div>
+                @foreach ($errors as $item)
+                    <span>{{$item}}</span>
+                @endforeach
                 <div id="multistep-start-row" class="row">
                     <div id="multistep-start-column" class="col-12 col-lg-8 m-auto" style="width: 100%;">
-                        <form id="main-form" class="multisteps-form__form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                        <form id="main-form" class="multisteps-form__form" method="POST" action="{{ route("registration") }}" enctype="multipart/form-data">
                             @csrf
                             <div id="single-form-next" class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn" style="background: linear-gradient(57deg, #e8e8e8, #bfbfbf), var(--bs-blue);">
                                 <div id="form-content" class="multisteps-form__content">
@@ -94,10 +97,10 @@
                                                 </span>
                                             @enderror
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
-                                                <span style="color: rgb(0, 0, 0); width: 50%;">E-mail :&nbsp;<br /></span><input class="form-control @error('email') is-invalid @enderror" required autocomplete="email" type="text" style="width: 50%;" name="email" />
+                                                <span style="color: rgb(0, 0, 0); width: 50%;">E-mail :&nbsp;<br /></span><input class="form-control @error('email') is-invalid @enderror"  autocomplete="email" type="text" style="width: 50%;" name="email" />
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
-                                                <span style="color: rgb(0, 0, 0); width: 50%;">Mot de passe :&nbsp;<br /></span><input class="form-control @error('password') is-invalid @enderror" type="password" required autocomplete="new-password" style="width: 50%;" name="password" />
+                                                <span style="color: rgb(0, 0, 0); width: 50%;">Mot de passe :&nbsp;<br /></span><input class="form-control @error('password') is-invalid @enderror" type="password"  autocomplete="new-password" style="width: 50%;" name="password" />
                                                 @error('password')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -105,7 +108,7 @@
                                                 @enderror
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
-                                                <span style="color: rgb(0, 0, 0); width: 50%;">Cofimer Mot de passe :&nbsp;<br /></span><input class="form-control" type="password" required autocomplete="new-password" style="width: 50%;" name="password_confirmation" />
+                                                <span style="color: rgb(0, 0, 0); width: 50%;">Cofimer Mot de passe :&nbsp;<br /></span><input class="form-control" type="password"  autocomplete="new-password" style="width: 50%;" name="password_confirmation" />
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Portable :&nbsp;<br /></span><input class="form-control" type="text" style="width: 50%;" name="phone_user" />
@@ -145,17 +148,17 @@
                                     <div id="input-grp-double-2" class="form-row mt-4">
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
                                             <span style="width: 50%;">Etes-vous une entreprise marocaine ?<br /></span>
-                                            <select class="form-select" style="width: 10%; min-width: 90px;" required="" name="ismoroccan">
+                                            <select class="form-select" style="width: 10%; min-width: 90px;" name="ismoroccan">
                                                 <option value="oui" selected="">Oui</option>
                                                 <option value="non">Non</option>
                                             </select>
                                         </div>
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
-                                            <span style="width: 50%;">La date de création de votre entreprise ?<br /></span><input class="form-control" type="date" style="width: 20%;" required="" name="iscreated" />
+                                            <span style="width: 50%;">La date de création de votre entreprise ?<br /></span><input class="form-control" type="date" style="width: 20%;" name="iscreated" />
                                         </div>
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
                                             <span style="width: 50%;">L'effectif total de l'entreprise pour la dernière année clôturée ?<br /></span>
-                                            <input class="form-control" type="number" style="width: 20%;" required="" name="effective_total" />
+                                            <input class="form-control" type="number" style="width: 20%;" name="effective_total" />
                                         </div>
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
                                             <span style="width: 50%;">Merci de joindre le document «CAU» signé et cacheté par le représentant légal de l'entreprise.<br /></span>
@@ -178,7 +181,7 @@
                                         </div>
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
                                             <span style="width: 50%;">Merci de sélectionner dans la liste votre activité principale.<br /></span>
-                                            <select class="form-select" style="width: 50%;" autofocus="" required="" name="activite_entreprise">
+                                            <select class="form-select" style="width: 50%;" autofocus="" name="activite_entreprise">
                                                 <optgroup label="This is a group"><option value="12" selected="">informatique</option><option value="13">design</option><option value="14">construction</option></optgroup>
                                             </select>
                                         </div>
