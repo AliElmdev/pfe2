@@ -104,10 +104,33 @@ class RegisterController extends Controller
         $user->attachRole($role);
 
         $profile = new Profile([
-            'titre' => $data['titre'],
+            'title' => $data['title'],
+            'title_service' => $data['title_service'],
+            'phone_user' => $data['phone_user'],
+            'lang_user' => $data['lang_user'],
         ]);
         $entreprise = new Entreprise([
-            
+            'social_name' => $data['social_name'],
+            'commercial_name' => $data['commercial_name'],
+            'company_type' => $data['company_type'],
+            'ice_num' => $data['ice_num'],
+            'siret_num' => $data['siret_num'],
+            'adresse' => $data['adresse'],
+            'zip_code' => $data['zip_code'],
+            'city' => $data['city'],
+            'country' => $data['country'],
+            'phone' => $data['phone'],
+            'ismoroccan' => $data['ismoroccan'],
+            'iscreated' => $data['iscreated'],
+            'effective_total' => $data['effective_total'],
+            'doc_cau' => $data['doc_cau'],
+            'doc_status_entreprise' => $data['doc_status_entreprise'], 
+            'doc_registre' => $data['doc_registre'],
+            'doc_cpc' => $data['doc_cpc'],
+            'activite_entreprise' => $data['activite_entreprise'],
+            'certificats' => $data['certificats'],
+            'ref_clients' => $data['ref_clients'],
+            'rules_accept' => $data['rules_accept'],
         ]);
         $user->profile()->save($profile);
         $user->entreprise()->save($entreprise);
@@ -116,6 +139,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register0');
+        return view('auth.register');
     }
+    
 }
