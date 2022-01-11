@@ -10,9 +10,9 @@ class Profile extends Model
 
     protected $fillable = [
         'title',
-        'title_service',
-        'phone_user',
-        'lang_user',
+        'service_title',
+        'phone',
+        'lang',
     ];
 
     public $guarded=[];
