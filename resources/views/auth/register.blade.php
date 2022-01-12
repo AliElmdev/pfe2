@@ -2,8 +2,8 @@
 @section('content')
 <main class="page">
     <section>
-        <section style="margin-bottom: 65px;">
-            <div id="multple-step-form-n" class="container overflow-hidden" style="margin-top: 0px; margin-bottom: 10px; padding-bottom: 300px; padding-top: 57px; height: 1642px;">
+        <section style="margin-bottom: 65px;background: #01001f;">
+            <div id="multple-step-form-n" class="container overflow-hidden" style="margin-top: 0px; margin-bottom: 10px; padding-bottom: 300px; padding-top: 57px; height: 100%;">
                 <div id="progress-bar-button" class="multisteps-form">
                     <div class="row">
                         <div class="col-12 col-lg-8 ml-auto mr-auto mb-4" style="width: 100%; padding-right: 5%; padding-left: 5%;">
@@ -14,7 +14,9 @@
                         </div>
                     </div>
                 </div>
-                
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">{!! $error !!}</div>
+                @endforeach
                 <div id="multistep-start-row" class="row">
                     <div id="multistep-start-column" class="col-12 col-lg-8 m-auto" style="width: 100%;">
                         <form id="main-form" class="multisteps-form__form" method="POST" action="{{ route("registration") }}" enctype="multipart/form-data">
@@ -22,7 +24,7 @@
                             <div id="single-form-next" class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn" style="background: linear-gradient(57deg, #e8e8e8, #bfbfbf), var(--bs-blue);">
                                 <div id="form-content" class="multisteps-form__content">
                                     <div id="input-grp-double" class="form-row mt-4">
-                                        <h3 class="text-center multisteps-form__title" style="color: var(--bs-red); margin-bottom: 30px;">Données entreprise<br /></h3>
+                                        <h3 class="text-center multisteps-form__title" style="color: var(--bs-red); margin-bottom: 30px;font-weight: bold;">Données entreprise<br /></h3>
                                         <div class="col-12 col-sm-6" style="width: 100%;">
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Pays :&nbsp;</span>
@@ -67,7 +69,7 @@
                                         </div>
                                     </div>
                                     <div id="input-grp-single" class="form-row mt-4">
-                                        <h3 class="text-center multisteps-form__title" style="color: var(--bs-red); margin-left: 0px; margin-bottom: 30px;">Données utilisateur</h3>
+                                        <h3 class="text-center multisteps-form__title" style="color: var(--bs-red); margin-left: 0px; margin-bottom: 30px;font-weight: bold;">Données utilisateur</h3>
                                         <div class="col-12 col-sm-6" style="width: 100%;">
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Titre :&nbsp;</span>
@@ -80,7 +82,7 @@
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Titre/Service :&nbsp;<br /></span>
-                                                <select class="form-select" style="width: 30%;" name="title_service">
+                                                <select class="form-select" style="width: 30%;" name="service_title">
                                                     <optgroup label="This is a group">
                                                         <option value="12" selected="">Autre</option><option value="13">Propriétaire</option><option value="14">Chef de projet</option>
                                                         <option value="15">Service Commercial/Marketing</option><option value="16">Département Production</option><option value="17">Département Projet</option>
@@ -113,11 +115,11 @@
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Cofimer Mot de passe :&nbsp;<br /></span><input class="form-control" type="password"  autocomplete="new-password" style="width: 50%;" name="password_confirmation" />
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
-                                                <span style="color: rgb(0, 0, 0); width: 50%;">Portable :&nbsp;<br /></span><input class="form-control" type="text" style="width: 50%;" name="phone_user" />
+                                                <span style="color: rgb(0, 0, 0); width: 50%;">Portable :&nbsp;<br /></span><input class="form-control" type="text" style="width: 50%;" name="phone" />
                                             </div>
                                             <div class="d-flex" style="width: 100%; margin-bottom: 10px;">
                                                 <span style="color: rgb(0, 0, 0); width: 50%;">Choix de la langue :&nbsp;<br /></span>
-                                                <select class="form-select" style="width: 50%;" name="lang_user">
+                                                <select class="form-select" style="width: 50%;" name="lang">
                                                     <optgroup label="This is a group"><option value="12" selected="">English</option><option value="13">Francais</option><option value="14">عربي</option></optgroup>
                                                 </select>
                                             </div>
@@ -145,14 +147,14 @@
                                 </div>
                             </div>
                             <div id="single-form-next-prev" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn" style="background: linear-gradient(57deg, #e8e8e8, #bfbfbf);">
-                                <h3 class="text-center multisteps-form__title" style="color: var(--bs-red);">About</h3>
+                                <h3 class="text-center multisteps-form__title" style="color: var(--bs-red);font-weight: bold;">About</h3>
                                 <div id="form-content-2" class="multisteps-form__content">
                                     <div id="input-grp-double-2" class="form-row mt-4">
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
                                             <span style="width: 50%;">Etes-vous une entreprise marocaine ?<br /></span>
                                             <select class="form-select" style="width: 10%; min-width: 90px;" name="ismoroccan">
-                                                <option value="oui" selected="">Oui</option>
-                                                <option value="non">Non</option>
+                                                <option value="1" selected="">Oui</option>
+                                                <option value="0">Non</option>
                                             </select>
                                         </div>
                                         <div class="d-flex col-12 col-sm-6" style="width: 100%; margin-bottom: 10px;">
@@ -191,22 +193,22 @@
                                             <span style="width: 50%;">Merci de sélectionner dans la liste les certificats de votre entreprise.<br /></span>
                                             <div style="width: 50%;">
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-2" name="certificats" value="1" /><label class="form-check-label" for="formCheck-2">Aucune</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-2" name="certificats[]" value="1" /><label class="form-check-label" for="formCheck-2">Aucune</label>
                                                 </div>
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-5" name="certificats" value="1" /><label class="form-check-label" for="formCheck-5">ISO 9001</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-5" name="certificats[]" value="2" /><label class="form-check-label" for="formCheck-5">ISO 9001</label>
                                                 </div>
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-4" name="certificats" value="1" /><label class="form-check-label" for="formCheck-4">ISO 14001</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-4" name="certificats[]" value="3" /><label class="form-check-label" for="formCheck-4">ISO 14001</label>
                                                 </div>
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-3" name="certificats" value="1" /><label class="form-check-label" for="formCheck-3">ISO 50001</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-3" name="certificats[]" value="4" /><label class="form-check-label" for="formCheck-3">ISO 50001</label>
                                                 </div>
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-6" name="certificats" value="1" /><label class="form-check-label" for="formCheck-6">ISO 45001</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-6" name="certificats[]" value="5" /><label class="form-check-label" for="formCheck-6">ISO 45001</label>
                                                 </div>
                                                 <div class="form-check" style="width: 100%;">
-                                                    <input class="form-check-input" type="checkbox" id="formCheck-1" name="certificats" value="1" /><label class="form-check-label" for="formCheck-1">Autres certifications</label>
+                                                    <input class="form-check-input" type="checkbox" id="formCheck-1" name="certificats[]" value="6" /><label class="form-check-label" for="formCheck-1">Autres certifications</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +226,7 @@
                                             class="btn btn btn-primary js-btn-prev"
                                             type="button"
                                             title="Prev"
-                                            style="background: rgb(0, 93, 99); width: 20%; min-width: 70px; max-width: 800px; margin-left: 30%; border-width: 0px;"
+                                            style="background: rgb(0, 93, 99); width: 20%; min-width: 70px; max-width: 800px; margin-left: 30%; border-width: 0px;margin-right: 5px;"
                                             onclick="window.location.href=&#39;#progress-bar-button&#39;"
                                         >
                                             Prev
@@ -242,7 +244,7 @@
                                 </div>
                             </div>
                             <div id="single-form-next-prev-1" class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn" style="background: linear-gradient(57deg, #e8e8e8, #bfbfbf);">
-                                <h3 class="text-center multisteps-form__title" style="margin-bottom: 42px; color: var(--bs-red);">Conditions d'Accessibilité de Disponibilité et de Sécurité Portail Fournisseurs<br /></h3>
+                                <h3 class="text-center multisteps-form__title" style="margin-bottom: 42px; color: var(--bs-red);font-weight: bold;">Conditions d'Accessibilité de Disponibilité et de Sécurité Portail Fournisseurs<br /></h3>
                                 <p style="overflow-y: scroll; height: 277px;">
                                     Ces Conditions d'Accessibilité, de Disponibilité et de Sécurité du Portail («CADSP») décrivent les termes des services fournis par OCP SA («OCP») à travers le Portail suivant les Conditions
                                     d'Accès et d'Utilisation (CAU). Elles ne s'appliquent pas aux conditions relatives à certaines applications nécessitant des conditions d'utilisation spécifiques et qui seront décrites par la suite
@@ -485,7 +487,7 @@
                                     Services en vigueur.Chaque modification des CAU fera l'objet d'une version datée et référencée.<br />
                                 </p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="formCheck-1" style="border-width: 1px;" name="rules_accept" />
+                                    <input class="form-check-input" type="checkbox" id="formCheck-1" value="1" style="border-width: 1px;" name="rules_accept" />
                                     <label class="form-check-label" for="formCheck-1">Le candidat déclare avoir lu avec attention et accepté les dispositions ci-dessus<br /></label>
                                 </div>
                                 <div id="form-content-1" class="multisteps-form__content" style="border-color: rgba(102, 16, 242, 0);">
