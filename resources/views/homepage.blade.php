@@ -4,7 +4,7 @@
     <section class="clean-block clean-hero" style="color: rgba(0,0,0,0.56);background: url(&quot;assets/img/tech/ImageForArticle_18547(1).jpg&quot;);background-size: cover;">
         <div class="text">
             <h2 style="font-size: 54.361px;font-family: Montserrat, sans-serif;font-weight: bold;">Bienvenue sur votre Portail<br></h2>
-            <p>Une plateforme intuitive et ergonomique pour tous vos échanges transactionnels.<br></p><button class="btn btn-lg" data-bss-hover-animate="pulse" type="button" style="border-width: 1px;border-color: var(--bs-blue);color: #e9f6ff;">Opportunities -&gt;</button>
+            <p>Une plateforme intuitive et ergonomique pour tous vos échanges transactionnels.<br></p><a href="{{ route('Marches') }}"><button class="btn btn-lg" data-bss-hover-animate="pulse" type="button" style="border-width: 1px;border-color: var(--bs-blue);color: #e9f6ff;">Opportunities -&gt;</button></a>
         </div>
     </section>
     <section class="clean-block clean-info dark" style="background: rgb(235,235,235);">
@@ -64,7 +64,7 @@
                 <h2 style="color: #b92525;">NOS OPPORTUNITÉS<br></h2>
                 <p>Consultez, identifiez et répondez aux opportunités émises par tous les sites<br></p>
             </div>
-            <div class="text-center"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="width: 20%;margin-right: 30%;margin-left: 30%;margin-bottom: 80px;min-width: 123px;">Appels D'offres</button><img src="assets/img/91aeec6500cfba18125437e834cc7338.png" style="width: 80%;margin-right: 10%;margin-left: 10%;"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="width: 20%;margin-right: 30%;margin-left: 30%;margin-bottom: 0;margin-top: 50px;min-width: 123px;">Devenir Fournisseur</button></div>
+            <div class="text-center"><a href="{{ route('Marches') }}"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="width: 20%;margin-right: 30%;margin-left: 30%;margin-bottom: 80px;min-width: 123px;">Appels D'offres</button></a><img src="assets/img/91aeec6500cfba18125437e834cc7338.png" style="width: 80%;margin-right: 10%;margin-left: 10%;"><a href="{{ route('register') }}"><button class="btn btn-primary" data-bss-hover-animate="pulse" type="button" style="width: 20%;margin-right: 30%;margin-left: 30%;margin-bottom: 0;margin-top: 50px;min-width: 123px;">Devenir Fournisseur</button></a></div>
         </div>
     </section>
     <section class="clean-block about-us" style="height: 444px;">

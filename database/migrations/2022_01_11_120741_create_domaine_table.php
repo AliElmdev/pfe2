@@ -13,7 +13,7 @@ class CreateDomaineTable extends Migration
      */
     public function up()
     {
-        Schema::create('domaine', function (Blueprint $table) {
+        Schema::create('domaines', function (Blueprint $table) {
             $table->increments('id_domaine');
             $table->string('name');
             $table->timestamps();

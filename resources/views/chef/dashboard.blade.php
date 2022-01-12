@@ -91,7 +91,7 @@
 @endsection
 
 @section('title')
-Dashboard Admin
+Dashboard Responsable Département
 @endsection
 
 @section('content')
