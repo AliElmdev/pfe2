@@ -15,10 +15,11 @@ class Profile extends Model
         'lang_user',
     ];
 
-    public $guarded=[];
+    public $guarded = [];
 
-    public function user(){
-        return $this->belongsTo('User');
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     use HasFactory;

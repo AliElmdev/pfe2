@@ -29,15 +29,21 @@
                     <div class="col-md-6 offset-md-3">
                         <div id="faqlist" class="accordion accordion-flush">
                             <div class="accordion-item">
-                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-1">Question 1 ?</button></h2>
+                                <h2 class="accordion-header">
+                                    <button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-1">Question 1 ?</button>
+                                </h2>
                                 <div id="content-accordion-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                                    </p>
                                 </div>
                             </div>
                             <div class="accordion-item">
-                                <h2 class="accordion-header"><button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-2">Question 2 ?</button></h2>
+                                <h2 class="accordion-header">
+                                    <button class="btn accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#content-accordion-2">Question 2 ?</button></h2>
                                 <div id="content-accordion-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                    <p class="accordion-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
                                 </div>
                             </div>
                             <div class="accordion-item">

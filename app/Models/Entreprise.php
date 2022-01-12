@@ -24,7 +24,7 @@ class Entreprise extends Model
         'iscreated',
         'effective_total',
         'doc_cau',
-        'doc_status_entreprise', 
+        'doc_status_entreprise',
         'doc_registre',
         'doc_cpc',
         'activite_entreprise',
@@ -33,9 +33,10 @@ class Entreprise extends Model
         'rules_accept',
     ];
 
-    public $guarded=[];
+    public $guarded = [];
 
-    public function user(){
-        return $this->belongsTo('User');
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\MarcheController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +21,9 @@ Route::get('/', function () {
 Route::get('/Faq', function () {
     return view('Faq');
 })->name('Faq');
-Route::get('/Opportuinities', function () {
-    return view('Marches');
-})->name("Marches");
+// Route::get('/Opportuinities', function () {
+//     return view('Marches');
+// })->name("Marches");
 
 Auth::routes();
 
@@ -29,8 +31,6 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name("home");
 
-/*
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-*/
 
-Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'create_cost'])->name('registration');
+Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
+Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
