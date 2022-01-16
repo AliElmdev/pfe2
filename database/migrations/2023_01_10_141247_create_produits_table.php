@@ -21,7 +21,7 @@ class CreateProduitsTable extends Migration
             $table->integer('qte');
             $table->enum('unit', ['m', 'kg','u']);
             $table->enum('serv_prod', ['service', 'produit']);
-            $table->foreign('id_marche')->references('id')->on('marches')->onDelete('cascade');
+            $table->foreign('marche_id')->references('id')->on('marches')->onDelete('cascade');
             $table->timestamps();
         });
     }

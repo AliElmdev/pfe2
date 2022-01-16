@@ -15,7 +15,9 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_domaine')->unsigned();
             $table->string('name');
+            $table->foreign('id_domaine')->references('id')->on('domaines')->onDelete('cascade');
             $table->timestamps();
         });
     }

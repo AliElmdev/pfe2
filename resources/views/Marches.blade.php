@@ -13,6 +13,12 @@
                                 <div class="filters">
                                     <div class="filter-item">
                                         <h3><strong>Domaines</strong></h3>
+
+                                        {{-- testtttt --}}
+                                        @foreach ($list_categories as $item)  
+                                            <div>{{$item->getDomaineNameAttribute()}}</div>
+                                        @endforeach
+                                        {{-- testttttt --}}
                                         <select class="chosen form-select" required="" style="color: #000000;width: 100%;">
                                             <option ></option>
                                             @foreach ($list_domaines  as $item)
@@ -23,7 +29,7 @@
                                     <div class="filter-item">
                                         <h3><strong>Catégories</strong></h3>
                                         <select class="chosen form-select" onchange="filtercategorie(this)" required="" style="color: #000000;width: 100%;">
-                                            <option></option>
+                                            <option value="all">Tous</option>
                                             @foreach ($list_categories as $item)  
                                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                             @endforeach
@@ -69,7 +75,7 @@
                             <div class="products">
                                 <div class="row g-0">
                                     @foreach ( $list_marches as $item)
-                                    <div class="col-12 col-md-6 col-lg-4 marche" style="width: 100%;height: 260px;background: rgba(214,51,132,0);margin-bottom: 20px;margin-top: 20px;">
+                                    <div class="col-12 col-md-6 col-lg-4 marche_{{$item->id_categorie}}" style="width: 100%;height: 260px;background: rgba(214,51,132,0);margin-bottom: 20px;margin-top: 20px;">
                                         <div class="clean-product-item" style="width: 100%;height: 230px;">
                                             <h5 style="font-weight: bold;">M</h5>
                                             <p>Objet :{{$item->title}}</p>
@@ -121,11 +127,16 @@
     </main>
     <script> 
         function filtercategorie(selectObject) {
+            $("*[class*='marche_']").hide();
             var value = selectObject.value;
-            $('.marche').hide().filter(function(){
-                
-            })
-            //console.log(value);
+            if(value=='all'){
+                $("*[class*='marche_']").show();
+            }else{
+                var m_categ = '.marche_';
+                var m_cat = m_categ.concat(value);
+                $(m_cat).show().filter(true);
+                //console.log(value);
+            }
         }
     </script>
 @endsection

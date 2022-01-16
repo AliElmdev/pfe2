@@ -16,4 +16,8 @@ class Categorie extends Model
     public function marche(){
         return $this->belongsTo(Marche::class);
     }
+
+    public function domaine(){
+        return $this->belongsTo(Domaine::class);
+    }
 }

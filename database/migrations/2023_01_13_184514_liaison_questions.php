@@ -15,8 +15,8 @@ class LiaisonQuestions extends Migration
     {
         Schema::create('LiaisonQuestions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_questionnaire');
-            $table->bigInteger('id_question');
+            $table->bigInteger('id_questionnaire')->unsigned();
+            $table->bigInteger('id_question')->unsigned();
             $table->foreign('id_questionnaire')->references('id')->on('questionnaires')->onDelete('cascade');
             $table->foreign('id_question')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();
