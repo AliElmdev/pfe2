@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
+use App\Http\Controllers\Chef\CreateMarcheController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,9 +29,13 @@ Route::get('/Faq', function () {
 
 Auth::routes();
 
-// Route::get('/admin/dashboard', function () {
-//     return view('admin.dashboard');
-// })->name("home");
+// Route::get('/create_project', function () {
+//     return view('chef.create_project');
+// })->name("create_project");
+
+Route::get("/create_project", [CreateMarcheController::class, "index"])->name("create_project")->middleware('auth');
+Route::post("/create_project", [CreateMarcheController::class, "store"])->name("create_project")->middleware('auth');
+
 
 Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
 Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');

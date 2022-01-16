@@ -18,8 +18,9 @@ class CreateMarchesTable extends Migration
             $table->bigInteger('id_categorie')->unsigned();
             $table->string('title', 255);
             $table->string('description', 255);
-            $table->date('limit_date');
-            $table->date('affichage_date');
+            $table->date('limit_date')->default(null);
+            $table->date('affichage_date')->default(null);
+            $table->integer('etat')->default(0);
             $table->string('c_charge', 255);
             $table->foreign('id_categorie')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
