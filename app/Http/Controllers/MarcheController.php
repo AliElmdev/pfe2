@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Domaine;
-use App\Models\Marches;
+use App\Models\Marche;
 use Illuminate\Http\Request;
 
 class MarcheController extends Controller
@@ -14,11 +14,39 @@ class MarcheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $list_categories = Categorie::all();
+
+        //domaines filtrage test
+        if (!empty($request->input("domaine"))) {
+            $list_categories = Categorie::all()->where("id_domaine", "=", $request->input("domaine"));
+        } else {
+            $list_categories =  Categorie::all();
+        }
+
+        // marches fitrages test tous les champs
+        $list_marches = [];
+        if (!empty($request->input("categorie")) && !empty($request->input("limit_date"))) {
+            $list_marches = Marche::all()
+                ->where("id_categorie", "=", $request->input("categorie"))
+                ->where("limit_date", "=", $request->input("limit_date"));
+        }
+        //  // marches fitrages seul champs
+        // categorie
+        else if (!empty($request->input("categorie")) && empty($request->input("limit_date"))) {
+            $list_marches = Marche::all()->where("id_categorie", "=", $request->input("categorie"));
+        }
+        // domaine
+        else   if (empty($request->input("categorie")) && !empty($request->input("limit_date"))) {
+            $list_marches = Marche::all()->where("limit_date", "=", $request->input("limit_date"));
+        }
+        // tous empty
+        else {
+            $list_marches = Marche::all();
+        }
+        //  dd($list_marches);
+
         $list_domaines = Domaine::all();
-        $list_marches = Marches::all();
         return view("marches", compact(["list_categories", "list_domaines", "list_marches"]));
     }
 

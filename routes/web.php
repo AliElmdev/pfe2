@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MarcheController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MarcheUnitereController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,6 @@ Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 })->name("home");
 
-
 Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
 Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'index'])->name("marchesunitere");

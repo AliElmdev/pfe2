@@ -21,7 +21,6 @@ class CreateProfilesTable extends Migration
             $table->string('phone');
             $table->string('lang');
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

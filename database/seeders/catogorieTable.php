@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Categorie;
+use App\Models\Domaine;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -18,6 +19,8 @@ class catogorieTable extends Seeder
     {
         $cate = new Categorie();
         $cate->name = Str::random(10);
+        $cate->id_domaine = 1;
+        $cate = Categorie::with('categoriecontrole');
         $cate->save();
     }
 }

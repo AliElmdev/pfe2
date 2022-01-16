@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDomaineTable extends Migration
+class CreateDomainesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateDomaineTable extends Migration
      */
     public function up()
     {
-        Schema::create('domaine', function (Blueprint $table) {
-            $table->increments('id_domaine');
+        Schema::create('domaines', function (Blueprint $table) {
+            $table->id('id_domaine');
             $table->string('name');
             $table->timestamps();
         });

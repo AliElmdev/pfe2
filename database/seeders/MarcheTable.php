@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Marches;
-use Database\Seeders\MarchesTable as SeedersMarchesTable;
+use App\Models\Marche;
+use Database\Seeders\MarcheTable as SeedersMarchesTable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Nette\Utils\Random;
 
-class MarchesTable extends Seeder
+class MarcheTable extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class MarchesTable extends Seeder
      */
     public function run()
     {
-        $marches = new Marches();
+        $marches = new Marche();
         $marches->title = Str::random(10);
         $marches->id_categorie = random_int(1, 20);
         $marches->description = Str::random(100);

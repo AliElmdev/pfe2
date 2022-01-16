@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Models;
@@ -44,10 +45,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(\App\Models\Profile::class);
     }
-    public function Entreprise(){
+    public function Entreprise()
+    {
         return $this->hasOne(\App\Models\Profile::class);
     }
 }
