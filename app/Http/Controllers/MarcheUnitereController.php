@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Marche;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class MarcheUnitereController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -46,8 +47,9 @@ class MarcheUnitereController extends Controller
      */
     public function show($id)
     {
-        $marcheUnitere = Marche::find($id);
-        return view("Marchepage", compact("marcheUnitere"));
+        $marche = Marche::find($id);
+        $categorie = Categorie::find($marche->id_categorie);
+        return view("Marchepage", compact("marche","categorie"));
     }
 
     /**
