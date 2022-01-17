@@ -18,6 +18,7 @@ class catogorieTable extends Seeder
     {
         $cate = new Categorie();
         $cate->name = Str::random(10);
+        $cate->id_domaine = 1;
         $cate->save();
     }
 }
