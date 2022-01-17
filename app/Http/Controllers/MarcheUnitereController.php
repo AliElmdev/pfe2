@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categorie;
-use App\Models\Domaine;
 use App\Models\Marche;
 use Illuminate\Http\Request;
 
-class MarcheController extends Controller
+class MarcheUnitereController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +14,7 @@ class MarcheController extends Controller
      */
     public function index()
     {
-        $list_categories = Categorie::all();
-        $list_domaines = Domaine::all();
-        $list_marches = Marche::all();
-        $catg = Categorie::all()->keyBy('id');
-        return view("Marches", compact(["list_categories", "list_domaines", "list_marches","catg"]));
+        
     }
 
     /**
@@ -52,7 +46,8 @@ class MarcheController extends Controller
      */
     public function show($id)
     {
-        //
+        $marcheUnitere = Marche::find($id);
+        return view("Marchepage", compact("marcheUnitere"));
     }
 
     /**

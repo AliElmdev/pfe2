@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +41,4 @@ Route::post("/create_project", [CreateMarcheController::class, "store"])->name("
 Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
 Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
 Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");

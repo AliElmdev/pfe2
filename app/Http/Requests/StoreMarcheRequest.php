@@ -24,10 +24,10 @@ class StoreMarcheRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=> ['required', 'string', 'max:255'],
-            'description'=> ['required', 'string'],
-            'id_categorie'=> ['required'],
-            'c_charge'=>['required'],
+            // 'title'=> ['required', 'string', 'max:255'],
+            // 'description'=> ['required', 'string'],
+            // 'id_categorie'=> ['required'],
+            // 'c_charge'=>['required'],
         ];
     }
 }
