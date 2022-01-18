@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
@@ -24,15 +25,21 @@ Route::get('/', function () {
 Route::get('/Faq', function () {
     return view('Faq');
 })->name('Faq');
-// Route::get('/Opportuinities', function () {
-//     return view('Marches');
-// })->name("Marches");
+
+Route::get('/all_users', function () {
+    return view('admin.users');
+})->name("users");
 
 Auth::routes();
 
 // Route::get('/create_project', function () {
 //     return view('chef.create_project');
 // })->name("create_project");
+
+Route::delete('/all_users/delete/{id}', [AllUsersController::class, "destroy"])->middleware('auth');
+
+Route::get("/all_users", [AllUsersController::class, "index"])->name("users")->middleware('auth');
+
 
 Route::get("/create_project", [CreateMarcheController::class, "index"])->name("create_project")->middleware('auth');
 Route::post("/create_project", [CreateMarcheController::class, "store"])->name("create_project")->middleware('auth');

@@ -25,6 +25,7 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les utilisateurs:</h6>
+            <a class="collapse-item" href="{{route('users')}}">Tous les utilisateurs</a>
             <a class="collapse-item" href="#">Chefs de projet</a>
             <a class="collapse-item" href="#">Responsables d'achat</a>
             <a class="collapse-item" href="#">Entreprises</a>
