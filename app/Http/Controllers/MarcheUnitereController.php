@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use Illuminate\Http\Request;
 use App\Models\Marche;
 use App\Models\Categorie;
 use App\Models\Domaine;
 
+=======
+use App\Models\Categorie;
+use App\Models\Marche;
+use Illuminate\Http\Request;
+>>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
 
 class MarcheUnitereController extends Controller
 {
@@ -15,10 +21,16 @@ class MarcheUnitereController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function index($idmarche)
     {
         $marcheUnitere = Marche::find($idmarche);
         return view("marchepage", compact("marcheUnitere"));
+=======
+    public function index()
+    {
+
+>>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
     }
 
     /**
@@ -50,7 +62,13 @@ class MarcheUnitereController extends Controller
      */
     public function show($id)
     {
+<<<<<<< HEAD
         //
+=======
+        $marche = Marche::find($id);
+        $categorie = Categorie::find($marche->id_categorie);
+        return view("Marchepage", compact("marche","categorie"));
+>>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
     }
 
     /**
