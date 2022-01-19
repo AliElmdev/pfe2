@@ -27,6 +27,7 @@ class CreateEntreprisesTable extends Migration
             $table->string('country');
             $table->string('phone');  
             $table->boolean('ismoroccan');
+            $table->integer('effective_total');
             $table->date('iscreated');
             $table->string('doc_cau');
             $table->string('doc_status_entreprise');

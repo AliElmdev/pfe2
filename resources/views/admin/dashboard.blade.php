@@ -1,85 +1,99 @@
-@extends('layout.page')
-@section('content')
-<div class="d-flex flex-column" id="content-wrapper">
-    <div id="content">
-        <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-            <div class="container-fluid">
-                <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                <ul class="navbar-nav flex-nowrap ms-auto">
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <div class="nav-item dropdown no-arrow">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                <h6 class="dropdown-header" style="background: #b92525;">Notifications</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div>
-                                        <span class="small text-gray-500">December 12, 2022</span>
-                                        <p>Notification 1</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div>
-                                        <span class="small text-gray-500">December 7, 2022</span>
-                                        <p>Notification 2</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div>
-                                        <span class="small text-gray-500">December 2, 2019</span>
-                                        <p>Notification 3</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Afficher tous les notifications</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <div class="nav-item dropdown no-arrow">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                <h6 class="dropdown-header" style="background: #b92525;">Nouveaux Messages</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Contenu de message ...</span></div>
-                                        <p class="small text-gray-500 mb-0">Responsable 1&nbsp; - 58m</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Contenu de message...</span></div>
-                                        <p class="small text-gray-500 mb-0">Responsable 2 - 1h</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Contenu de message...</span></div>
-                                        <p class="small text-gray-500 mb-0">Responsable 3 - 2j</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Contenu de message...</span></div>
-                                        <p class="small text-gray-500 mb-0">Responsable 4 · 2sem</p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Afficher tous les messages</a>
-                            </div>
-                        </div>
-                        <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                    </li>
-                    <div class="d-none d-sm-block topbar-divider"></div>
-                    <li class="nav-item dropdown no-arrow">
-                        <div class="nav-item dropdown no-arrow">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: rgb(249, 23, 9); font-style: italic; font-weight: bold;">Nom utilisateur</a>
-                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Se déconnecter</a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+@extends('layouts.dashboard')
+@section('navbar')
+<!-- Nav Item - Dashboard -->
+<li class="nav-item">
+    <a class="nav-link" href="index.html">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Interface
 </div>
+
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Utilisateurs</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Les utilisateurs:</h6>
+            <a class="collapse-item" href="#">Chefs de projet</a>
+            <a class="collapse-item" href="#">Responsables d'achat</a>
+            <a class="collapse-item" href="#">Entreprises</a>
+        </div>
+    </div>
+</li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+        aria-expanded="true" aria-controls="collapseUtilities">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>Gestion</span>
+    </a>
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Gestion:</h6>
+            <a class="collapse-item" href="utilities-color.html">Roles</a>
+            <a class="collapse-item" href="utilities-border.html">Permission</a>
+        </div>
+    </div>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+    Addons
+</div>
+
+<!-- Nav Item - Pages Collapse Menu -->
+<li class="nav-item active">
+    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+        aria-controls="collapsePages">
+        <i class="fas fa-fw fa-folder"></i>
+        <span>Projets</span>
+    </a>
+    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+        data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Les Projets:</h6>
+            <a class="collapse-item" href="#">En cours</a>
+            <a class="collapse-item" href="#">Terminer</a>
+            <a class="collapse-item" href="#">Annuler</a>
+            <a class="collapse-item" href="#">Tous les projets</a>
+            {{-- <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Other Pages:</h6>
+            <a class="collapse-item" href="404.html">404 Page</a>
+            <a class="collapse-item active" href="blank.html">Blank Page</a> --}}
+        </div>
+    </div>
+</li>
+
+<!-- Nav Item - Charts -->
+<li class="nav-item">
+    <a class="nav-link" href="charts.html">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Statistiques</span></a>
+</li>
+
+
+@endsection
+
+@section('title')
+Dashboard Admin
+@endsection
+
+@section('content')
+<p>testtt</p>
 @endsection
