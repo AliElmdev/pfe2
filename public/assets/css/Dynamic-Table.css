@@ -1,0 +1,70 @@
+.table th, .table td {
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.header_marche_creation {
+  margin-bottom: 25px;
+}
+
+.descrip {
+  margin-right: 50px;
+  margin-left: 50px;
+  margin-bottom: 25px;
+}
+
+button {
+  margin-bottom: 25px;
+}
+
+.fa.fa-download {
+  margin-left: 8px;
+}
+
+.rfi_rfq_title {
+  margin-left: 50px;
+  color: #b92525;
+  font-weight: bold;
+}
+
+.btn_qts_rfi_rfq {
+  margin-left: 20px;
+  background-color: #B92525;
+  border-radius: 10px;
+}
+
+.fa.fa-star {
+  margin-left: 5px;
+}
+
+.fa.fa-caret-square-o-down {
+  margin-left: 5px;
+}
+
+.results {
+  padding-left: 5Opx;
+  padding-right: 50px;
+}
+
+@media (min-width: 768px) {
+  #trs-hd-1 {
+    width: 300px;
+  }
+}
+
+label {
+  margin-right: 20px;
+}
+
+select {
+  margin-left: 20px;
+}
+
+#sectCre {
+  margin-bottom: 20px;
+}
+
+#divDates {
+  margin-left: 20px;
+}
+
