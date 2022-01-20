@@ -39,11 +39,11 @@ Route::get("/create_project", [CreateMarcheController::class, "index"])->name("c
 Route::post("/create_project", [CreateMarcheController::class, "store"])->name("create_project")->middleware('auth');
 
 
-Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
-Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
-Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
-Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
+// Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
+// Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
+// Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+// Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
 
-Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
-Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreation");  
-Route::get("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation.store");
+// Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
+// Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreation");  
+// Route::get("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation.store");
