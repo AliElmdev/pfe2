@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/assets/css/Hover-cards.css">
     <link rel="stylesheet" href="/assets/css/project-card.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
-
+    <link rel="stylesheet" href="/assets/css/Select-Search.css">
     <!-- Custom fonts for this template-->
 
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
