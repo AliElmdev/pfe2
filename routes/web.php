@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
@@ -25,9 +26,10 @@ Route::get('/', function () {
 Route::get('/Faq', function () {
     return view('Faq');
 })->name('Faq');
-// Route::get('/Opportuinities', function () {
-//     return view('Marches');
-// })->name("Marches");
+
+Route::get('/all_users', function () {
+    return view('admin.users');
+})->name("users");
 
 Auth::routes();
 
@@ -35,15 +37,20 @@ Auth::routes();
 //     return view('chef.create_project');
 // })->name("create_project");
 
+Route::delete('/all_users/delete/{id}', [AllUsersController::class, "destroy"])->middleware('auth');
+
+Route::get("/all_users", [AllUsersController::class, "index"])->name("users")->middleware('auth');
+
+
 Route::get("/create_project", [CreateMarcheController::class, "index"])->name("create_project")->middleware('auth');
 Route::post("/create_project", [CreateMarcheController::class, "store"])->name("create_project")->middleware('auth');
 
 
-// Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
-// Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
-// Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
-// Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
+Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
+Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
+Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
 
-// Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
-// Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreation");  
-// Route::get("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation.store");
+Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
+Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreation");  
+Route::get("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation.store");
