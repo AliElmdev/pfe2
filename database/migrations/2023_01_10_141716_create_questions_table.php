@@ -19,9 +19,10 @@ class CreateQuestionsTable extends Migration
             $table->string('options');
             $table->string('description');
             $table->enum('type',['cr','cm','f','on']);
-            $table->enum('Questionnaire',['RFI','RFQ']);
+            $table->bigInteger('section_id')->unsigned();
             $table->integer('marche_id')->unsigned();
             $table->foreign('marche_id')->references('id')->on('marches')->onDelete('cascade');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->timestamps();
         });
     }
