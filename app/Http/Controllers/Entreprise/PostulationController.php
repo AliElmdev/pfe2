@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Entreprise;
 
-use App\Models\Marche;
+use App\Http\Controllers\Controller;
+use App\Models\Question;
 use Illuminate\Http\Request;
-use App\Models\Categorie;
 
-class MarcheUnitereController extends Controller
+class PostulationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +15,7 @@ class MarcheUnitereController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -46,9 +47,8 @@ class MarcheUnitereController extends Controller
      */
     public function show($id)
     {
-        $marche = Marche::find($id);
-        $categorie = Categorie::find($marche->id_categorie);
-        return view("Marchepage", compact("marche", "categorie"));
+        $questions = Question::where('marche_id', '==', $id);
+        return view("entreprise.postuler", compact(["questions"]));
     }
 
     /**

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marche;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Categorie;
+use Illuminate\Support\Facades\Redirect;
+use jeremykenedy\LaravelRoles\Models\Role;
 
-class MarcheUnitereController extends Controller
+class AllUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +16,9 @@ class MarcheUnitereController extends Controller
      */
     public function index()
     {
+        $users = User::all();
+        $roleslist = Role::all();
+        return view("admin.users", compact(["users","roleslist"]));
     }
 
     /**
@@ -46,9 +50,7 @@ class MarcheUnitereController extends Controller
      */
     public function show($id)
     {
-        $marche = Marche::find($id);
-        $categorie = Categorie::find($marche->id_categorie);
-        return view("Marchepage", compact("marche", "categorie"));
+        //
     }
 
     /**
@@ -59,7 +61,13 @@ class MarcheUnitereController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $_POST['name_input'];
+        $user->email = $_POST['email_input'];
+        $user->detachRole($user->role);
+        $user->attachRole($_POST['role_input']);
+        $user->save();
+        return Redirect::route('users');
     }
 
     /**
@@ -82,6 +90,7 @@ class MarcheUnitereController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return Redirect::route('users');
     }
 }

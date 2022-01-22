@@ -1,0 +1,316 @@
+@extends('achat.dashboard')
+@section('contenu')
+
+    <div style="margin: 25px;padding: 20px;">
+        <div>
+            <section id="sectCre" style="text-align: center;">
+                <h1 class="header_marche_creation" style="font-weight: bold;font-style: italic;">{{$marche->title}}</h1>
+                <p class="descrip">{{$marche->description}}</p><button class="btn btn-primary" style="width: 200px;height: 40px;font-weight: bold;background: #b92525;"><a style="text-decoration: none;color:white" href="/{{$marche->c_charge}}">Cahier de charge</a><i class="fa fa-download"></i></button>
+            </section>
+            <div class="table-responsive table table-hover table-bordered results">
+                <table class="table table-hover table-bordered">
+                    <thead class="bill-header cs" style="background: #b0c163;">
+                        <tr>
+                            <th id="trs-hd-2" class="col-lg-2">Identificateur</th>
+                            <th id="trs-hd-3" class="col-lg-3">Nom Produit / Service</th>
+                            <th id="trs-hd-4" class="col-lg-2">Unité de Mesure</th>
+                            <th id="trs-hd-5" class="col-lg-2">Quantité de Produits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="warning no-result">
+                            <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                        </tr>
+                        @foreach ($produits as $item)
+                            <tr>
+                                <td>{{$item->id}}</td>
+                                <td>{{$item->nom}}</td>
+                                <td>{{$item->unit}}</td>
+                                <td>{{$item->qte}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <form action="{{route('marcheUnitEnCoursCreation')}}" method="POST">
+        @csrf
+        <input hidden name="marche_id" value="{{$marche->id}}" />
+        <div id="Fome_Apply">
+            <div id="Questions">
+                <h1 class="rfi_rfq_title">RFI</h1>
+                <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
+                <section>
+                    <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
+                        <table class="table table-hover table-bordered">
+                            <thead class="bill-header cs">
+                                <tr>
+                                    <th id="trs-hd-7" class="col-lg-3" style="width: 500px;">Question</th>
+                                    <th id="trs-hd-1" class="col-lg-3" style="width: 500px;">Description</th>
+                                    <th id="trs-hd-11" class="col-lg-3" style="width: 500px;">Type de Question</th>
+                                    <th id="trs-hd-6" class="col-lg-3" style="width: 500px;">Options</th>
+                                    <th id="trs-hd-8" class="col-lg-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="warning no-result">
+                                    <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <section style="text-align: right;padding: 50px;"><button class="btn btn-primary btn_qts_rfi_rfq mb-5" type="button" onclick="add_RFI_qst()">Ajouter une question<i class="fa fa-caret-square-o-down"></i></button>
+                        <div>
+                            <div id="nv_qst_rfi" style="display:none;">
+                                <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">Ajouter Questions</h4>
+                                <div class="d-flex justify-content-between"><select class="chosen" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFI()">
+                                        <option value="0"></option>
+                                        @foreach ($questions as $question)
+                                            <option value="{{$question->id}}">{{$question->question}}</option>
+                                        @endforeach
+                                        <option selected="selected" value="0">Nouvelle Question</option>
+                                    </select><select onclick="changetype()" class="types_qst" style="width: 29%;margin: 0;">
+                                        <optgroup label="Types de questions">
+                                            <option value="cm" selected="">Choix multiple</option>
+                                            <option value="f">Fichier</option>
+                                            <option value="cr">court reponse</option>
+                                            <option value="on">Oui / Non</option>
+                                        </optgroup>
+                                    </select></div>
+                            </div>
+                            <div class="text-center nv_cr" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="qstcr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="desccr_input" type="text" style="width: 80%;margin-top: 10px;"></div><button onclick="Annuler()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button onclick="Ajouter()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                            </div>
+                            <div class="text-center nv_f" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="qstcr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="desccr_input" type="text" style="width: 80%;margin-top: 10px;"></div><button onclick="Annuler()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button onclick="Ajouter()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                            </div>
+                            <div class="text-center nv_on" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="qston_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="descon_input" type="text" style="width: 79%;margin-top: 10px;"></div>
+                                <div style="margin-top: 30px;">
+                                    <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
+                                    <div id="sect_sqt_rfi">
+                                        
+                                    </div>
+                                    <button class="btn btn-primary add" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button>
+                                </div><button onclick="Annuler()" class="btn btn-primary add_nvl_qst_rfi" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button onclick="Ajouter()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                            </div>
+                            <div class="text-center nv_cm" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="qstcm_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="desccm_input" type="text" style="width: 79%;margin-top: 10px;"></div>
+                                <div style="margin-top: 30px;">
+                                    <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
+                                    <div id="sect_sqt_rfi_b">
+                                        
+                                    </div>
+                                    <span style="margin-top: 0px;padding-top: 0px;width: 51px;"><button class="btn btn-primary add_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button></span>
+                                </div><button onclick="Annuler()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button onclick="Ajouter()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+            <div>
+                <h1 class="rfi_rfq_title">RFQ</h1>
+                <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
+                <section>
+                    <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
+                        <table class="table table-hover table-bordered">
+                            <thead class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
+                                <tr>
+                                    <th id="trs-hd-9" class="col-lg-3" style="width: 500px;">Question</th>
+                                    <th id="trs-hd-14" class="col-lg-3" style="width: 500px;">Descriptions</th>
+                                    <th id="trs-hd-13" class="col-lg-3" style="width: 500px;">Types</th>
+                                    <th id="trs-hd-12" class="col-lg-3" style="width: 500px;">OPtions</th>
+                                    <th id="trs-hd-10" class="col-lg-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="warning no-result">
+                                    <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                                </tr>
+                                <tr>
+                                    <td>Question 1</td>
+                                    <td>Description 1</td>
+                                    <td>Choic Multiples</td>
+                                    <td>opt1;opt2;opt3</td>
+                                    <td style="text-align: center;"><button class="btn btn-danger" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <section style="text-align: right;padding: 50px;"><button class="btn btn-primary btn_qts_rfi_rfq" type="button">Ajouter une question<i class="fa fa-caret-square-o-down"></i></button></section>
+                </section>
+            </div>
+            <div class="text-center" id="lancer-le-marche">
+                <h1 class="text-start rfi_rfq_title">Lancer le marche</h1>
+                <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
+                <div><label class="form-label">Date D'affichage :&nbsp;<input name="dateAffichage" type="date" style="color:white;background: rgba(37, 71, 106, 0.56);border-width: 1px;"></label><label class="form-label">&nbsp; &nbsp; &nbsp; Date Limite&nbsp; :&nbsp;<input name="dateLimite" type="date" style="color:white;background: rgba(37, 71, 106, 0.56);border-width: 1px;"></label></div>
+            </div>
+            <div id="submit_btn" style="text-align: center;margin-top: 20px;"><button class="btn btn-primary" type="submit" style="text-align: center;width: 20%;margin-bottom: 10px;background: rgba(15,42,69,0.98);border-width: 0px;">Envoi</button></div>
+        </div>
+    </form>
+    {{-- <script src="/assets/bootstrap/js/bootstrap.min.js?h=5488c86a1260428f0c13c0f8fb06bf6a"></script>
+    <script src="/assets/js/Dynamic-Table.js?h=4f9222d0881d1b1e9b498d8711ad3631"></script> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    {{-- <script src="/assets/js/script.js?h=22c46e843590b6862008b73c67a2aba2"></script>
+    <script src="/assets/js/Select-Search.js?h=7a14c595f52cdf6026b5a44585159606"></script>
+    <script src="/assets/js/Table-With-Search.js?h=aeb9a0ac8b6cc9ec2e3b9cc3add2f239"></script> --}}
+    
+
+    <script>
+        $(document).on('click', '.qst_item', function() {
+    $(this).closest('tr').remove();
+});
+
+$(document).on('click', '.add', function() {
+    var html = '<div class="option" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
+    html += '';
+    $('#sect_sqt_rfi').append(html);
+});
+
+$(document).on('click', '.add_b', function() {
+    var html = '<div class="form-check d-inline-flex option_b"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input" type="text" style="margin-left: 10px;"></label></div>';
+    html += '';
+    $('#sect_sqt_rfi_b').append(html);
+});
+
+$(document).on('click', '.remove', function() {
+    //$(this).closest('div').remove();
+    // $("#sect_sqt_rfi > div:last-child").remove();
+    $('#sect_sqt_rfi .option:last').remove()
+});
+
+$(document).on('click', '.remove_b', function() {
+    //$(this).closest('div').remove();
+    // $("#sect_sqt_rfi > div:last-child").remove();
+    $('#sect_sqt_rfi_b .option_b:last').remove()
+});
+
+$(".chosen").val(0).select2({
+    matcher: function(params, data) {
+        if (data.id === "0") { // <-- option value of "Other", always appears in results
+            return data;
+        } else {
+            return $.fn.select2.defaults.defaults.matcher.apply(this, arguments);
+        }
+    },
+});
+$('.chosen').val(nl);
+//add card to create questions
+function add_RFI_qst() {
+    var x = document.getElementById("nv_qst_rfi");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+        $("*[class*='nv_']").hide();
+    }
+}
+//choose case a cocher
+function myFunctionRFI() {
+    var id_question = $(".chosen").val();
+    var questions = @json($questions);
+    // var questions = {!! json_encode($questions->toArray()) !!};
+    $.each(questions, function(i, item) {
+        if (questions[i].id == id_question) {
+            //show box to add new question with a specific type
+            $(".types_qst").val(questions[i].type).change();
+            var zone_add = ".nv_" + questions[i].type;
+            $("*[class*='nv_']").hide();
+            $(zone_add).show();
+            //Fill inputs with questions template from data base
+            var question_input = ".qst" + questions[i].type + "_input";
+            var description_input = ".desc" + questions[i].type + "_input";
+            var options_input = questions[i].options.split(";");
+            $(".option").remove();
+            $(".option_b").remove();
+            if (questions[i].type == 'cm') {
+                for (let index = 0; index < options_input.length; index++) {
+                    add_option_b(options_input[index]);
+                }
+            } else {
+                for (let index = 0; index < options_input.length; index++) {
+                    add_option(options_input[index]);
+                }
+            }
+
+            $(question_input).val(questions[i].question);
+            $(description_input).val(questions[i].description);
+        };
+    });
+}
+
+function changetype() {
+    var type = $(".types_qst").val();
+    var zone_add = ".nv_" + type;
+    if ($(zone_add).is(":hidden")) {
+        $("*[class*='nv_']").hide();
+        $(zone_add).show();
+    };
+}
+
+function Annuler() {
+    add_RFI_qst();
+}
+
+function Ajouter() {
+
+    var type_qst = $(".types_qst").val();
+    var question_input = $(".qst" + type_qst + "_input").val();
+    var description_input = $(".desc" + type_qst + "_input").val();
+    var options = '';
+    // $('.option').each(function() {
+    //     var options += $(this).val();
+    //     var options += ';';
+    // });
+    if (type_qst != 'cr' && type_qst != 'f') {
+        options = $.map($('.option_input'), function(e) { return e.value; }).join(';');
+        // values.join(';');
+    }
+
+    markup = '<tr><td>' + question_input + '<input hidden name="question_input[]" value="' + question_input + '" /></td><td>' + description_input + '<input hidden name="description_input[]" value="' + description_input + '" /></td><td>' + type_qst + '<input hidden name="type_input[]" value="' + type_qst + '" /></td><td>' + options + '<input hidden name="option_input[]" value="' + options + '" /></td><td style="text-align: center;"><button class="btn btn-danger qst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td></tr>'
+    tableBody = $("#Questions table tbody");
+    tableBody.append(markup);
+
+    add_RFI_qst();
+}
+
+function add_option($option) {
+    var html = '<div class="option" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input" type="text" style="width: 100%;" value="' + $option + '" placeholder="' + $option + '"></label></div></div>';
+    html += '';
+    $('#sect_sqt_rfi').append(html);
+}
+
+function add_option_b($option) {
+    var html = '<div class="form-check d-inline-flex option_b"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input value="' + $option + '" placeholder="' + $option + '" class="option_input" type="text" style="margin-left: 10px;"></label></div>';
+    html += '';
+    $('#sect_sqt_rfi_b').append(html);
+}
+
+function add_RFQ_qst() {
+    var x = document.getElementById("nv_qst_rfq");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+function myFunctionRFQ() {
+
+    var x = document.getElementById("select_rfq").value;
+    var y = document.getElementById('sect_sqt_rfq');
+    if (x == 'cc') {
+        $('#sect_sqt_rfq').show();
+    } else
+        $('#sect_sqt_rfq').hide();
+}
+    </script>
+
+@endsection
+</html>

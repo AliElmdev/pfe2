@@ -21,6 +21,7 @@ class Marche extends Model
         'limit_date',
         'affichage_date',
         'c_charge',
+        'etat',
     ];
 
     public function categorie(){
@@ -29,5 +30,8 @@ class Marche extends Model
     public function produit(){
         return $this->hasMany(\App\Models\Produit::class);
 >>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
+    }
+    public function question(){
+        return $this->hasMany(\App\Models\Question::class);
     }
 }
