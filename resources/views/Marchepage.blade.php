@@ -112,7 +112,7 @@
                         <div>
                             <h5 style="font-family: Roboto, sans-serif;"><strong>Postuler</strong><br /></h5>
                             <p style="font-family: Roboto, sans-serif; color: rgb(89, 89, 89);">
-                                <a href="#" style="background: var(--bs-table-bg); padding-top: 32px;"><i class="fa fa-share-square-o" style="font-size: 26px; color: rgb(90, 152, 89);"></i></a><br />
+                                <a href='{{route("postulation",$marche->id)}}' style="background: var(--bs-table-bg); padding-top: 32px;"><i class="fa fa-share-square-o" style="font-size: 26px; color: rgb(90, 152, 89);"></i></a><br />
                             </p>
                         </div>
                     </td>

@@ -6,9 +6,10 @@ use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
 use App\Http\Controllers\EcMarcheCreationController;
+use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,11 +32,18 @@ Route::get('/all_users', function () {
     return view('admin.users');
 })->name("users");
 
+Route::get('/postulation/{id}', function () {
+    return view('entreprise.postuler');
+})->name("postulation");
+
 Auth::routes();
 
 // Route::get('/create_project', function () {
 //     return view('chef.create_project');
 // })->name("create_project");
+
+Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
+
 
 Route::delete('/all_users/delete/{id}', [AllUsersController::class, "destroy"])->middleware('auth');
 Route::get("/all_users", [AllUsersController::class, "index"])->name("users")->middleware('auth');
