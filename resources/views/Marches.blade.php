@@ -15,34 +15,22 @@
                                 <div class="filters">
                                     <div class="filter-item">
                                         <h3><strong>Domaines</strong></h3>
-<<<<<<< HEAD
-                                        <select name="domaine" class="chosen form-select"
+                                        <select class="chosen form-select" onchange="filterdomaine(this)" required=""
                                             style="color: #000000;width: 100%;">
-                                            <option></option>
-                                            @foreach ($list_domaines as $item)
-=======
-                                        <select class="chosen form-select"  onchange="filterdomaine(this)" required="" style="color: #000000;width: 100%;">
                                             <option value="all">Tous</option>
-                                            @foreach ($list_domaines  as $item)
->>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
+                                            @foreach ($list_domaines as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="filter-item">
                                         <h3><strong>Catégories</strong></h3>
-<<<<<<< HEAD
-                                        <select name="categorie" class="chosen form-select"
+                                        <select class="chosen form-select" onchange="filtercategorie(this)" required=""
                                             style="color: #000000;width: 100%;">
-                                            <option></option>
-                                            @foreach ($list_categories as $item)
-                                            <option value="{{$item->id}}">{{$item->name}}</option>
-=======
-                                        <select class="chosen form-select" onchange="filtercategorie(this)" required="" style="color: #000000;width: 100%;">
                                             <option value="all">Tous</option>
-                                            @foreach ($list_categories as $item)  
-                                                <option class="domain_{{$item->id_domaine}}" value="{{$item->id}}">{{$item->name}}</option>
->>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
+                                            @foreach ($list_categories as $item)
+                                            <option class="domain_{{$item->id_domaine}}" value="{{$item->id}}">
+                                                {{$item->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -92,54 +80,22 @@
                                     </div>
                             </form>
                         </div>
-<<<<<<< HEAD
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="products">
-                        <div class="row g-0">
-                            @foreach ( $list_marches as $item)
-                            <div class="col-12 col-md-6 col-lg-4"
-                                style="width: 100%;height: 260px;background: rgba(214,51,132,0);margin-bottom: 20px;margin-top: 20px;">
-                                <div class="clean-product-item" style="width: 100%;height: 230px;">
-                                    <h5 style="font-weight: bold;">{{$item->ctaegoriename->name}}</h5>
-                                    <p>Objet :{{$item->title}}</p>
-                                    <p style="font-size: 15px;">Dossier_{{$item->id}}: {{$item->description}}<br></p>
-                                    <div class="d-flex">
-                                        <span style="font-size: 14px;">
-                                            Date limite de réponse :&nbsp;<br>
-                                        </span>
-                                        <span style="color: rgb(14,101,0);font-weight: bold;font-size: 14px;">
-                                            {{$item->limit_date}} GMT<br>
-                                        </span>
-                                    </div>
-                                    <div style="height: 20%;margin-left: 70%;margin-top: 10px;">
-                                        <button class="btn btn-primary"">
-                                            <a href=" {{ route('marchesunitere',$item->id) }}
-                                            style=" background: var(--bs-blue);color: rgb(255,255,255);padding-right:
-                                            20px;padding-left: 20px;padding-bottom: 10px;padding-top:
-                                            10px;border-radius: 6px;">
-                                            Accéder<br>
-                                            </a>
-                                        </button>
-                                    </div>
-                                    <hr
-                                        style="height: 3px;background: var(--bs-blue);color: rgb(33, 37, 41);opacity: 1;margin-top: 18px;">
-=======
                         <div class="col-md-9">
                             <div class="products">
                                 <div class="row g-0">
                                     @foreach ( $list_marches as $item)
-                                        @foreach($catg as $key=>$value)
-                                            @if($item->id_categorie == $key)
-                                                @break;
-                                            @endif
-                                        @endforeach 
-                                    <div class="col-12 col-md-6 col-lg-4 marche_{{$item->id_categorie}} domain_{{$value->id_domaine}}" style="width: 100%;height: 260px;background: rgba(214,51,132,0);margin-bottom: 20px;margin-top: 20px;">
+                                    @foreach($catg as $key=>$value)
+                                    @if($item->id_categorie == $key)
+                                    @break;
+                                    @endif
+                                    @endforeach
+                                    <div class="col-12 col-md-6 col-lg-4 marche_{{$item->id_categorie}} domain_{{$value->id_domaine}}"
+                                        style="width: 100%;height: 260px;background: rgba(214,51,132,0);margin-bottom: 20px;margin-top: 20px;">
                                         <div class="clean-product-item" style="width: 100%;height: 230px;">
                                             <h5 style="font-weight: bold;">M</h5>
                                             <p>Objet :{{$item->title}}</p>
-                                            <p style="font-size: 15px;">Dossier_{{$item->id}}: {{$item->description}}<br></p>
+                                            <p style="font-size: 15px;">Dossier_{{$item->id}}:
+                                                {{$item->description}}<br></p>
                                             <div class="d-flex">
                                                 <span style="font-size: 14px;">
                                                     Date limite de réponse :&nbsp;<br>
@@ -149,18 +105,23 @@
                                                 </span>
                                             </div>
                                             <div style="height: 20%;margin-left: 70%;margin-top: 10px;">
-                                                <a href={{route('marchesunitere',$item->id)}} style="background: var(--bs-blue);color: rgb(255,255,255);padding-right: 20px;padding-left: 20px;padding-bottom: 10px;padding-top: 10px;border-radius: 6px;">
+                                                <a href={{route('marchesunitere',$item->id)}} style="background:
+                                                    var(--bs-blue);color: rgb(255,255,255);padding-right:
+                                                    20px;padding-left: 20px;padding-bottom: 10px;padding-top:
+                                                    10px;border-radius: 6px;">
                                                     Accéder<br>
                                                 </a>
                                             </div>
-                                            <hr style="height: 3px;background: var(--bs-blue);color: rgb(33, 37, 41);opacity: 1;margin-top: 18px;">
+                                            <hr
+                                                style="height: 3px;background: var(--bs-blue);color: rgb(33, 37, 41);opacity: 1;margin-top: 18px;">
                                         </div>
                                     </div>
-                                    @endforeach  
+                                    @endforeach
                                     <nav style="margin-top: 100px;">
                                         <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">« </span></a>
+                                            <li class="page-item disabled"><a class="page-link" href="#"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">« </span></a>
                                             </li>
                                             <li class="page-item active">
                                                 <a class="page-link" href="#"> 1 </a>
@@ -170,7 +131,7 @@
                                             </li>
                                             <li class="page-item">
                                                 <a class="page-link" href="#">
-                                                3</a>
+                                                    3</a>
                                             </li>
                                             <li class="page-item">
                                                 <a class="page-link" href="#" aria-label="Next">
@@ -179,7 +140,6 @@
                                             </li>
                                         </ul>
                                     </nav>
->>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
                                 </div>
                             </div>
                             @endforeach
@@ -209,15 +169,10 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-        </div>
     </section>
 </main>
-=======
-        </section>
-    </main>
-    <script> 
-        function filtercategorie(selectObject) {
+<script>
+    function filtercategorie(selectObject) {
             $("*[class*='marche_']").hide();
             var value = selectObject.value;
             if(value=='all'){
@@ -241,9 +196,8 @@
                 //console.log(value);
             }
         }
-    </script>
+</script>
 @endsection
 
->>>>>>> 1bef297d9cc3c0358481614f4ae00a338f631b5b
 
 @endsection
