@@ -61,7 +61,13 @@ class AllUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $_POST['name_input'];
+        $user->email = $_POST['email_input'];
+        $user->detachRole($user->role);
+        $user->attachRole($_POST['role_input']);
+        $user->save();
+        return Redirect::route('users');
     }
 
     /**

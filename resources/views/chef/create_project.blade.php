@@ -87,7 +87,7 @@
                             </td>
                             <td>
                                 <select class="custom-select" name="unit[]">
-                                    <optgroup label="This is a group"><option value="unit" selected="">Unit</option><option value="m">Metre</option><option value="kg">KiloGramme</option></optgroup>
+                                    <optgroup label="This is a group"><option value="u" selected="">Unit</option><option value="m">Metre</option><option value="kg">KiloGramme</option></optgroup>
                                 </select>
                             </td>
                             <td><input class="form-control" name="qte[]" type="number" /></td>
@@ -114,7 +114,7 @@
       html += '<tr> <td><input class="form-control" name="nom[]" type="text" /></td>'
       html += '<td><textarea class="form-control" name="description[]" style="height: 34px;"></textarea></td>'
       html += '<td> <select class="custom-select" name="serv_prod[]"><optgroup label="This is a group"><option value="service" selected="">Service</option><option value="Produit">Produit</option></optgroup></select></td>'
-      html += '<td><select class="custom-select" name="unit[]"><optgroup label="This is a group"><option value="unit" selected="">Unit</option><option value="m">Metre</option><option value="kg">KiloGramme</option></optgroup></select></td>'
+      html += '<td><select class="custom-select" name="unit[]"><optgroup label="This is a group"><option value="u" selected="">Unit</option><option value="m">Metre</option><option value="kg">KiloGramme</option></optgroup></select></td>'
       html += '<td><input class="form-control" name="qte[]" type="number" /></td>'
       html += '<td><button class="btn btn-primary remove" name="remove" type="button" style="background: rgb(230, 0, 0);"><strong>x</strong></button></td></tr>'
       $('#item_table').append(html);

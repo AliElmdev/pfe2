@@ -16,8 +16,12 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->string('question');
-            $table->string('reponse');
-            $table->string('path_file');
+            $table->string('options');
+            $table->string('description');
+            $table->enum('type',['cr','cm','f','on']);
+            $table->enum('Questionnaire',['RFI','RFQ']);
+            $table->integer('marche_id')->unsigned();
+            $table->foreign('marche_id')->references('id')->on('marches')->onDelete('cascade');
             $table->timestamps();
         });
     }

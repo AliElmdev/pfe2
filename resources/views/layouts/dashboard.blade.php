@@ -10,9 +10,21 @@
     <meta name="author" content="">
     
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Service d'achat</title>
 
-    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/Dynamic-Table.css">
+    <link rel="stylesheet" href="/assets/css/Pretty-Table-1.css">
+    <link rel="stylesheet" href="/assets/css/Pretty-Table.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/Table-With-Search-1.css">
+    <link rel="stylesheet" href="/assets/css/Table-With-Search.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/Hover-cards.css">
+    {{-- <link rel="stylesheet" href="/assets/css/project-card.css"> --}}
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/Select-Search.css">
 
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link

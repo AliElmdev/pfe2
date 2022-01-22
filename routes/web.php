@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,8 +38,8 @@ Auth::routes();
 // })->name("create_project");
 
 Route::delete('/all_users/delete/{id}', [AllUsersController::class, "destroy"])->middleware('auth');
-
 Route::get("/all_users", [AllUsersController::class, "index"])->name("users")->middleware('auth');
+Route::post("/Modify_user/{id}", [AllUsersController::class, "edit"])->name("edit_user")->middleware('auth');
 
 
 Route::get("/create_project", [CreateMarcheController::class, "index"])->name("create_project")->middleware('auth');
@@ -48,4 +49,8 @@ Route::post("/create_project", [CreateMarcheController::class, "store"])->name("
 Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
 Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
 Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
-Route::get("/marche/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
+Route::get("/opportuinities/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
+
+Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
+Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreations");  
+Route::post("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation");

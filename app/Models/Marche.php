@@ -16,6 +16,7 @@ class Marche extends Model
         'limit_date',
         'affichage_date',
         'c_charge',
+        'etat',
     ];
 
     public function categorie(){
@@ -23,5 +24,8 @@ class Marche extends Model
     }
     public function produit(){
         return $this->hasMany(\App\Models\Produit::class);
+    }
+    public function question(){
+        return $this->hasMany(\App\Models\Question::class);
     }
 }
