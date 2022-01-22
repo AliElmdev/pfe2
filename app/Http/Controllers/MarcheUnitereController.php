@@ -15,7 +15,6 @@ class MarcheUnitereController extends Controller
      */
     public function index()
     {
-
     }
 
     /**
@@ -49,7 +48,7 @@ class MarcheUnitereController extends Controller
     {
         $marche = Marche::find($id);
         $categorie = Categorie::find($marche->id_categorie);
-        return view("Marchepage", compact("marche","categorie"));
+        return view("marchepage", compact("marche", "categorie"));
     }
 
     /**
