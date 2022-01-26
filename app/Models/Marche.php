@@ -18,10 +18,12 @@ class Marche extends Model
         'c_charge',
     ];
 
-    public function categorie(){
+    public function categorie()
+    {
         return $this->hasOne(\App\Models\Categorie::class);
     }
-    public function produit(){
+    public function produit()
+    {
         return $this->hasMany(\App\Models\Produit::class);
     }
 }

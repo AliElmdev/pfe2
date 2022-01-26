@@ -2,8 +2,8 @@
 @section('content')
 <header style="background: url('/assets/img/mining-exploration-activities.jpg') top / auto; height: 80px;"></header>
 <div class="container" style="width: 100%; margin-top: 30px;">
-    <h5 style="background: #e8e8e8; padding: 20px; font-family: Roboto, sans-serif;">Dossier : Dossier_49365 -
-        Acquisition de Matériel de travail en hauteur (Echafaudages) pour la SOTREG<br /></h5>
+    <h5 style="background: #e8e8e8; padding: 20px; font-family: Roboto, sans-serif;">Dossier : Dossier_{{$marche->id}} -
+        {{$marche->title}}<br /></h5>
 </div>
 <div style="padding-right: 90px; padding-left: 90px;">
     <div class="table-responsive">
@@ -126,8 +126,8 @@
                         <div>
                             <h5 style="font-family: Roboto, sans-serif;"><strong>Postuler</strong><br /></h5>
                             <p style="font-family: Roboto, sans-serif; color: rgb(89, 89, 89);">
-                                <a href="#" style="background: var(--bs-table-bg); padding-top: 32px;"><i
-                                        class="fa fa-share-square-o"
+                                <a href={{route('postulation',$marche->id)}} style="background: var(--bs-table-bg);
+                                    padding-top: 32px;"><i class="fa fa-share-square-o"
                                         style="font-size: 26px; color: rgb(90, 152, 89);"></i></a><br />
                             </p>
                         </div>

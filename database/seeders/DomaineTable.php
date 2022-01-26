@@ -15,8 +15,9 @@ class DomaineTable extends Seeder
      */
     public function run()
     {
+
         $dom = new Domaine();
-        $dom->name = Str::random(10);
+        $dom->name = 1;
         $dom->save();
     }
 }
