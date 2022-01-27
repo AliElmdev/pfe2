@@ -67,10 +67,12 @@ class PostulationController extends Controller
             ->orderBy('grp_id')
             ->orderBy('sect_id')
             ->get();
+
         $list = [];
         foreach ($list_questions as $questions) {
             array_push($list, [$questions->type => [$questions->grp_id => [$questions->sect_id => $questions]]]);
         }
+        dd($list);
 
         // arr = array($list_questions[0]->name => $list_questions);
 

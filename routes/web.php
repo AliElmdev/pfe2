@@ -35,6 +35,5 @@ Route::post('/registration', [RegisterController::class, 'create_cost'])->name('
 Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
 Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
 
-
 // postulation marches
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
