@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Marche;
 use App\Models\Produit;
 use App\Models\Question;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EcMarcheCreationController extends Controller
 {
@@ -34,7 +36,13 @@ class EcMarcheCreationController extends Controller
         return view('achat.AchatCreateMarche',[
             'marche' => Marche::find($id),
             'produits' => Produit::where('marche_id',$id)->get(),
-            'questions' => Question::where('marche_id',$id)->get(),
+            'questions' => Question::all(),
+            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFI')->get(),
+            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFQ')->get(),
+            'sections_RFI' => Section::where('type_section','RFI')->get(),
+            'sections_RFQ' => Section::where('type_section','RFQ')->get(),
+            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFI')->where('marche_id',$id)->get(),
+            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFQ')->where('marche_id',$id)->get(),
          ]);
     }
 
@@ -46,16 +54,29 @@ class EcMarcheCreationController extends Controller
         $marche->etat = 1;
         $marche->save();
 
-        for($count = 0; $count < count($_POST["question_input"]); $count++){
+        for($count = 0; $count < count($_POST["question_input_rfi"]); $count++){
             $question = new Question([
-                'question' => $_POST["question_input"][$count],
-                'description' => $_POST["description_input"][$count],
-                'type' => $_POST["type_input"][$count],
-                'options' => $_POST["option_input"][$count],
-                'Questionnaire' => "RFI",
+                'question' => $_POST["question_input_rfi"][$count],
+                'description' => $_POST["description_input_rfi"][$count],
+                'type' => $_POST["type_input_rfi"][$count],
+                'options' => $_POST["option_input_rfi"][$count],
+                'section_id' => (int)$_POST["section_input_rfi"][$count],
+                'marche_id' => $_POST["marche_id"],
             ]);
-            $marche->question()->save($question);
+            $question->save();
         }   
+
+        for($count = 0; $count < count($_POST["question_input_rfq"]); $count++){
+            $question = new Question([
+                'question' => $_POST["question_input_rfq"][$count],
+                'description' => $_POST["description_input_rfq"][$count],
+                'type' => $_POST["type_input_rfq"][$count],
+                'options' => $_POST["option_input_rfq"][$count],
+                'section_id' => (int)$_POST["section_input_rfq"][$count],
+                'marche_id' => $_POST["marche_id"],
+            ]);
+            $question->save();
+        }  
             
         return redirect('/Marches-en-cours-creation');
     }    

@@ -14,10 +14,14 @@ class Question extends Model
         'options',
         'description',
         'type',
-        'Questionnaire',
+        'section_id',
+        'marche_id',
     ];
 
     public function marche(){
         return $this->hasMany(\App\Models\Marche::class);
+    }
+    public function question(){
+        return $this->hasOne(\App\Models\Section::class);
     }
 }

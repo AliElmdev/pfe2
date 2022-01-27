@@ -15,7 +15,7 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('nom section');
+            $table->string('nom_section');
             $table->enum('type_section',["RFI","RFQ"]);
         });
     }
