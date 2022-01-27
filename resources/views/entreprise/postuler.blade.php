@@ -20,6 +20,8 @@
                     <a class="nav-link" href="#" style="background: #296232; color: #ffffff; border-radius: 10px; border-top-left-radius: 0px; border-top-right-radius: 0px; border-width: 1px; border-color: #003b0d;">Pieces Joins</a>
                 </li>
             </ul>
+
+        <form>    
             <div class="container" style="padding-right: 0px; padding-left: 0px;">
                 <div
                     style="
@@ -37,6 +39,7 @@
                         width: 90%;
                     "
                 >
+
                     <h2 class="text-info" style="font-family: Roboto, sans-serif;">Contact Us</h2>
                     @foreach ($questions as $question)
                         <div>{{$question->question}}</div>
@@ -358,6 +361,7 @@
                     </div>
                 </div>
             </div>
+        </form>
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

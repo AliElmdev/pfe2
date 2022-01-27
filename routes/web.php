@@ -45,6 +45,8 @@ Auth::routes();
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
 
 
+//Show all users in admin panel
+
 Route::delete('/all_users/delete/{id}', [AllUsersController::class, "destroy"])->middleware('auth');
 Route::get("/all_users", [AllUsersController::class, "index"])->name("users")->middleware('auth');
 Route::post("/Modify_user/{id}", [AllUsersController::class, "edit"])->name("edit_user")->middleware('auth');

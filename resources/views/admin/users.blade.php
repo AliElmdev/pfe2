@@ -11,7 +11,15 @@
 @section('content')
 <div class="col-md">
     <div class="card">
-        <div class="card-header">Users</div>
+        <div class="ml-4">Filter :</div>
+        <div class="card-header">
+            <select onchange="filter_users();" class="form-select users_list" aria-label="Default select example">
+                <option value="all">All</option>
+                @foreach ($roleslist as $item)
+                    <option value="{{$item->name}}">{{$item->name}}</option>
+                @endforeach 
+            </select>
+        </div>
         <div class="card-body">
             <table class="table">
                 <thead>
@@ -36,7 +44,7 @@
                                         @foreach($user->roles as $role)
                                             @foreach ($roleslist as $item)
                                                 @if($item->name==$role->name)
-                                                    <button type="button" class="badge  badge-success role" value="{{$role->id}}">{{$role->name}}</button>
+                                                    <button type="button" class="badge  badge-success role {{$role->name}}" value="{{$role->id}}">{{$role->name}}</button>
                                                     <input class="role_input" name="role_input" value='{{$role->id}}' hidden />
                                                 @else
                                                     <button type="button" style="display: none" class="badge  badge-danger other_role role" value='{{$item->id}}'>{{$item->name}}</button>
@@ -71,6 +79,17 @@
 </div>
 <script>
     
+    function filter_users(){
+        var role_selected = $(".users_list").val();
+        if(role_selected == 'all'){
+            $('.role').closest('tr').show();
+        }else{
+            role_selected = '.'+role_selected;
+            $('.role').closest('tr').hide();
+            $(role_selected).closest('tr').show();
+        }   
+    }
+
     function edit(){
         if($(".other_role").is(":visible")){
             $(".other_role").hide();
