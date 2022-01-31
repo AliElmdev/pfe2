@@ -100,9 +100,9 @@ class PostulationController extends Controller
         $marche = Marche::where('id', $id)->get();
         $produits = Produit::where('marche_id', $id)->get();
 
-        $postulations = Postulation::where('marche_id', $id)->get();
-        $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id);
-        $reponses_commercial = Reponse_commercial::where('reponses_commercials_id',$postulations->commercials_id);
+        $postulations = Postulation::where('marche_id', $id)->first();
+        $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id)->get();
+        $reponses_commercial = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)->get();
         return view("entreprise.postuler", compact(["b_sections","marche","produits","reponses_question","reponses_commercial"]));
     }
 

@@ -84,11 +84,11 @@
                                                             <tr>
                                                                 @if($question->type == 'f')
                                                                         <td>{{$question->question}}</td>
-                                                                        <td><input name="reponseqst_{{$question->id}}" type="file" class="form-costum reponse_l" disabled /></td>
+                                                                        <td><input name="reponseqst_{{$question->id}}" type="file" class="form-costum reponse_l reponseqst_{{$question->id}}" disabled /></td>
                                                                 @elseif($question->type == 'cm')
                                                                     <td>{{$question->question}}</td>
                                                                     <td>
-                                                                        <select name="reponseqst_{{$question->id}}" class="reponse_l" style="height: 25.8px; width: 134px;" disabled>
+                                                                        <select name="reponseqst_{{$question->id}}" class="reponse_l reponseqst_{{$question->id}}" style="height: 25.8px; width: 134px;" disabled>
                                                                             <optgroup label="Oui / NON"><option value="0" selected=""></option>
                                                                             @foreach(explode(';', $question->options) as $opt) 
                                                                                 <option value="{{$opt}}">{{$opt}}</option>
@@ -98,11 +98,11 @@
                                                                     </td>
                                                                 @elseif($question->type == 'cr')
                                                                     <td>{{$question->question}}</td>
-                                                                    <td><input name="reponseqst_{{$question->id}}" type="text" class="form-costum reponse_l" disabled /></td>
+                                                                    <td><input name="reponseqst_{{$question->id}}" type="text" class="form-costum reponse_l reponseqst_{{$question->id}}" disabled /></td>
                                                                 @elseif($question->type == 'on')
                                                                     <td>{{$question->question}}</td>
                                                                     <td>
-                                                                        <select name="reponseqst_{{$question->id}}" class="reponse_l" style="height: 25.8px; width: 134px;" disabled>
+                                                                        <select name="reponseqst_{{$question->id}}" class="reponse_l reponseqst_{{$question->id}}" style="height: 25.8px; width: 134px;" disabled>
                                                                             <optgroup label="Oui / NON"><option value="0" selected=""></option>
                                                                                 @foreach(explode(';', $question->options) as $opt) 
                                                                                     <option value="{{$opt}}">{{$opt}}</option>
@@ -189,7 +189,7 @@
                                                     <td>{{$produit->commentaire}}</td>
                                                     <td>
                                                         <select name="type_{{$produit->id}}" class="reponse_l" disabled>
-                                                            <optgroup label="Type"><option value="0" selected=""></option><option value="2">Article</option><option value="14">Variable</option></optgroup>
+                                                            <optgroup label="Type"><option value="0" selected=""></option><option value="article">Article</option><option value="variante">Variante</option></optgroup>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -218,6 +218,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
     <script>
+        var reponses_questions =  @json($reponses_question);
+        var reponses_commercials =  @json($reponses_commercial);
+
+        reponses_questions.forEach(reponse => {
+            alert('test');
+            var options = reponse.reponse.split(";");
+            options.forEach(option => {
+                alert(option);
+                // var classna = '.reponseqst_'+ reponse.question_id;
+                // alert(classna);
+                // $(classna).val(option).change();
+                $('.reponseqst_2').val('o').change();
+            });
+        });
         const calcule_prix_totale = (quantite,prix_input,result_display_id)=>{
             const result_display_element = document.getElementById("prix_totale_"+result_display_id);
             const prix_totale = quantite * parseFloat(prix_input.value);
