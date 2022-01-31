@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostulationTable extends Migration
+class CreateReponsesCommercialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePostulationTable extends Migration
      */
     public function up()
     {
-        Schema::create('postulation', function (Blueprint $table) {
+        Schema::create('reponses_commercials', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreatePostulationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('postulation');
+        Schema::dropIfExists('reponses_commercials');
     }
 }

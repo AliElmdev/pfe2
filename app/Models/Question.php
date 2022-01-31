@@ -24,4 +24,7 @@ class Question extends Model
     public function question(){
         return $this->hasOne(\App\Models\Section::class);
     }
+    public function section(){
+        return $this->belongsTo(\App\Models\Section::class);
+    }
 }

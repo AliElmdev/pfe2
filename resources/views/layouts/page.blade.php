@@ -57,9 +57,9 @@
                     <div class="col-sm-4 col-md-3 item">
                         <h3>Notre Groupe</h3>
                         <ul>
-                            <li><a href="#"><img src="assets/img/saraweb3d.png" style="width: 49px;">Sara Web</a></li>
-                            <li style="margin-top: 6px;"><a href="#"><img src="assets/img/securiter-dabord-logo.png" style="width: 49px;">Sécurité D'abord</a></li>
-                            <li><a href="#"><img src="assets/img/blue%20logo.png" style="width: 49px;">True Work</a></li>
+                            <li><a href="#"><img src="/assets/img/saraweb3d.png" style="width: 49px;">Sara Web</a></li>
+                            <li style="margin-top: 6px;"><a href="#"><img src="/assets/img/securiter-dabord-logo.png" style="width: 49px;">Sécurité D'abord</a></li>
+                            <li><a href="#"><img src="/assets/img/blue%20logo.png" style="width: 49px;">True Work</a></li>
                         </ul>
                     </div>
                     <div class="col-sm-4 col-md-3 item">

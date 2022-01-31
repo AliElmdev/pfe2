@@ -28,4 +28,7 @@ class Marche extends Model
     public function question(){
         return $this->hasMany(\App\Models\Question::class);
     }
+    public function postulation(){
+        return $this->hasMany(\App\Models\Postulation::class);
+    }
 }

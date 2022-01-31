@@ -17,7 +17,12 @@ class catogorieTable extends Seeder
     public function run()
     {
         $cate = new Categorie();
-        $cate->name = Str::random(10);
+        $cate->name = 'dev';
+        $cate->id_domaine = 1;
+        $cate->save();
+
+        $cate = new Categorie();
+        $cate->name = 'logiciel';
         $cate->id_domaine = 1;
         $cate->save();
     }

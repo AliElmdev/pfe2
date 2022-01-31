@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(catogorieTable::class);
         $this->call(DomaineTable::class);
         $this->call(MarchesTable::class);
-        //$this->call('UsersTableSeeder');
-
+        $this->call(B_sectionsSeeder::class);
+        $this->call(SectionsSeeder::class);
+        $this->call(UsersTableSeeder::class);
         Model::reguard();
         // \App\Models\User::factory(10)->create();
     }
