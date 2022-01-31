@@ -10,4 +10,8 @@ class Chat extends Model
     protected $fillable = [
         'sender_id', 'receiver_id', 'message'
     ];
+    public function users()
+    {
+        return $this->hasOne(\App\Models\User::class);
+    }
 }

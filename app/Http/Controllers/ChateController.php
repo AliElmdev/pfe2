@@ -7,6 +7,9 @@ use App\Models\Entreprise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
+
 class ChateController extends Controller
 {
     /**
@@ -49,7 +52,7 @@ class ChateController extends Controller
     public function show($id)
     {
     }
-    public function afficher($id_marche, $id_receve, $id_envoie)
+    public static function afficher($id_marche, $id_receve, $id_envoie)
     {
         $id_marche = 1;
         $id_receve = 1;
@@ -59,8 +62,12 @@ class ChateController extends Controller
         //     INNER JOIN chats c2
         //         ON c.sender_id=c2.receiver_id
         //   	WHERE c.sender_id=1 AND c.receiver_id=2 AND c.id_marche=1;
-        $list = DB::table('chats c')
-            ->leftJoin("chats c2 ", "c.sender_id", "=", "c2.receiver_id");
+        $list = DB::table(DB::raw('chats as c, chats as c2'))
+            // ->leftJoin("chats as c2", "c.sender_id", "=", "c2.receiver_id")
+            ->where("c.sender_id", "=", $id_envoie)
+            ->where("c.receiver_id", "=", $id_receve)
+            ->where("c.id_marche", "=", $id_marche)
+            ->get();
         // ->select('chats.user','chat.rr')
         // ->join('chats c2', '');
         // $list = DB::select(
@@ -71,8 +78,29 @@ class ChateController extends Controller
         // );
 
         // $list = Chat::where([['id_marche', '=', $id_marche], ['sender_id', '=', $id_envoie], ['receiver_id', '=',  $id_envoie]])->get();
-        dd($list);
         return view("entreprise.chate", compact(['list', 'id_marche', 'id_receve', 'id_envoie']));
+    }
+    public function enregister($id_marche, $id_receve, $id_envoie, Request $request)
+
+    {
+        $name = new Chat();
+        $name->id_marche = $id_marche;
+        $name->sender_id = $id_envoie;
+        $name->receiver_id = $id_receve;
+        $name->message = $request->input('text_input');
+        // if (!(isEmpty($name->message))) {
+        $name->save();
+        // }
+
+        // DB::insert('insert into chats values(,');
+
+        // if (!($request->input('name', 'input_txt')->is_nan)) {
+
+        // } else if ($request->input('name', '')) {
+        //     $name->message = $request->input('name', '');
+        //     $name->save();
+        // }
+        return ChateController::afficher($id_marche, $id_receve, $id_envoie);
     }
 
     /**

@@ -40,3 +40,4 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 // postulation marches
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 Route::get('/marche/{id_marche}/{id_receve}/{id_envoie}/chats', [ChateController::class, 'afficher'])->name('chats');
+Route::post('/marche/{id_marche}/{id_receve}/{id_envoie}/chatsl', [ChateController::class, 'enregister'])->name('chatseng');

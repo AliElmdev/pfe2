@@ -25,70 +25,62 @@
 
 
         <div class="page-content page-container" id="page-content">
-            <div class="padding">
-                <div class="row container d-flex justify-content-center">
-                    <div class="col-md-6">
-                        <div class="card card-bordered">
-                            <div class="card-header">
-                                <h4 class="card-title"><strong>Chat</strong>
-                            </div>
-
-                            <div class="ps-container ps-theme-default ps-active-y" id="chat-content"
-                                style="overflow-y: scroll !important; height:400px !important;">
-                                @foreach ($list as $item)
-                                @if ($item->sender_id== $id_envoie)
-                                <div class="media media-chat"> <img class="avatar"
-                                        src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                                    <div class="media-body">
-                                        <p>{{$item->message}}</p>
-                                        <p class="meta"><time datetime="2018">{{$item->created_at}}</time></p>
-                                    </div>
-                                </div>
-                                @elseif( $item->sender_id== $id_receve)
-                                <div class="media media-chat media-chat-reverse">
-                                    <div class="media-body">
-                                        <p>{{$item->message}}</p>
-                                        <p class="meta"><time datetime="2018">{{$item->created_at}}</time></p>
-                                    </div>
-                                </div>
-
-                                @endif
-
-
-                                @endforeach
-
-                            </div>
-                            <form action="action('ChateController@store')" method="post"
-                                style="max-width:100% ;margin-top: 3%;border-top:none">
-                                <div class="publisher bt-1 border-light"> <img class="avatar avatar-xs"
-                                        src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                                    <input class="publisher-input" type="text" name="input_txt"
-                                        placeholder="Veillez tapper votre message ici">
-                                    <span class="publisher-btn file-group">
-                                        <i class="fa fa-paperclip file-browser"> </i>
-                                        <input type="file" name="input_file"
-                                            accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps">
-                                    </span>
-                                    <a class="publisher-btn" type="submit" data-abc="true">
-                                        <i class="fa fa-smile"></i></a>
-                                    <a class="publisher-btn text-info" href="action('ChateController@store')"
-                                        data-abc="true"><i class="fa fa-paper-plane"></i>
-                                    </a>
-                                </div>
-                            </form>
+            <div class="padding ; text-align: center" ">
+                <div class=" row container d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="card card-bordered">
+                        <div class="card-header">
+                            <h4 class="card-title"><strong>Chat</strong>
                         </div>
 
+                        <div class="ps-container ps-theme-default ps-active-y" id="chat-content"
+                            style="overflow-y: scroll !important; height:400px !important;">
+                            @foreach ($list as $item)
+                            @if ($item->sender_id== $id_envoie)
+                            <div class="media media-chat"> <img class="avatar"
+                                    src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                <div class="media-body">
+                                    <p>{{$item->message}}</p>
+                                    <p class="meta">
+                                        <time datetime="2020">{{$item->created_at}}</time>
+                                    </p>
+                                </div>
+                            </div>
+                            @elseif($item->sender_id== $id_receve)
+                            <div class="media media-chat media-chat-reverse  ">
+                                <div class="media-body">
+                                    <p>{{$item->message}}</p>
+                                    <p class="meta"><time datetime="2020">{{$item->created_at}}</time></p>
+                                </div>
+                            </div>
+                            @endif
+                            @endforeach
 
+                        </div>
+                        <form action={{route('chatseng',[$id_marche, $id_envoie,$id_receve])}} method="post">
+                            @csrf
+                            <div class="publisher bt-1 border-light"> <img class="avatar avatar-xs"
+                                    src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                <input class="publisher-input" name="text_input" type="text"
+                                    placeholder="veillez tapper votre message">
+                                <span class="publisher-btn file-group"> <input type="file"> <i
+                                        class="fa fa-paperclip file-browser"></i>
+                                </span> <a class="publisher-btn" data-abc="true"><i class="fa fa-smile"></i></a>
+                                <button>
+                                    <a class="publisher-btn text-info" data-abc="true">
+                                        <i class="fa fa-paper-plane"></i>
+                                    </a>
+                                </button>
 
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         </div>
-
+        </div>
     </section>
-
-
 </main>
 
 
