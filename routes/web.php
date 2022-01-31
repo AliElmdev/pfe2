@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ChateController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\MarcheUnitereController;
 use App\Http\Controllers\PostulationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,4 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 
 // postulation marches
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
+Route::get('/marche/{id_marche}/{id_receve}/{id_envoie}/chats', [ChateController::class, 'afficher'])->name('chats');
