@@ -50,4 +50,7 @@ class User extends Authenticatable
     public function Entreprise(){
         return $this->hasOne(\App\Models\Profile::class);
     }
+    public function pustulation(){
+        return $this->hasMany(\App\Models\Postulation::class);
+    }
 }

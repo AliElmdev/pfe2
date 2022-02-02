@@ -10,6 +10,11 @@ class Postulation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'marche_id',
+        'questions_id',
+        'commercials_id',
+        'user_id',
+        'etat',
     ];
 
     public function marche(){
@@ -20,5 +25,11 @@ class Postulation extends Model
     }
     public function reponses_commercial(){
         return $this->hasOne(\App\Models\Reponses_commercial::class);
+    }
+    public function user(){
+        return $this->hasOne(\App\Models\User::class);
+    }
+    public function etat_postulation(){
+        return $this->hasOne(\App\Models\Etat_Postulation::class);
     }
 }

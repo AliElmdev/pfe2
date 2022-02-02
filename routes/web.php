@@ -7,6 +7,7 @@ use App\Http\Controllers\Chef\CreateMarcheController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\RFIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +62,9 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 
 // postulation marches
 // Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
+
+Route::get("/selection_rfi/{id_marche}", [RFIController::class, "index"])->name("selection_rfi");
+
+Route::get('/id', function () {
+    return view('slection_RFI.rfi_step_details');
+})->name("step2");
