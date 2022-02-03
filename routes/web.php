@@ -40,8 +40,8 @@ Auth::routes();
 //     return view('chef.create_project');
 // })->name("create_project");
 
-Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation");
-Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation");
+Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
+Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
 
 
 //Show all users in admin panel

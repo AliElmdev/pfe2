@@ -21,7 +21,7 @@
                 </li>
             </ul>
 
-        <form style="max-width:100%" action="{{route('postulation',$marche[0]->id)}}" method="POST">    
+        <form style="max-width:100%" action="{{route('postulation',$marche[0]->id)}}" method="POST" enctype="multipart/form-data">    
             @csrf
             <input type="text" name="marche_id" value="{{$marche[0]->id}}" hidden>
             <div class="container" style="padding-right: 0px; padding-left: 0px;">
@@ -84,7 +84,13 @@
                                                             <tr>
                                                                 @if($question->type == 'f')
                                                                         <td>{{$question->question}}</td>
-                                                                        <td><input name="reponseqst_{{$question->id}}" type="file" class="form-costum reponse_l reponseqst_{{$question->id}}" disabled /></td>
+                                                                        <td>
+                                                                            <div class="upload-btn-wrapper">
+                                                                                <button name="hnea" class="btn_upload reponseqst_{{$question->id}}">Télécharger un fichier</button>
+                                                                                <input name="reponseqst_{{$question->id}}" type="file"  class="form-costum reponse_l reponse_file reponseqst_{{$question->id}}" disabled />
+                                                                            </div>
+                                                                            {{-- <input name="reponseqst_{{$question->id}}" type="file" class="form-costum reponse_l reponseqst_{{$question->id}}" disabled /> --}}
+                                                                        </td>
                                                                 @elseif($question->type == 'cm')
                                                                     <td>{{$question->question}}</td>
                                                                     <td>
@@ -185,19 +191,19 @@
                                                     <td style="padding-top: 11px; padding-left: 19px;">{{$produit->id}}</td>
                                                     <td>{{$produit->nom}}</td>
                                                     <td>{{$produit->unit}}</td>
-                                                    <td>{{$produit->qte}}</td>
+                                                    <td class="qte_{{$produit->id}}">{{$produit->qte}}</td>
                                                     <td>{{$produit->commentaire}}</td>
                                                     <td>
-                                                        <select name="type_{{$produit->id}}" class="reponse_l" disabled>
+                                                        <select name="type_{{$produit->id}}" class="reponse_l type_{{$produit->id}}" disabled>
                                                             <optgroup label="Type"><option value="0" selected=""></option><option value="article">Article</option><option value="variante">Variante</option></optgroup>
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select name="devis_{{$produit->id}}" style="height: 22.8px; width: 105.4px;" class="reponse_l" disabled>
+                                                        <select name="devis_{{$produit->id}}" style="height: 22.8px; width: 105.4px;" class="reponse_l devis_{{$produit->id}}" disabled>
                                                             <optgroup label="Type"><option value="0" selected=""></option><option value="2">Euro</option><option value="2">MAD</option></optgroup>
                                                         </select>
                                                     </td>
-                                                    <td><input name="prix_{{$produit->id}}" class="reponse_l" disabled onkeyup="calcule_prix_totale({{$produit->qte}},this,{{$produit->id}})" type="number" id={{$produit->id.'prix_input'}} style="width: 77.4px; border-radius: 0px; border-width: 1px; border-style: solid;" /></td>
+                                                    <td><input name="prix_{{$produit->id}}" class="reponse_l prix_{{$produit->id}}" disabled onkeyup="calcule_prix_totale({{$produit->qte}},this,{{$produit->id}})" type="number" id={{$produit->id.'prix_input'}} style="width: 77.4px; border-radius: 0px; border-width: 1px; border-style: solid;" /></td>
                                                     <td id="prix_totale_{{$produit->id}}">...................</td>
                                                 </tr>
                                             @endforeach
@@ -218,19 +224,53 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
     <script>
-        var reponses_questions =  @json($reponses_question);
+
+        $( ".reponse_file" ).change(function() {
+            var file = $('.reponse_file')[0].files[0]
+            if (file){
+                // alert($(this).attr('name'));
+                var classnam = "button." + $(this).attr('name');
+                $(classnam).html(file.name);
+                // $(this).closest("button").css("background-color","yellow");
+                // this.parents().find('button').html(file.name);
+            }
+        });
+
+        @isset($reponses_question)
+        var reponses_questions = @json($reponses_question);
         var reponses_commercials =  @json($reponses_commercial);
+        @endisset
 
         reponses_questions.forEach(reponse => {
-            alert('test');
             var options = reponse.reponse.split(";");
             options.forEach(option => {
-                alert(option);
+                var classna = '.reponseqst_'+ reponse.question_id;
+                var classnafile = 'button'+classna;
+                if($(classnafile)[0]){
+                    var file_name = option.split("/");
+                    $(classnafile).html(file_name[file_name.length-1 ]);
+                }else{
+                    $('.reponseqst_2').val(option).change();
+                }
                 // var classna = '.reponseqst_'+ reponse.question_id;
                 // alert(classna);
                 // $(classna).val(option).change();
-                $('.reponseqst_2').val('o').change();
             });
+        });
+        reponses_commercials.forEach(reponse => {
+            var prix = '.prix_'+ reponse.produit_id;
+            var devis = '.devis_' + reponse.produit_id;
+            var type = '.type_' + reponse.produit_id;
+            var prix_total = '#prix_totale_' + reponse.produit_id;
+            var qte = $('.qte_'+ reponse.produit_id).text();
+            var prixtot = qte*reponse.prix;
+            $(prix).val(reponse.prix).change();
+            $(devis).val(reponse.devis).change();
+            $(type).val(reponse.type).change();
+            $(prix_total).html(prixtot);
+            // var classna = '.reponseqst_'+ reponse.question_id;
+            // alert(classna);
+            // $(classna).val(option).change();
         });
         const calcule_prix_totale = (quantite,prix_input,result_display_id)=>{
             const result_display_element = document.getElementById("prix_totale_"+result_display_id);
@@ -248,5 +288,30 @@
             }
         }
     </script>
+    <style>
+        .upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        }
+
+        .btn_upload {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 4px 20px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        }
+    </style>
         {{-- <script src="assets/js/script.min.js"></script> --}}
 @endsection
