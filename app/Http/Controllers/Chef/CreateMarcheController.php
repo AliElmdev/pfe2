@@ -40,11 +40,11 @@ class CreateMarcheController extends Controller
      */
     public function store(StoreMarcheRequest $request)
     {
-        
+
         $file_charge_o = $request->file('file_charge');
-        $file_chargeSaveAsName = time()."_Charge.". $file_charge_o->getClientOriginalExtension();
-        $upload_path = 'Marches/'.$request['titre_input'].'/';
-        $file_charge = $upload_path . $file_chargeSaveAsName;
+        $file_chargeSaveAsName = time() . "_Charge." . $file_charge_o->getClientOriginalName();;
+        $upload_path = 'Marches/' . $request['titre_input'] . '/'; //messages/id entreprise/id messahe
+        $file_charge = $upload_path . $file_chargeSaveAsName; // telechager
         $success = $file_charge_o->move($upload_path, $file_chargeSaveAsName);
 
 
@@ -62,7 +62,7 @@ class CreateMarcheController extends Controller
         //DB::table('marches')->insert($values);
 
 
-        for($count = 0; $count < count($_POST["nom"]); $count++){
+        for ($count = 0; $count < count($_POST["nom"]); $count++) {
             $produit = new Produit([
                 'nom' => $_POST["nom"][$count],
                 'commentaire' => $_POST["description"][$count],

@@ -31,6 +31,7 @@ class Chats extends Migration
             $table->unsignedBigInteger('sender_id')->unsigned();
             $table->unsignedBigInteger('receiver_id')->unsigned();
             $table->text('message');
+            $table->enum('type', ['txt', 'f']);
             $table->foreign('id_marche')->references('id')->on('marches')->onDelete('cascade');
             $table->foreign('recever_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');

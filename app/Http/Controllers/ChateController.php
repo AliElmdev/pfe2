@@ -6,68 +6,34 @@ use App\Models\Chat;
 use App\Models\Entreprise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Input\Input;
 
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
 class ChateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
+    // afficher le centenu de char
     public static function afficher($id_marche, $id_receve, $id_envoie)
     {
         $id_marche = 1;
-        $id_receve = 1;
-        $id_envoie = 2;
+        $id_receve = 1; // marches 9aleb
+        $id_envoie = 2; // autentificate
         //     SELECT * 
         // FROM chats c
         //     INNER JOIN chats c2
         //         ON c.sender_id=c2.receiver_id
         //   	WHERE c.sender_id=1 AND c.receiver_id=2 AND c.id_marche=1;
+
+        // model
         $list = DB::table(DB::raw('chats as c, chats as c2'))
             // ->leftJoin("chats as c2", "c.sender_id", "=", "c2.receiver_id")
             ->where("c.sender_id", "=", $id_envoie)
             ->where("c.receiver_id", "=", $id_receve)
             ->where("c.id_marche", "=", $id_marche)
             ->get();
+
         // ->select('chats.user','chat.rr')
         // ->join('chats c2', '');
         // $list = DB::select(
@@ -77,19 +43,46 @@ class ChateController extends Controller
         //          WHERE c.sender_id=1 AND c.receiver_id=2 AND c.id_marche=1;"
         // );
 
+
         // $list = Chat::where([['id_marche', '=', $id_marche], ['sender_id', '=', $id_envoie], ['receiver_id', '=',  $id_envoie]])->get();
-        return view("entreprise.chate", compact(['list', 'id_marche', 'id_receve', 'id_envoie']));
+        return view("entreprise.chat", compact(['list', 'id_marche', 'id_receve', 'id_envoie']));
     }
+
+    // enregistrer les chats
     public function enregister($id_marche, $id_receve, $id_envoie, Request $request)
 
     {
-        $name = new Chat();
-        $name->id_marche = $id_marche;
-        $name->sender_id = $id_envoie;
-        $name->receiver_id = $id_receve;
-        $name->message = $request->input('text_input');
+
         // if (!(isEmpty($name->message))) {
-        $name->save();
+
+        if (!(is_null($request->input('text_input')))) {
+            $name = new Chat();
+            $name->id_marche = $id_marche;
+            $name->sender_id = $id_envoie;
+            $name->receiver_id = $id_receve;
+            $name->message = $request->input('text_input');
+            $name->typ = "txt";
+            $name->save();
+        }
+        // dd(!(is_null($request->input("file_input"))));
+        if (!(is_null($request->input('file_input')))) {
+
+
+            $file_charge = $request->input('file_input');
+            $file_SaveAsName = time() . "_message." . $file_charge->getClientOriginalName();;
+            $upload_path = 'Messages/' . $request->input('file_input') . '/'; //messages/id entreprise/id messahe
+            $file_chargeo = $upload_path . $file_SaveAsName; // telechager
+            $success = $file_charge->move($upload_path, $file_SaveAsName);
+            $name = new Chat();
+            $name->id_marche = $id_marche;
+            $name->sender_id = $id_envoie;
+            $name->receiver_id = $id_receve;
+            $name->message =  $file_chargeo;
+            $name->typ = "file";
+            $name->save();
+        }
+
+
         // }
 
         // DB::insert('insert into chats values(,');
@@ -101,39 +94,5 @@ class ChateController extends Controller
         //     $name->save();
         // }
         return ChateController::afficher($id_marche, $id_receve, $id_envoie);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

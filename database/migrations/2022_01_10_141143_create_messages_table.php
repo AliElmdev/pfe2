@@ -16,9 +16,13 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('message');
-            $table->bigInteger('id_user');
-            $table->bigInteger('id_entreprise');
-            $table->bigInteger('id_marche');
+            $table->enum('type', ['txt', 'f']);
+            $table->bigInteger('sender_id')->unsigned();
+            $table->bigInteger('receiver_id')->unsigned();;
+            $table->bigInteger('id_marche')->unsigned();;
+            $table->foreign('id_marche')->references('id')->on('marches')->onDelete('cascade');
+            $table->foreign('recever_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
