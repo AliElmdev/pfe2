@@ -18,6 +18,7 @@ class CreatePostulationsTable extends Migration
             $table->integer('marche_id')->unsigned();
             $table->bigInteger('questions_id')->unsigned();
             $table->bigInteger('commercials_id')->unsigned();
+            $table->integer('etat')->unsigned();
             $table->foreign('marche_id')->references('id')->on('marches')->onDelete('cascade');
             $table->foreign('commercials_id')->references('id')->on('reponses_commercials')->onDelete('cascade');
             $table->foreign('questions_id')->references('id')->on('reponses_questions')->onDelete('cascade');

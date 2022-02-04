@@ -10,6 +10,7 @@ class Postulation extends Model
     use HasFactory;
 
     protected $fillable = [
+        "etat",
     ];
 
     public function marche(){

@@ -7,6 +7,8 @@ use App\Http\Controllers\Chef\CreateMarcheController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\SelectionCommercialController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +38,11 @@ Route::get('/all_users', function () {
 
 Auth::routes();
 
-// Route::get('/create_project', function () {
-//     return view('chef.create_project');
-// })->name("create_project");
+//Selection
+
+Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "index"])->name("selection_commercial")->middleware('auth');
+
+//Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
 Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
