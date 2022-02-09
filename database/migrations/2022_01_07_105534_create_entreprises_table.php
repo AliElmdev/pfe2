@@ -37,6 +37,7 @@ class CreateEntreprisesTable extends Migration
             $table->string('certificats');
             $table->string('ref_clients');
             $table->boolean('rules_accept');
+            $table->boolean('confirm')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

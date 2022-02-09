@@ -1,5 +1,25 @@
 @extends('layouts.page')
 @section('content')
+    <span>list of products</span>
+    @foreach($list_entreprises as $key=>$entreprise)
+        <span>{{$entreprise}}</span>
+    @endforeach
+    @foreach ($list_reponses_commercials as $keys => $reponses_commercials)
+    @if ($loop->first)
+        @foreach ($list_reponses_commercials as $key => $reponses_commercialss)
+            @foreach ($reponses_commercialss as $k => $v)
+                @if ($loop->first)
+                    <div>
+                        <span>{{$k}} => {{$v}}</span>
+                @else
+                        <span>{{$v}}</span>
+                @endif
+                    </div>
+            @endforeach
+        @endforeach
+    @endif
+    @endforeach
+
     <main style="background: rgba(220,53,69,0);height: 574px;margin-top: 0px;">
         <div style="height: 100px;background: url('/assets/img/gettyimages-1205700615.jpg') bottom / cover;"></div>
         <div style="text-align: center;margin-top: 20px;">
@@ -18,13 +38,27 @@
                     <thead class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
                         <tr>
                             <th id="trs-hd-1" class="col-lg-1">SL. No.</th>
+                            @foreach ($list_entreprises as $entreprise)
+                                <th id="trs-hd-3" class="col-lg-3">{{$entreprise}}<i class="fa fa-trophy" style="margin-left: 10px;display: none;"></i></th>
+                            @endforeach
                             <th id="trs-hd-3" class="col-lg-3">Entreprise 1<i class="fa fa-trophy" style="margin-left: 10px;display: none;"></i></th>
                             <th id="trs-hd-5" class="col-lg-3">Entreprise 2<i class="fa fa-trophy" style="margin-left: 10px;display: none;"></i></th>
-                            <th id="trs-hd-4" class="col-lg-3">Entreprise 3<i class="fa fa-trophy" style="margin-left: 10px;display: none;"></i></th>
-                            <th id="trs-hd-2" class="col-lg-3">Entreprise 4<i class="fa fa-trophy" style="margin-left: 10px;display: none;"></i></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($list_reponses_commercials as $keys => $reponses_commercials)
+                        @if ($loop->first)
+                            @foreach ($list_reponses_commercials as $key => $reponses_commercials)
+                                <tr style="border-width: 0px;border-bottom-width: 1px;border-bottom-color: rgb(163,165,167);">
+                                    <td style="font-weight: bold;">#0{{$key}}</td>
+                                    <td class="produit1" style="text-align: center;">120 Dh<i class="fa fa-trophy" style="display: none;"></i></td>
+                                    <td class="produit1" style="text-align: center;">1200 Dh<br><i class="fa fa-trophy" style="display: none;"></i></td>
+                                    <td class="produit1" style="text-align: center;">1524 Dh<i class="fa fa-trophy" style="display: none;"></i></td>
+                                    <td class="produit1" style="text-align: center;">12500 Dh<i class="fa fa-trophy" style="display: none;"></i></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        @endforeach
                         <tr style="border-width: 0px;border-bottom-width: 1px;border-bottom-color: rgb(163,165,167);">
                             <td style="font-weight: bold;">#213</td>
                             <td class="produit1" style="text-align: center;">120 Dh<i class="fa fa-trophy" style="display: none;"></i></td>

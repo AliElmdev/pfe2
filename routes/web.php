@@ -4,10 +4,12 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\SelectionCommercialController;
+use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -36,11 +38,22 @@ Route::get('/all_users', function () {
 //     return view('entreprise.postuler');
 // })->name("postulation");
 
+// Route::get('/EcMarcheCreationController', function () {
+//     return view('en');
+// })->name("postulation");
+
+Route::get('/ValiderInscription', [ValiderInscriptionController::class, "index"])->name("ValiderInscription");
+Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::class, "edit"]);
+
+
+Route::get('/EcMarcheCreationController', [EcMarcheCreationController::class, "showEtatZero"])->name("EcMarcheCreationController")->middleware('auth');
+
+
 Auth::routes();
 
 //Selection
 
-Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "index"])->name("selection_commercial")->middleware('auth');
+Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
 
 //Postulations
 

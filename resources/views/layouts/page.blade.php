@@ -82,11 +82,11 @@
             </div>
         </footer>
     </main>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+    <script src="/assets/js/script.min.js"></script>
+    <script src="/assets/js/Table-With-Search.js"></script>
 </body>
-
 </html>

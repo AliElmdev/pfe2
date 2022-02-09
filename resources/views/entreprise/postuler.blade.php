@@ -1,5 +1,7 @@
 @extends('layouts.page')
 @section('content')
+
+
     <main class="page contact-us-page">
         <section class="clean-block clean-form dark">
             <div style="background: url('/assets/img/mining-exploration-activities.jpg') top; height: 100px;"></div>
@@ -240,7 +242,7 @@
         var reponses_questions = @json($reponses_question);
         var reponses_commercials =  @json($reponses_commercial);
         @endisset
-
+        
         reponses_questions.forEach(reponse => {
             var options = reponse.reponse.split(";");
             options.forEach(option => {
@@ -250,13 +252,15 @@
                     var file_name = option.split("/");
                     $(classnafile).html(file_name[file_name.length-1 ]);
                 }else{
-                    $('.reponseqst_2').val(option).change();
+                    $(classna).val(option).change();
+
                 }
                 // var classna = '.reponseqst_'+ reponse.question_id;
                 // alert(classna);
                 // $(classna).val(option).change();
             });
         });
+        
         reponses_commercials.forEach(reponse => {
             var prix = '.prix_'+ reponse.produit_id;
             var devis = '.devis_' + reponse.produit_id;

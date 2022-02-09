@@ -13,6 +13,9 @@ class Postulation extends Model
         "etat",
     ];
 
+    public function user(){
+        return $this->hasOne(\App\Models\User::class);
+    }
     public function marche(){
         return $this->hasOne(\App\Models\Marche::class);
     }

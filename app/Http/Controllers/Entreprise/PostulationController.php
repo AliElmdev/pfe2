@@ -176,7 +176,7 @@ class PostulationController extends Controller
         $marche = Marche::where('id', $id)->get();
         $produits = Produit::where('marche_id', $id)->get();
 
-        $postulations = Postulation::where('marche_id', $id)->first();
+        $postulations = Postulation::where('marche_id', $id)->where('user_id',auth()->user()->id)->first();
         if($postulations !=null){
             $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id)->get();
             $reponses_commercial = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)->get();
