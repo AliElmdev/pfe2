@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RegistrationRequest;
 use Error;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Auth;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class RegisterController extends Controller
 {

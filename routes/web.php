@@ -45,9 +45,10 @@ Route::get('/all_users', function () {
 Route::get('/ValiderInscription', [ValiderInscriptionController::class, "index"])->name("ValiderInscription");
 Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::class, "edit"]);
 
-
-Route::get('/EcMarcheCreationController', [EcMarcheCreationController::class, "showEtatZero"])->name("EcMarcheCreationController")->middleware('auth');
-
+//Creation marche achat
+Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
+Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreations");  
+Route::post("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation");
 
 Auth::routes();
 
