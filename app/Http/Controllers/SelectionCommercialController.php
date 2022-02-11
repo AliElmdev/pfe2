@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marche;
-use App\Models\Postulation;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RFIController extends Controller
+class SelectionCommercialController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        return view('slection_RFI.rfi_step',[
-            'marche' => Marche::find($id),
-            // 'entreprises' => DB::table('postulations')
-            //     ->join('entreprises','postulations.user_id')  //kmli
-         ]);
+        return view('selection.selection_commercial');
     }
 
     /**

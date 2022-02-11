@@ -10,11 +10,7 @@ class Postulation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'marche_id',
-        'questions_id',
-        'commercials_id',
-        'user_id',
-        'etat',
+        "etat",
     ];
 
     public function marche(){
