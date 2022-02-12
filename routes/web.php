@@ -40,7 +40,7 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 // postulation marches
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 //contact 
-Route::post('/marche/{id_marche}/{id_receve}/{id_envoie}/chats', [ChateController::class, 'enregister'])->name('chats');
+Route::get('/marche/{id_marche}/chats', [ChateController::class, 'enregister'])->name('chats');
 
 // Route::get('/messages', function () {
 //     return view('entreprise.chat');
