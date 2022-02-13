@@ -324,14 +324,17 @@
     <script src="/assets/js/Table-With-Search.js?h=aeb9a0ac8b6cc9ec2e3b9cc3add2f239"></script> --}}
     
 
-    <script>
-    $(document).on('click', '.rfqqst_item', function() {
+<script>
+
+$(document).on('click', '.rfqqst_item', function() {
     $(this).closest('tr').remove();
 });
+
 
 $(document).on('click', '.rfiqst_item', function() {
     $(this).closest('tr').remove();
 });
+
 
 $(document).on('click', '.add', function() {
     var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
@@ -339,11 +342,13 @@ $(document).on('click', '.add', function() {
     $('#sect_sqt_rfi').append(html);
 });
 
+
 $(document).on('click', '.add', function() {
     var html = '<div class="option_rfq" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfq" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
     html += '';
     $('#sect_sqt_rfq').append(html);
 });
+
 
 $(document).on('click', '.add_b', function() {
     var html = '<div class="form-check d-inline-flex option_b_rfi"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input_rfi" type="text" style="margin-left: 10px;"></label></div>';
@@ -368,6 +373,7 @@ $(document).on('click', '.remove', function() {
 $(document).on('click', '.remove_b', function() {
     $('#sect_sqt_rfi_b .option_b_rfi:last').remove()
 });
+
 
 $(document).on('click', '.remove_b', function() {
     $('#sect_sqt_rfq_b .option_b_rfq:last').remove()
@@ -394,6 +400,7 @@ function add_RFI_qst() {
         $("*[class*='rfinv_']").hide();
     }
 }
+
 
 function add_RFQ_qst() {
     var x = document.getElementById("rfqnv_qst_rfq");

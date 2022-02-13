@@ -33,17 +33,19 @@ class EcMarcheCreationController extends Controller
      */
     public function show($id)
     {
+        // $val = DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id as id_section_rfq")->get();
+        // dd($val);
         return view('achat.AchatCreateMarche',[
             'marche' => Marche::find($id),
             'produits' => Produit::where('marche_id',$id)->get(),
             'questions' => Question::all(),
-            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFI')->get(),
-            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFQ')->get(),
-            'sections_RFI' => Section::where('type_section','RFI')->get(),
-            'sections_RFQ' => Section::where('type_section','RFQ')->get(),
-            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFI')->where('marche_id',$id)->get(),
-            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->where('type_section','RFQ')->where('marche_id',$id)->get(),
-         ]);
+            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->get(),
+            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->get(),
+            'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select("nom_section","sections.id")->get(),
+            'sections_RFQ' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id")->get(),
+            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->where('marche_id',$id)->get(),
+            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->where('marche_id',$id)->get(), 
+        ]);
     }
 
     public function store(Request $request){

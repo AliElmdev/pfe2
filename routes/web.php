@@ -42,7 +42,7 @@ Route::get('/all_users', function () {
 //     return view('en');
 // })->name("postulation");
 
-Route::get('/ValiderInscription', [ValiderInscriptionController::class, "index"])->name("ValiderInscription");
+Route::get('/ValiderInscription/{id}', [ValiderInscriptionController::class, "index"])->name("ValiderInscription");
 Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::class, "edit"]);
 
 //Creation marche achat

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Mail\TestMail;
 use App\Models\Entreprise;
+use App\Models\EntrepriseUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -16,11 +17,11 @@ class ValiderInscriptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id_entreprise)
     {
-        $entreprise_id = 3;
-        $entreprise = Entreprise::where('user_id','=',$entreprise_id)->first();
-        $user = User::where('id','=',$entreprise_id)->first();
+        $user_id = EntrepriseUser::where('entreprise_id',"=",$id_entreprise)->select("user_id")->first();
+        $entreprise = Entreprise::where('id','=',$id_entreprise)->first();
+        $user = User::where('id','=',$user_id['user_id'])->first();
         Mail::to('alielmakhroubi00@gmail.com')->send(new TestMail($entreprise,$user));
         return view("entreprise.valider_inscrip");
     }
@@ -73,7 +74,7 @@ class ValiderInscriptionController extends Controller
             Mail::to($user->email)->send(new TestMail($entreprise,$user));
         }
     }
-    
+  
     /**
      * Update the specified resource in storage.
      *

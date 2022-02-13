@@ -81,6 +81,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    
                                                     @foreach ($section->question as $question)
                                                         @if($question->marche_id == $marche[0]->id)
                                                             <tr>
@@ -226,23 +227,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
     <script>
-
         $( ".reponse_file" ).change(function() {
             var file = $('.reponse_file')[0].files[0]
             if (file){
-                // alert($(this).attr('name'));
                 var classnam = "button." + $(this).attr('name');
                 $(classnam).html(file.name);
                 // $(this).closest("button").css("background-color","yellow");
                 // this.parents().find('button').html(file.name);
             }
         });
-
         @isset($reponses_question)
         var reponses_questions = @json($reponses_question);
         var reponses_commercials =  @json($reponses_commercial);
         @endisset
-        
         reponses_questions.forEach(reponse => {
             var options = reponse.reponse.split(";");
             options.forEach(option => {

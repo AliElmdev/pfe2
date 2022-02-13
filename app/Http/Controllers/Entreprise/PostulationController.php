@@ -152,8 +152,11 @@ class PostulationController extends Controller
                 }
             }
             foreach ($result as $prod) {
-                
-                $commercial = Reponse_commercial::where('reponses_commercial_id','=',$postulations->commercials_id)->where('produit_id','=',$prod)->update(['type'=>$_POST['type_'.$prod],'devis'=>$_POST['devis_'.$prod],'prix'=>$_POST['prix_'.$prod]]);
+                if(Reponse_commercial::where('reponses_commercial_id','=',$postulations->commercials_id)->where('produit_id','=',$prod)->exists()){
+                    $commercial = Reponse_commercial::where('reponses_commercial_id','=',$postulations->commercials_id)->where('produit_id','=',$prod)->update(['type'=>$_POST['type_'.$prod],'devis'=>$_POST['devis_'.$prod],'prix'=>$_POST['prix_'.$prod]]);
+                }else{
+                    
+                }
                 // $commercial->type = $_POST['type_'.$prod];
                 // $commercial->devis = $_POST['devis_'.$prod];
                 // $commercial->prix = $_POST['prix_'.$prod];

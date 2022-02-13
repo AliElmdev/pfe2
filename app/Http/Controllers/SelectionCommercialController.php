@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Entreprise;
+use App\Models\EntrepriseUser;
 use App\Models\Postulation;
+use App\Models\Produit;
 use App\Models\Reponse_commercial;
 use App\Models\Reponse_question;
 use Illuminate\Http\Request;
@@ -51,43 +53,46 @@ class SelectionCommercialController extends Controller
     public function show($id)
     {
         $postulations = Postulation ::where('marche_id',$id)->get();
-        //dd($postulations);
-        // $array = array();
-        // foreach ($postulations as $value) {
-        //     array_push($array , [$value->user_id=>$value->marche_id]);
-        // }
-        // foreach ($array as $key => $value) {
-        //     print("hena : ");
-        //     print_r($value);
-        // }
-        $entreprises = [];
-        $reponses_commercials = [];
+        $list_entreprises = [];
+        $list_reponses_commercials = [];
+        $list_produits = Produit::where('marche_id',$id)->select('id')->get();
+        $total_price = array('Total');
         foreach ($postulations as $postulation) {
-            // $entreprises = Entreprise ::where('user_id',$postulation->user_id)->get();
-            // $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
-            // dd($reponses_commercials[0]->produit_id);
-            
-            $entreprises = Entreprise ::where('user_id',$postulation->user_id)->get();
-            
-            foreach($entreprises as $entreprise){
-                $list_entreprises[$postulation->user_id] = $entreprise->social_name;
-            }
-
-            $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
-            foreach($reponses_commercials as $reponses_commercial){
-                $produits[$reponses_commercial->produit_id] = $reponses_commercial->prix;
-            }
-            $list_reponses_commercials[$postulation->user_id] = $produits;
-            //$entreprises[$postulation->user_id] = Entreprise ::where('user_id',$postulation->user_id)->get();
-            //$reponses_commercials[$postulation->user_id] = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
-            // $entreprises = array($postulation->user_id=>Entreprise ::where('user_id',$postulation->user_id)->get());
-            // $reponses_commercials = array($postulation->user_id=>Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get());
-            // array_push($entreprises[$postulation->user_id],Entreprise ::where('user_id',$postulation->user_id)->get());
-            // array_push($reponses_commercials[$postulation->user_id],Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get());
+            $entreprises = Entreprise ::where('user_id','=',$postulation->user_id)->select('commercial_name')->first();
+            $list_entreprises[$postulation->user_id] = $entreprises->commercial_name;
         }
-        //dd($list_reponses_commercials);
-        return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
-        // return view("selection.selection_commercial");
+        foreach($postulations as $postulation){
+            $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
+            $total = 0;
+            foreach($reponses_commercials as $reponses_commercial){
+                $total += $reponses_commercial->prix;
+            }
+            array_push($total_price, $total);
+        }
+
+
+
+        foreach($list_produits as $produit){
+            $produit_prix = array($produit->id);
+            foreach ($postulations as $postulation) {
+                //$entreprise_id = EntrepriseUser::where('user_id','=',$postulation->user_id)->select('entreprise_id')->first();
+                // $entreprises = Entreprise ::where('id','=',$entreprise_id)->select('commercial_name')->first();
+                $entreprises = Entreprise ::where('user_id','=',$postulation->user_id)->select('commercial_name')->first();
+                //$list_entreprises[$postulation->user_id] = $entreprises->commercial_name;
+                
+                $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
+                foreach($reponses_commercials as $reponses_commercial){
+                    if($reponses_commercial->produit_id == $produit->id){
+                        array_push($produit_prix, $reponses_commercial->prix);
+                    }
+                }
+                $list_reponses_commercials[$produit->id] = $produit_prix;
+            }
+        }
+        // dd($total_price);
+        
+        //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
+        return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price"]));
     }
 
     /**

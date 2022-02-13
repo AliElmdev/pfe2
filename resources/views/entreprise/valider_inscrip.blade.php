@@ -12,5 +12,14 @@
             </a></div>
     </div>
 </main>
-
+<script>
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    sleep(5000).then(() => { window.location.href = "/"; });
+    if(window.performance.navigation.type == 1){
+        alert("Request under review");
+        window.location.href= "{{ route('Home')}}";
+    }
+</script>
 @endsection

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\EntrepriseUser;
 use Error;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
@@ -176,7 +177,13 @@ class RegisterController extends Controller
         ]);
         $user->profile()->save($profile);
         $user->entreprise()->save($entreprise);
-        return $user;
+        $entreprise_user = new EntrepriseUser();
+        $entreprise_user->user_id = $user->id;
+        $entreprise_user->entreprise_id = $entreprise->id;
+        $entreprise_user->role = 'primaire';
+        $entreprise_user->save();
+    
+        return redirect()->route('ValiderInscription', ['id' => $entreprise->id]);
     }
 
     public function showRegistrationForm()

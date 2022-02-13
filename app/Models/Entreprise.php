@@ -35,8 +35,11 @@ class Entreprise extends Model
 
     public $guarded = [];
 
-    public function user()
-    {
+    public function user(){
         return $this->belongsTo(User::class);
     }
+    public function EntrepriseUser(){
+        return $this->hasMany(EntrepriseUser::class);
+    }
+    
 }

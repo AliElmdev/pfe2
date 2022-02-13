@@ -53,4 +53,7 @@ class User extends Authenticatable
     public function postulation(){
         return $this->hasMany(\App\Models\Postulation::class);
     }
+    public function EntrepriseUser(){
+        return $this->hasMany(EntrepriseUser::class);
+    } 
 }
