@@ -37,6 +37,7 @@ class ChateController extends Controller
             ->where("sender_id", "=",    $id_envoie)
             ->orwhere("receiver_id", $id_envoie)
             ->where("sender_id", "=", $id_receve)
+            ->where("id_marche", "=", $id_marche)
             ->get();
 
         return view("entreprise.chat", compact(["list", "id_marche",  "id_receve", "id_envoie"]));
