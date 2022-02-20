@@ -8,6 +8,7 @@ use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
@@ -79,3 +80,10 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 
 // postulation marches
 // Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
+
+Route::get("/selection_RFI/{id_marche}", [Selection_RFIController::class, "index"])->name("selection_rfi");
+// Route::get("/selection_RFI/{id_marche}/{id_entreprise}", [Selection_RFIController::class, "show"])->name("selection_rfi_details");
+
+Route::get("/selection_RFI/{id_marche}/{id_entreprise}-{id_postulation}", [Selection_RFIController::class, "show"])->name("selection_rfi_details");
+Route::get("/selection_RFI/{id_marche}/{id_entreprise}-{id_postulation}/accept", [Selection_RFIController::class, "accept"])->name("selection_rfi_accept");
+Route::get("/selection_RFI/{id_marche}/{id_entreprise}-{id_postulation}/refuse", [Selection_RFIController::class, "refuse"])->name("selection_rfi_refuse");
