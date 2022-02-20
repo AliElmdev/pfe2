@@ -82,31 +82,37 @@ class Selection_RFIController extends Controller
             'marche' => Marche::find($id_marche),
             'postulation' =>Postulation::find($id_postulation),
             'entreprise' => Entreprise::find($id_entreprise),
+            // Section :Dossier Fournisseur - Données Saisies - Section avec questions VM
             'reponses_section1' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',1)->get(),
+            // Section : Dossier Fournisseur - Pièces jointes - Section avec questions VM
             'reponses_section2' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',2)->get(),
+            // Section : Management HSE- section avec VM
             'reponses_section3' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',3)->get(),
+             // Section : SITUATION FINANCIAIRE 
             'reponses_section4' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',4)->get(),
+            // Section : EXPERIENCE ET REFERENCES  
             'reponses_section5' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',5)->get(),
+            // Section : CERTIFICATION 
             'reponses_section6' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
                 ->select('question','reponse','type')
