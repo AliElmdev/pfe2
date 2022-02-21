@@ -4,14 +4,14 @@
     <div class="container-fluid">
         <header style="margin-bottom: 3%;margin-top: 2%;"><img src="/assets/img/construction.jpg" style="width: 100%;height: 132.6px;">
             <section style="margin-top: 4%;margin-bottom: 4%;">
-                <h2 style="margin-bottom: 2%; color:seagreen;text-align: center; font-weight: bold;">Sélection Base RFI</h2>
+                <h2 style="margin-bottom: 2%; color:seagreen;text-align: center; font-weight: bold;">Sélection Base Fichier Technique</h2>
                 <h3 class="text-dark mb-4" style="text-align: center;">{{$marche->title}}</h3>
                 <p style="text-align: center;">{{$marche->description}}</p>
             </section>
         </header>
         <div class="card shadow">
             <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Listes des entreprises qui ont postuler</p>
+                <p class="text-primary m-0 fw-bold">Listes des entreprises passer du RFI</p>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -35,7 +35,7 @@
                                 <th style="text-align: center;">Activité</th>
                                 <th style="text-align: center;">Bureau</th>
                                 <th style="text-align: center;">Badge</th>
-                                <th style="text-align: center;">RFI</th>
+                                <th style="text-align: center;">Fichier Technique</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,7 +45,7 @@
                                     <td>{{$entreprise->activite_entreprise}}</td>
                                     <td>{{$entreprise->city}}</td>
                                     <td style="text-align: center;"><i class="fa fa-star"></i></td>
-                                    <td style="text-align: center;"><a href="{{route('selection_rfi_details',['id_marche'=> $marche->id,'id_entreprise'=>$entreprise->id, 'id_postulation'=>$entreprise->id_postulation])}}"><button class="btn btn-primary" type="button" style="background: rgb(247,61,61);"><i class="fa fa-eye" style="color: rgb(255,255,255);"></i></button></a></td>
+                                    <td style="text-align: center;"><a href="{{route('selection_fichierTechnique_details',['id_marche'=> $marche->id,'id_entreprise'=>$entreprise->id, 'id_postulation'=>$entreprise->id_postulation])}}"><button class="btn btn-primary" type="button" style="background: rgb(247,61,61);"><i class="fa fa-eye" style="color: rgb(255,255,255);"></i></button></a></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -55,7 +55,7 @@
                                 <td style="text-align: center;"><strong>Activité<br></strong></td>
                                 <td style="text-align: center;"><strong>Bureau<br></strong></td>
                                 <td style="text-align: center;"><strong>Badge</strong><br></td>
-                                <td style="text-align: center;"><strong>RFI</strong></td>
+                                <td style="text-align: center;"><strong>Fichier Technique</strong></td>
                                 <td></td>
                             </tr>
                         </tfoot>
