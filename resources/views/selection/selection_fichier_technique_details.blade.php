@@ -4,20 +4,10 @@
     <div class="container-fluid">
         <header>
             <h3 class="text-dark mb-4" style="text-align: center;margin-top: 3%;">{{$marche->title}}</h3>
-            <div class="card shadow card-rfi">
-                <div class="card-header py-3">
-                    <p class="text-primary m-0 fw-bold">Fichier Technique</p>
-                </div>
-                <div class="card-body">
-                    <div>
-                        
-                    </div>
-                </div>
-            </div>
         </header>
         <div class="card shadow card-rfi">
             <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold"><strong>Réponses Questions Téchniques</strong><br></p>
+                <p class="text-primary m-0 fw-bold"><strong>Fichier Technique</strong><br></p>
             </div>
             <div class="card-body">
                 <div>

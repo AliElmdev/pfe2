@@ -89,7 +89,7 @@
                                             </div>
                                             <div style="height: 20%;margin-left: 70%;margin-top: 10px;">
                                                 <a href={{route('marchesunitere',$item->id)}} style="background: var(--bs-blue);color: rgb(255,255,255);padding-right: 20px;padding-left: 20px;padding-bottom: 10px;padding-top: 10px;border-radius: 6px;">
-                                                    Accéder<br>
+                                                    Accéder
                                                 </a>
                                             </div>
                                             <hr style="height: 3px;background: var(--bs-blue);color: rgb(33, 37, 41);opacity: 1;margin-top: 18px;">
