@@ -8,6 +8,7 @@ use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\messagerieController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,7 @@ Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::
 
 //Creation marche achat
 Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
-Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreations");  
+Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreations");
 Route::post("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation");
 
 Auth::routes();
@@ -79,3 +80,5 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 
 // postulation marches
 // Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
+
+Route::get('/marche/{id_marche}/message', [MessagerieController::class, 'enregister'])->name('chats');
