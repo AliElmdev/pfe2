@@ -100,6 +100,9 @@
                 </table>
             </div>
         </div>
+
+        @include('includes.questions');
+
         <div class="form-group mb-3" style="margin-top: 100px;">
             <button class="btn btn-primary" type="submit" style="font-weight: bold; width: 20%; margin-left: 40%; min-width: 80px;">Envoi</button>
         </div>

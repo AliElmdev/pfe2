@@ -56,29 +56,33 @@ class EcMarcheCreationController extends Controller
         $marche->etat = 1;
         $marche->save();
 
-        for($count = 0; $count < count($_POST["question_input_rfi"]); $count++){
-            $question = new Question([
-                'question' => $_POST["question_input_rfi"][$count],
-                'description' => $_POST["description_input_rfi"][$count],
-                'type' => $_POST["type_input_rfi"][$count],
-                'options' => $_POST["option_input_rfi"][$count],
-                'section_id' => (int)$_POST["section_input_rfi"][$count],
-                'marche_id' => $_POST["marche_id"],
-            ]);
-            $question->save();
-        }   
-
-        for($count = 0; $count < count($_POST["question_input_rfq"]); $count++){
-            $question = new Question([
-                'question' => $_POST["question_input_rfq"][$count],
-                'description' => $_POST["description_input_rfq"][$count],
-                'type' => $_POST["type_input_rfq"][$count],
-                'options' => $_POST["option_input_rfq"][$count],
-                'section_id' => (int)$_POST["section_input_rfq"][$count],
-                'marche_id' => $_POST["marche_id"],
-            ]);
-            $question->save();
-        }  
+        if(isset($_POST["question_input_rfi"])){
+            for($count = 0; $count < count($_POST["question_input_rfi"]); $count++){
+                $question = new Question([
+                    'question' => $_POST["question_input_rfi"][$count],
+                    'description' => $_POST["description_input_rfi"][$count],
+                    'type' => $_POST["type_input_rfi"][$count],
+                    'options' => $_POST["option_input_rfi"][$count],
+                    'section_id' => (int)$_POST["section_input_rfi"][$count],
+                    'marche_id' => $_POST["marche_id"],
+                ]);
+                $question->save();
+            }       
+        }
+        
+        if(isset($_POST["question_input_rfq"])){
+            for($count = 0; $count < count($_POST["question_input_rfq"]); $count++){
+                $question = new Question([
+                    'question' => $_POST["question_input_rfq"][$count],
+                    'description' => $_POST["description_input_rfq"][$count],
+                    'type' => $_POST["type_input_rfq"][$count],
+                    'options' => $_POST["option_input_rfq"][$count],
+                    'section_id' => (int)$_POST["section_input_rfq"][$count],
+                    'marche_id' => $_POST["marche_id"],
+                ]);
+                $question->save();
+            }  
+        }
             
         return redirect('/Marches-en-cours-creation');
     }    

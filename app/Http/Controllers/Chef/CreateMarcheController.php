@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth;
 use App\Http\Requests\StoreMarcheRequest;
 use App\Models\Marche;
 use App\Models\Produit;
+use App\Models\Question;
 
 class CreateMarcheController extends Controller
 {
@@ -19,7 +20,15 @@ class CreateMarcheController extends Controller
      */
     public function index()
     {
-        return view('chef.create_project');
+        return view('chef.create_project',[
+            'questions' => Question::all(),
+            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->get(),
+            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->get(),
+            'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select("nom_section","sections.id")->get(),
+            'sections_RFQ' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id")->get(),
+            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->where('marche_id',-1)->get(),
+            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->where('marche_id',-1)->get(), 
+        ]);
     }
 
     /**
