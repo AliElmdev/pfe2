@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\messagerieController;
 use App\Http\Controllers\SelectionCommercialController;
+use App\Http\Controllers\SelectionFichier_TechniqueController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
