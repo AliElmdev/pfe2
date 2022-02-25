@@ -17,7 +17,7 @@ class CreateSectionsTable extends Migration
             $table->id();
             $table->string('nom_section');
             $table->bigInteger('b_section_id')->unsigned();
-            $table->foreign('b_section_id')->references('id')->on('sections')->onDelete('cascade');
+            $table->foreign('b_section_id')->references('id')->on('b_sections')->onDelete('cascade');
         });
     }
 
