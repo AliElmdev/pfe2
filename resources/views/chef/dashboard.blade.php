@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
 @section('navbar')
+
+
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
     <a class="nav-link" href="index.html">

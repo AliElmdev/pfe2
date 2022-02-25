@@ -1,3 +1,4 @@
+
     <div id="Fome_Apply">
         <div id="Questions_RFI">
             <h1 class="rfi_rfq_title">RFI</h1>
@@ -16,16 +17,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($questions_RFI_marche as $question)
-                                <tr>
-                                    <th>{{$question->question}}</th>
-                                    <th>{{$question->description}}</th>
-                                    <th>{{$question->type}}</th>
-                                    <th>{{$question->options}}</th>
-                                    <th>{{$question->section_id}}</th>
-                                    <th></th>
-                                </tr>
-                            @endforeach
+                            
                             <tr class="warning no-result">
                                 <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
                             </tr>
@@ -149,16 +141,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($questions_RFQ_marche as $question)
-                                <tr>
-                                    <th>{{$question->question}}</th>
-                                    <th>{{$question->description}}</th>
-                                    <th>{{$question->type}}</th>
-                                    <th>{{$question->options}}</th>
-                                    <th>{{$question->section_id}}</th>
-                                    <th></th>
-                                </tr>
-                            @endforeach
+                            
                             <tr class="warning no-result">
                                 <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
                             </tr>
@@ -172,7 +155,8 @@
                 <div>
                     <div id="rfqnv_qst_rfq" style="display:none;">
                         <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">Ajouter Questions</h4>
-                        <div class="d-flex justify-content-between"><select class="chosen" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ()">
+                        <div class="d-flex justify-content-between">
+                            <select class="chosen chosen_rfq" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ();">
                                 <option value="0"></option>
                                 @foreach ($questions_RFQ as $question)
                                     <option value="{{$question->id}}">{{$question->question}}</option>
@@ -268,267 +252,267 @@
                 </div>
             </section>
         </div>
-        <div class="text-center" id="lancer-le-marche">
-            <h1 class="text-start rfi_rfq_title">Lancer le marche</h1>
-            <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
-            <div><label class="form-label">Date D'affichage :&nbsp;<input name="dateAffichage" type="date" style="color:white;background: rgba(37, 71, 106, 0.56);border-width: 1px;"></label><label class="form-label">&nbsp; &nbsp; &nbsp; Date Limite&nbsp; :&nbsp;<input name="dateLimite" type="date" style="color:white;background: rgba(37, 71, 106, 0.56);border-width: 1px;"></label></div>
-        </div>
-        <div id="submit_btn" style="text-align: center;margin-top: 20px;"><button class="btn btn-primary" type="submit" style="text-align: center;width: 20%;margin-bottom: 10px;background: rgba(15,42,69,0.98);border-width: 0px;">Envoi</button></div>
+        
     </div>
-    
-<script>
-
-    $(".chosen").val(0).select2({
-        matcher: function(params, data) {
-            if (data.id === "0") { // <-- option value of "Other", always appears in results
-                return data;
-            } else {
-                return $.fn.select2.defaults.defaults.matcher.apply(this, arguments);
-            }
-        },
-    });
-    
-    //$('.chosen').val(nl);
-    
-    function add_RFI_qst() {
-        var x = document.getElementById("rfinv_qst_rfi");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-            $("*[class*='rfinv_']").hide();
-        }
-    }
-    
-    function add_RFQ_qst() {
-        var x = document.getElementById("rfqnv_qst_rfq");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-            $("*[class*='rfqnv_']").hide();
-        }
-    }
-    
-    
-    //choose case a cocher
-    function myFunctionRFI() {
-        var id_question = $(".chosen").val();
-        var questions = @json($questions);
-        // var questions = {!! json_encode($questions->toArray()) !!};
-        $.each(questions, function(i, item) {
-            if (questions[i].id == id_question) {
-                //show box to add new question with a specific type
-                $(".types_qst_RFI").val(questions[i].type).change();
-                var zone_add = ".rfinv_" + questions[i].type;
-                $("*[class*='rfinv_']").hide();
-                $(zone_add).show();
-                //Fill inputs with questions template from data base
-                var question_input = ".rfiqst" + questions[i].type + "_input";
-                var description_input = ".rfidesc" + questions[i].type + "_input";
-                var options_input = questions[i].options.split(";");
-                var section_input = ".section_rfiqst_" +  questions[i].type + "_input";
-                $(".option_rfi").remove();
-                $(".option_b_rfi").remove();
-                if (questions[i].type == 'cm') {
-                    for (let index = 0; index < options_input.length; index++) {
-                        add_option_b_rfi(options_input[index]);
-                    }
-                } else {
-                    for (let index = 0; index < options_input.length; index++) {
-                        add_option_rfi(options_input[index]);
-                    }
-                }
-    
-                $(question_input).val(questions[i].question);
-                $(description_input).val(questions[i].description);
-            };
-        });
-    }
-    
-    function myFunctionRFQ() {
-        var id_question = $(".chosen").val();
-        var questions = @json($questions);
-        // var questions = {!! json_encode($questions->toArray()) !!};
-        $.each(questions, function(i, item) {
-            if (questions[i].id == id_question) {
-                //show box to add new question with a specific type
-                $(".types_qst_RFQ").val(questions[i].type).change();
-                var zone_add = ".rfqnv_" + questions[i].type;
-                $("*[class*='rfqnv_']").hide();
-                $(zone_add).show();
-                //Fill inputs with questions template from data base
-                var question_input = ".rfqqst" + questions[i].type + "_input";
-                var description_input = ".rfqdesc" + questions[i].type + "_input";
-                var options_input = questions[i].options.split(";");
-                var section_input = ".section_rfqqst_" +  questions[i].type + "_input";
-                $(".option_rfq").remove();
-                $(".option_b_rfq").remove();
-                if (questions[i].type == 'cm') {
-                    for (let index = 0; index < options_input.length; index++) {
-                        add_option_b_rfq(options_input[index]);
-                    }
-                } else {
-                    for (let index = 0; index < options_input.length; index++) {
-                        add_option_rfq(options_input[index]);
-                    }
-                }
-    
-                $(question_input).val(questions[i].question);
-                $(description_input).val(questions[i].description);
-            };
-        });
-    }
-    
-    function changetype_RFI() {
-        var type = $(".types_qst_RFI").val();
-        var zone_add = ".rfinv_" + type;
-        if ($(zone_add).is(":hidden")) {
-            $("*[class*='rfinv_']").hide();
-            $(zone_add).show();
-        };
-    }
-    
-    function changetype_RFQ() {
-        var type = $(".types_qst_RFQ").val();
-        var zone_add = ".rfqnv_" + type;
-        if ($(zone_add).is(":hidden")) {
-            $("*[class*='rfqnv_']").hide();
-            $(zone_add).show();
-        };
-    }
-    
-    function Annuler_RFI() {
-        add_RFI_qst();
-    }
-    
-    function Annuler_RFQ() {
-        add_RFQ_qst();
-    }
-    
-    function Ajouter_RFI() {
-    
-        var type_qst = $(".types_qst_RFI").val();
-        var question_input = $(".rfiqst" + type_qst + "_input").val();
-        var description_input = $(".rfidesc" + type_qst + "_input").val();
-        var options = '';
-        var section_input = $(".section_rfiqst_"+ type_qst + "_input").val();
-        // $('.option').each(function() {
-        //     var options += $(this).val();
-        //     var options += ';';
-        // });
-        if (type_qst != 'cr' && type_qst != 'f') {
-            options = $.map($('.option_input_rfi'), function(e) { return e.value; }).join(';');
-            // values.join(';');
-        }
-    
-        markup = '<tr><td>' + question_input + '<input hidden name="question_input_rfi[]" value="' + question_input + '" /></td><td>' + description_input + '<input hidden name="description_input_rfi[]" value="' + description_input + '" /></td><td>' + type_qst + '<input hidden name="type_input_rfi[]" value="' + type_qst + '" /></td><td>' + options + '<input hidden name="option_input_rfi[]" value="' + options + '" /></td><td>' + section_input + '<input hidden name="section_input_rfi[]" value="' + section_input + '"/></td><td style="text-align: center;"><button class="btn btn-danger rfiqst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td></tr>'
-        tableBody = $("#Questions_RFI table tbody");
-        tableBody.append(markup);
-    
-        add_RFI_qst();
-    }
-    
-    function Ajouter_RFQ() {
-    
-    var type_qst = $(".types_qst_RFQ").val();
-    var question_input = $(".rfqqst" + type_qst + "_input").val();
-    var description_input = $(".rfqdesc" + type_qst + "_input").val();
-    var options = '';
-    var section_input = $(".section_rfqqst_"+ type_qst + "_input").val();
-    // $('.option').each(function() {
-    //     var options += $(this).val();
-    //     var options += ';';
-    // });
-    if (type_qst != 'cr' && type_qst != 'f') {
-        options = $.map($('.option_input_rfq'), function(e) { return e.value; }).join(';');
-        // values.join(';');
-    }
-    
-    markup = '<tr><td>' + question_input + '<input hidden name="question_input_rfq[]" value="' + question_input + '" /></td><td>' + description_input + '<input hidden name="description_input_rfq[]" value="' + description_input + '" /></td><td>' + type_qst + '<input hidden name="type_input_rfq[]" value="' + type_qst + '" /></td><td>' + options + '<input hidden name="option_input_rfq[]" value="' + options + '" /></td><td>' + section_input + '<input hidden name="section_input_rfq[]" value="' + section_input + '"/></td><td style="text-align: center;"><button class="btn btn-danger rfqqst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td></tr>'
-    tableBody = $("#Questions_RFQ table tbody");
-    tableBody.append(markup);
-    
-    add_RFQ_qst();
-    }
-    
-    function add_option_rfi($option) {
-        var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" value="' + $option + '" placeholder="' + $option + '"></label></div></div>';
-        html += '';
-        $('#sect_sqt_rfi').append(html);
-    }
-    
-    function add_option_rfq($option) {
-        var html = '<div class="option_rfq" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfq" type="text" style="width: 100%;" value="' + $option + '" placeholder="' + $option + '"></label></div></div>';
-        html += '';
-        $('#sect_sqt_rfq').append(html);
-    }
-    
-    function add_option_b_rfi($option) {
-        var html = '<div class="form-check d-inline-flex option_b_rfi"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input value="' + $option + '" placeholder="' + $option + '" class="option_input_rfi" type="text" style="margin-left: 10px;"></label></div>';
-        html += '';
-        $('#sect_sqt_rfi_b').append(html);
-    }
-    function add_option_b_rfq($option) {
-        var html = '<div class="form-check d-inline-flex option_b_rfq"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input value="' + $option + '" placeholder="' + $option + '" class="option_input_rfq" type="text" style="margin-left: 10px;"></label></div>';
-        html += '';
-        $('#sect_sqt_rfq_b').append(html);
-    }
-
-    $(document).on('click', '.rfqqst_item', function() {
-        $(this).closest('tr').remove();
-    });
-    
-    
-    $(document).on('click', '.rfiqst_item', function() {
-        $(this).closest('tr').remove();
-    });
-    
-    
-    $(document).on('click', '.add', function() {
-        var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
-        html += '';
-        $('#sect_sqt_rfi').append(html);
-    });
-    
-    
-    $(document).on('click', '.add', function() {
-        var html = '<div class="option_rfq" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfq" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
-        html += '';
-        $('#sect_sqt_rfq').append(html);
-    });
-    
-    
-    $(document).on('click', '.add_b', function() {
-        var html = '<div class="form-check d-inline-flex option_b_rfi"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input_rfi" type="text" style="margin-left: 10px;"></label></div>';
-        html += '';
-        $('#sect_sqt_rfi_b').append(html);
-    });
-    
-    $(document).on('click', '.add_b', function() {
-        var html = '<div class="form-check d-inline-flex option_b_rfq"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input_rfq" type="text" style="margin-left: 10px;"></label></div>';
-        html += '';
-        $('#sect_sqt_rfq_b').append(html);
-    });
-    
-    $(document).on('click', '.remove', function() {
-        $('#sect_sqt_rfi .option_rfi:last').remove()
-    });
-    
-    $(document).on('click', '.remove', function() {
-        $('#sect_sqt_rfq .option_rfq:last').remove()
-    });
-    
-    $(document).on('click', '.remove_b', function() {
-        $('#sect_sqt_rfi_b .option_b_rfi:last').remove()
-    });
-    
-    
-    $(document).on('click', '.remove_b', function() {
-        $('#sect_sqt_rfq_b .option_b_rfq:last').remove()
-    });
-    
-    </script>
-
+{{-- <script src="/assets/bootstrap/js/bootstrap.min.js?h=5488c86a1260428f0c13c0f8fb06bf6a"></script>
+<script src="/assets/js/Dynamic-Table.js?h=4f9222d0881d1b1e9b498d8711ad3631"></script> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+{{-- <script src="/assets/js/script.js?h=22c46e843590b6862008b73c67a2aba2"></script>
+<script src="/assets/js/Select-Search.js?h=7a14c595f52cdf6026b5a44585159606"></script>
+<script src="/assets/js/Table-With-Search.js?h=aeb9a0ac8b6cc9ec2e3b9cc3add2f239"></script> --}}
+
+
+<script>
+
+$(".chosen").val(0).select2({
+    matcher: function(params, data) {
+        if (data.id === "0") { // <-- option value of "Other", always appears in results
+            return data;
+        } else {
+            return $.fn.select2.defaults.defaults.matcher.apply(this, arguments);
+        }
+    },
+});
+//$('.chosen').val(nl);
+
+
+function add_RFI_qst() {
+var x = document.getElementById("rfinv_qst_rfi");
+if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+    $("*[class*='rfinv_']").hide();
+}
+}
+
+
+function add_RFQ_qst() {
+var x = document.getElementById("rfqnv_qst_rfq");
+if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+    $("*[class*='rfqnv_']").hide();
+}
+}
+
+//choose case a cocher
+function myFunctionRFI() {
+var id_question = $(".chosen").val();
+var questions = @json($questions);
+// var questions = {!! json_encode($questions->toArray()) !!};
+$.each(questions, function(i, item) {
+    if (questions[i].id == id_question) {
+        //show box to add new question with a specific type
+        $(".types_qst_RFI").val(questions[i].type).change();
+        var zone_add = ".rfinv_" + questions[i].type;
+        $("*[class*='rfinv_']").hide();
+        $(zone_add).show();
+        //Fill inputs with questions template from data base
+        var question_input = ".rfiqst" + questions[i].type + "_input";
+        var description_input = ".rfidesc" + questions[i].type + "_input";
+        var options_input = questions[i].options.split(";");
+        var section_input = ".section_rfiqst_" +  questions[i].type + "_input";
+        $(".option_rfi").remove();
+        $(".option_b_rfi").remove();
+        if (questions[i].type == 'cm') {
+            for (let index = 0; index < options_input.length; index++) {
+                add_option_b_rfi(options_input[index]);
+            }
+        } else {
+            for (let index = 0; index < options_input.length; index++) {
+                add_option_rfi(options_input[index]);
+            }
+        }
+
+        $(question_input).val(questions[i].question);
+        $(description_input).val(questions[i].description);
+    };
+});
+}
+
+function myFunctionRFQ() {
+var id_question = $(".chosen_rfq").val();
+var questions = @json($questions);
+// var questions = {!! json_encode($questions->toArray()) !!};
+$.each(questions, function(i, item) {
+    if (questions[i].id == id_question) {
+        //show box to add new question with a specific type
+        $(".types_qst_RFQ").val(questions[i].type).change();
+        var zone_add = ".rfqnv_" + questions[i].type;
+        $("*[class*='rfqnv_']").hide();
+        $(zone_add).show();
+        //Fill inputs with questions template from data base
+        var question_input = ".rfqqst" + questions[i].type + "_input";
+        var description_input = ".rfqdesc" + questions[i].type + "_input";
+        var options_input = questions[i].options.split(";");
+        var section_input = ".section_rfqqst_" +  questions[i].type + "_input";
+        $(".option_rfq").remove();
+        $(".option_b_rfq").remove();
+        if (questions[i].type == 'cm') {
+            for (let index = 0; index < options_input.length; index++) {
+                add_option_b_rfq(options_input[index]);
+            }
+        } else {
+            for (let index = 0; index < options_input.length; index++) {
+                add_option_rfq(options_input[index]);
+            }
+        }
+        $(question_input).val(questions[i].question);
+        $(description_input).val(questions[i].description);
+    };
+});
+}
+
+function changetype_RFI() {
+var type = $(".types_qst_RFI").val();
+var zone_add = ".rfinv_" + type;
+if ($(zone_add).is(":hidden")) {
+    $("*[class*='rfinv_']").hide();
+    $(zone_add).show();
+};
+}
+
+function changetype_RFQ() {
+var type = $(".types_qst_RFQ").val();
+var zone_add = ".rfqnv_" + type;
+if ($(zone_add).is(":hidden")) {
+    $("*[class*='rfqnv_']").hide();
+    $(zone_add).show();
+};
+}
+
+function Annuler_RFI() {
+add_RFI_qst();
+}
+
+function Annuler_RFQ() {
+add_RFQ_qst();
+}
+
+function Ajouter_RFI() {
+
+var type_qst = $(".types_qst_RFI").val();
+var question_input = $(".rfiqst" + type_qst + "_input").val();
+var description_input = $(".rfidesc" + type_qst + "_input").val();
+var options = '';
+var section_input = $(".section_rfiqst_"+ type_qst + "_input").val();
+// $('.option').each(function() {
+//     var options += $(this).val();
+//     var options += ';';
+// });
+if (type_qst != 'cr' && type_qst != 'f') {
+    options = $.map($('.option_input_rfi'), function(e) { return e.value; }).join(';');
+    // values.join(';');
+}
+
+markup = '<tr><td>' + question_input + '<input hidden name="question_input_rfi[]" value="' + question_input + '" /></td><td>' + description_input + '<input hidden name="description_input_rfi[]" value="' + description_input + '" /></td><td>' + type_qst + '<input hidden name="type_input_rfi[]" value="' + type_qst + '" /></td><td>' + options + '<input hidden name="option_input_rfi[]" value="' + options + '" /></td><td>' + section_input + '<input hidden name="section_input_rfi[]" value="' + section_input + '"/></td><td style="text-align: center;"><button class="btn btn-danger rfiqst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td></tr>'
+tableBody = $("#Questions_RFI table tbody");
+tableBody.append(markup);
+
+add_RFI_qst();
+}
+
+function Ajouter_RFQ() {
+
+var type_qst = $(".types_qst_RFQ").val();
+var question_input = $(".rfqqst" + type_qst + "_input").val();
+var description_input = $(".rfqdesc" + type_qst + "_input").val();
+var options = '';
+var section_input = $(".section_rfqqst_"+ type_qst + "_input").val();
+// $('.option').each(function() {
+//     var options += $(this).val();
+//     var options += ';';
+// });
+if (type_qst != 'cr' && type_qst != 'f') {
+options = $.map($('.option_input_rfq'), function(e) { return e.value; }).join(';');
+// values.join(';');
+}
+
+markup = '<tr><td>' + question_input + '<input hidden name="question_input_rfq[]" value="' + question_input + '" /></td><td>' + description_input + '<input hidden name="description_input_rfq[]" value="' + description_input + '" /></td><td>' + type_qst + '<input hidden name="type_input_rfq[]" value="' + type_qst + '" /></td><td>' + options + '<input hidden name="option_input_rfq[]" value="' + options + '" /></td><td>' + section_input + '<input hidden name="section_input_rfq[]" value="' + section_input + '"/></td><td style="text-align: center;"><button class="btn btn-danger rfqqst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></td></tr>'
+tableBody = $("#Questions_RFQ table tbody");
+tableBody.append(markup);
+
+add_RFQ_qst();
+}
+
+function add_option_rfi($option) {
+var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" value="' + $option + '" placeholder="' + $option + '"></label></div></div>';
+html += '';
+$('#sect_sqt_rfi').append(html);
+}
+
+function add_option_rfq($option) {
+var html = '<div class="option_rfq" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfq" type="text" style="width: 100%;" value="' + $option + '" placeholder="' + $option + '"></label></div></div>';
+html += '';
+$('#sect_sqt_rfq').append(html);
+}
+
+function add_option_b_rfi($option) {
+var html = '<div class="form-check d-inline-flex option_b_rfi"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input value="' + $option + '" placeholder="' + $option + '" class="option_input_rfi" type="text" style="margin-left: 10px;"></label></div>';
+html += '';
+$('#sect_sqt_rfi_b').append(html);
+}
+function add_option_b_rfq($option) {
+var html = '<div class="form-check d-inline-flex option_b_rfq"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input value="' + $option + '" placeholder="' + $option + '" class="option_input_rfq" type="text" style="margin-left: 10px;"></label></div>';
+html += '';
+$('#sect_sqt_rfq_b').append(html);
+}
+
+// function add_option_b_rfq($option) {
+//     $(this).closest('tr').remove();
+// }
+$(document).on('click', '.rfqqst_item', function() {
+$(this).closest('tr').remove();
+});
+
+$(document).on('click', '.rfiqst_item', function() {
+$(this).closest('tr').remove();
+});
+
+
+$(document).on('click', '.add', function() {
+var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
+html += '';
+$('#sect_sqt_rfi').append(html);
+});
+
+
+$(document).on('click', '.add', function() {
+var html = '<div class="option_rfq" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfq" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
+html += '';
+$('#sect_sqt_rfq').append(html);
+});
+
+
+$(document).on('click', '.add_b', function() {
+var html = '<div class="form-check d-inline-flex option_b_rfi"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input_rfi" type="text" style="margin-left: 10px;"></label></div>';
+html += '';
+$('#sect_sqt_rfi_b').append(html);
+});
+
+$(document).on('click', '.add_b', function() {
+var html = '<div class="form-check d-inline-flex option_b_rfq"><input class="form-check-input" type="checkbox" id="formCheck-3" disabled=""><label class="form-check-label" for="formCheck-3"><input class="option_input_rfq" type="text" style="margin-left: 10px;"></label></div>';
+html += '';
+$('#sect_sqt_rfq_b').append(html);
+});
+$(document).on('click', '.remove', function() {
+$('#sect_sqt_rfi .option_rfi:last').remove()
+});
+
+$(document).on('click', '.remove', function() {
+$('#sect_sqt_rfq .option_rfq:last').remove()
+});
+
+$(document).on('click', '.remove_b', function() {
+$('#sect_sqt_rfi_b .option_b_rfi:last').remove()
+});
+
+
+$(document).on('click', '.remove_b', function() {
+$('#sect_sqt_rfq_b .option_b_rfq:last').remove()
+});
+
+</script>

@@ -1,6 +1,5 @@
 @extends('achat.dashboard')
 @section('contenu')
-
     <div style="margin: 25px;padding: 20px;">
         <div>
             <section id="sectCre" style="text-align: center;">
@@ -62,7 +61,7 @@
                                         <th>{{$question->type}}</th>
                                         <th>{{$question->options}}</th>
                                         <th>{{$question->section_id}}</th>
-                                        <th></th>
+                                        <th style="text-align: center;"><button class="btn btn-danger rfqqst_item" style="margin-left: 5px;" type="button"><i class="fa fa-trash" style="font-size: 15px;"></i></button></th>
                                     </tr>
                                 @endforeach
                                 <tr class="warning no-result">
@@ -211,7 +210,8 @@
                     <div>
                         <div id="rfqnv_qst_rfq" style="display:none;">
                             <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">Ajouter Questions</h4>
-                            <div class="d-flex justify-content-between"><select class="chosen" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ()">
+                            <div class="d-flex justify-content-between">
+                                <select class="chosen chosen_rfq" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ();">
                                     <option value="0"></option>
                                     @foreach ($questions_RFQ as $question)
                                         <option value="{{$question->id}}">{{$question->question}}</option>
@@ -315,7 +315,6 @@
             <div id="submit_btn" style="text-align: center;margin-top: 20px;"><button class="btn btn-primary" type="submit" style="text-align: center;width: 20%;margin-bottom: 10px;background: rgba(15,42,69,0.98);border-width: 0px;">Envoi</button></div>
         </div>
     </form>
-    <div class="rfqqst_item">123</div>
     {{-- <script src="/assets/bootstrap/js/bootstrap.min.js?h=5488c86a1260428f0c13c0f8fb06bf6a"></script>
     <script src="/assets/js/Dynamic-Table.js?h=4f9222d0881d1b1e9b498d8711ad3631"></script> --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -336,7 +335,7 @@ $(".chosen").val(0).select2({
         }
     },
 });
-$('.chosen').val(nl);
+//$('.chosen').val(nl);
 
 
 function add_RFI_qst() {
@@ -359,7 +358,6 @@ function add_RFQ_qst() {
         $("*[class*='rfqnv_']").hide();
     }
 }
-
 
 //choose case a cocher
 function myFunctionRFI() {
@@ -397,7 +395,7 @@ function myFunctionRFI() {
 }
 
 function myFunctionRFQ() {
-    var id_question = $(".chosen").val();
+    var id_question = $(".chosen_rfq").val();
     var questions = @json($questions);
     // var questions = {!! json_encode($questions->toArray()) !!};
     $.each(questions, function(i, item) {
@@ -423,7 +421,6 @@ function myFunctionRFQ() {
                     add_option_rfq(options_input[index]);
                 }
             }
-
             $(question_input).val(questions[i].question);
             $(description_input).val(questions[i].description);
         };
@@ -524,13 +521,22 @@ function add_option_b_rfq($option) {
     html += '';
     $('#sect_sqt_rfq_b').append(html);
 }
-// alert(document.getElementsByClassName("rfqqst_item"));
+
+// function add_option_b_rfq($option) {
+//     $(this).closest('tr').remove();
+// }
 $(document).on('click', '.rfqqst_item', function() {
-    $(this).closest('tr').remove();
+    var proceed = confirm("êtes-vous sûr de vouloir supprimer cette question ?");
+    if (proceed) {
+        $(this).closest('tr').remove();
+    }
 });
 
 $(document).on('click', '.rfiqst_item', function() {
-    $(this).closest('tr').remove();
+    var proceed = confirm("êtes-vous sûr de vouloir supprimer cette question ?");
+    if (proceed) {
+        $(this).closest('tr').remove();
+    }
 });
 
 
