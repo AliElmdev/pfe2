@@ -7,36 +7,19 @@ use Illuminate\Http\Request;
 
 class messagerieController extends Controller
 {
-    // afficher le centenu de char
-    public static function afficher($id_marche)
-    {
-        $id_marche = 1;
-        $id_receve = 1; // marches 9aleb
-        $id_envoie = 2; // autentificate
-
-        $list = Messagerie::where("id_marche", "=", $id_marche)
-            ->where("recever_id", "=", $id_receve)
-            ->where("sender_id", "=",  $id_envoie)
-            ->orwhere("recever_id", $id_envoie)
-            ->where("sender_id", "=", $id_receve)
-            ->where("id_marche", "=", $id_marche)
-            ->get();
-        Messagerie::where("id_marche", "=", $id_marche)
-            ->where("recever_id", "=", $id_receve)
-            ->where("sender_id", "=",    $id_envoie)
-            ->update(['vue' => 'Y']);
-
-        return view("entreprise.messagerie_page", compact(["list", "id_marche",  "id_receve", "id_envoie"]));
-    }
 
     // enregistrer les chats
     public function enregister($id_marche, Request $request)
 
     {
-        $id_marche = 1;
-        $id_receve = 1; // marches 9aleb
-        $id_envoie = 2; // autentificate
-
+        // if (auth()->user()->isAdmin()) {
+        //     $id_envoie = 2; // autentificate
+        // } elseif (auth()->user()->isChef()) {
+        // } elseif (auth()->user()->isUser()) {
+        // } elseif (auth()->user()->isAchat()) {
+        // }
+        $id_receve = auth()->user()->id;
+        $id_envoie = 2; // autentificate ranjbouh mn id marches
 
 
         // tester si le txt input est vide 
@@ -44,8 +27,8 @@ class messagerieController extends Controller
             // egregistrer des information 
             $name = new Messagerie();
             $name->id_marche = $id_marche;
-            $name->sender_id = $id_envoie;
-            $name->recever_id = $id_receve;
+            $name->sender_id = $id_receve;
+            $name->recever_id = $id_envoie;
             $name->message = $request->input('text_input');
             $name->type = "txt";
             $name->save();
@@ -61,13 +44,30 @@ class messagerieController extends Controller
             // egregistrer des information 
             $name = new Messagerie();
             $name->id_marche = $id_marche;
-            $name->sender_id = $id_envoie;
-            $name->recever_id = $id_receve;
+            $name->sender_id = $id_receve;
+            $name->recever_id = $id_envoie;
             $name->message =  $file_chargeo; // enregistrer en path uploud 
             $name->type = "file";
             $name->save();
         }
 
-        return MessagerieController::afficher($id_marche);
+        $list = Messagerie::where("id_marche", "=", $id_marche)
+            ->where("recever_id", "=", $id_receve)
+            ->where("sender_id", "=",  $id_envoie)
+            ->orwhere("recever_id", $id_envoie)
+            ->where("sender_id", "=", $id_receve)
+            ->where("id_marche", "=", $id_marche)
+            ->get();
+
+
+
+
+        // make message vue
+        Messagerie::where("id_marche", "=", $id_marche)
+            ->where("recever_id", "=", $id_receve)
+            ->where("sender_id", "=", $id_envoie)
+            ->update(['vue' => 'Y']);
+
+        return view("entreprise.messagerie_page", compact(["list", "id_marche",  "id_receve", "id_envoie"]));
     }
 }

@@ -1,6 +1,5 @@
 @extends('layouts.page')
 @section('content')
-
 <main class="page contact-us-page " style="font-style: roboto">
     <section class="clean-block clean-form dark">
         <ul class="nav nav-tabs">
@@ -22,18 +21,17 @@
             </li>
         </ul>
 
-        <div class="card card-bordered">
-
+        <div class="card card-bordered" style="background-color: rgb(163, 206, 206)">
             <div class="container py-5 px-4">
                 <!-- For demo purpose-->
                 <header class="text-center">
                     <h1 class="display-4"> Messagerie</h1>
                 </header>
                 <!-- Chat Box-->
-                <div class="col-12 px-0">
+                <div class="col-12 px-0" id="some_div">
                     <div class="px-4 py-5 chat-box bg-white">
                         <div style="height:500px;overflow-x:hidden;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-                        border-radius: 10px;  background-color:#11afa8 ; ">
+                        border-radius: 10px;  background-color: rgb(121, 208, 208)">
                             <!-- Sender Message-->
                             @foreach ($list as $item)
                             @if ($item->sender_id== $id_envoie)
@@ -121,5 +119,15 @@
         </div>
     </section>
 </main>
+{{-- don't sendding data when refreshing page --}}
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
+{{-- update data without refreshing window --}}
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
