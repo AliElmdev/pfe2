@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Chef;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Auth;
 use App\Http\Requests\StoreMarcheRequest;
 use App\Models\Marche;
 use App\Models\Produit;
+use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 
 class CreateMarcheController extends Controller
 {
@@ -19,7 +20,15 @@ class CreateMarcheController extends Controller
      */
     public function index()
     {
-        return view('chef.create_project');
+        return view('chef.create_project',[
+            'questions' => Question::all(),
+            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select('questions.id','questions.question')->get(),
+            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select('questions.id','questions.question')->get(),
+            'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select("nom_section","sections.id")->get(),
+            'sections_RFQ' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id")->get(),
+            // 'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->where('marche_id',-1)->get(),
+            // 'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->where('marche_id',-1)->get(), 
+        ]);
     }
 
     /**
@@ -56,6 +65,7 @@ class CreateMarcheController extends Controller
             'description' => $_POST["desc_input"],
             'id_categorie' => $_POST["categ_input"],
             'c_charge' => $file_charge,
+            'id_chef' => Auth::id(),
         ]);
 
         $marche->save();

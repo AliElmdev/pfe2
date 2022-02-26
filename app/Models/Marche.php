@@ -17,6 +17,8 @@ class Marche extends Model
         'affichage_date',
         'c_charge',
         'etat',
+        'id_chef',
+        'id_achat',
     ];
 
     public function categorie(){

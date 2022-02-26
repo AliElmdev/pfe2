@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entreprise;
+use App\Models\EntrepriseUser;
 use App\Models\Marche;
 use App\Models\Postulation;
 use Illuminate\Http\Request;
@@ -78,6 +79,8 @@ class Selection_RFIController extends Controller
      */
     public function show($id_marche,$id_entreprise,$id_postulation)
     {
+        $reponses_questions = Postulation::where('marche_id',$id_marche)->where('',);
+
         return view('selection.selection_rfi_details',[
             'marche' => Marche::find($id_marche),
             'postulation' =>Postulation::find($id_postulation),
