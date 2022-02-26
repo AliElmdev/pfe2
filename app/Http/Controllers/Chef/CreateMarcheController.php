@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Chef;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Auth;
 use App\Http\Requests\StoreMarcheRequest;
 use App\Models\Marche;
 use App\Models\Produit;
 use App\Models\Question;
+use Illuminate\Support\Facades\Auth;
 
 class CreateMarcheController extends Controller
 {
@@ -65,6 +65,7 @@ class CreateMarcheController extends Controller
             'description' => $_POST["desc_input"],
             'id_categorie' => $_POST["categ_input"],
             'c_charge' => $file_charge,
+            'id_chef' => Auth::id(),
         ]);
 
         $marche->save();

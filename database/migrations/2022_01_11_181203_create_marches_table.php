@@ -22,6 +22,8 @@ class CreateMarchesTable extends Migration
             $table->date('affichage_date')->nullable();
             $table->integer('etat')->default(0);
             $table->string('c_charge', 255);
+            $table->integer('id_chef')->nullable();
+            $table->integer('id_achat')->nullable();
             $table->foreign('id_categorie')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

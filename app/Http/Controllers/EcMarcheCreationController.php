@@ -8,6 +8,8 @@ use App\Models\Question;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class EcMarcheCreationController extends Controller
 {
@@ -55,6 +57,7 @@ class EcMarcheCreationController extends Controller
         $marche->affichage_date = $_POST['dateAffichage'];
         $marche->limit_date = $_POST['dateLimite'];
         $marche->etat = 1;
+        $marche->id_achat = Auth::user()->id;
         $marche->save();
 
         if(isset($_POST["question_input_rfi"])){

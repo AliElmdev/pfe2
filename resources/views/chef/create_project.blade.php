@@ -102,10 +102,6 @@
         </div>
 
         {{-- testtttttttttttttttttttttttttttttttttttttttt --}}
-
-        <form action="{{route('marcheUnitEnCoursCreation')}}" method="POST">
-            @csrf
-            <input hidden name="marche_id" value="" />
             <div id="Fome_Apply">
                 <div id="Questions_RFI">
                     <h1 class="rfi_rfq_title">RFI</h1>
@@ -360,7 +356,6 @@
                     </section>
                 </div>
             </div>
-        </form>
 
         {{-- testttttttttttttttttttttttttttttttttttttttttttttt --}}
 
