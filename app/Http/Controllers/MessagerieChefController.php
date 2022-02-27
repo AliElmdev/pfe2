@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Marche;
 use App\Models\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class messagerieController extends Controller
+class MessagerieChefController extends Controller
 {
-
-    // enregistrer les chats
-    public function enregister($id_marche, Request $request)
+    public function envoyer($id_marche, Request $request)
 
     {
         // if (auth()->user()->isAdmin()) {
@@ -21,9 +18,8 @@ class messagerieController extends Controller
         // } elseif (auth()->user()->isAchat()) {
         // }
 
-        $id_envoie  =  DB::table('marches')->where('id', $id_marche)->value('id_chef');
-        $id_receve =  auth()->user()->id; // autentificate ranjbouh mn id marches
-
+        $id_receve = Marche::all()->where('id', "=", $id_marche);
+        $id_envoie =  auth()->user()->id; // autentificate ranjbouh mn id marches
 
         // tester si le txt input est vide 
         if (!(is_null($request->input('text_input')))) {
@@ -72,6 +68,6 @@ class messagerieController extends Controller
             ->update(['vue' => 'Y']);
 
 
-        return view("entreprise.messagerie_page", compact(["list", "id_marche",  "id_receve", "id_envoie"]));
+        return view("chef.message_page_chef", compact(["list", "id_marche",  "id_receve", "id_envoie"]));
     }
 }

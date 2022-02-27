@@ -1,0 +1,131 @@
+date/time          : 2022-02-27, 00:08:25, 996ms
+computer name      : LAPTOP-SBUQ9OQ0
+user name          : EL MAALMI AYOUB
+registered owner   : EL MAALMI AYOUB / HP
+operating system   : Windows 10 x64 build 19044
+system language    : French
+system up time     : 10 hours 37 minutes
+program up time    : 2 hours 22 minutes
+processors         : 8x 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+physical memory    : 1010/7958 MB (free/total)
+free disk space    : (C:) 17,86 GB
+display mode       : 1536x864, 32 bit
+process id         : $2750
+allocated memory   : 99,31 MB
+largest free block : 131025,95 GB
+executable         : heidisql.exe
+exec. date/time    : 2021-01-24 12:00
+version            : 11.2.0.6213
+compiled with      : Delphi 10.4 Sydney
+madExcept version  : 5.1.0
+callstack crc      : $28f19923, $b52d372d, $210b9181
+exception number   : 3
+exception class    : EAccessViolation
+exception message  : Access violation at address 0000000000413F06 in module 'heidisql.exe'. Read of address FFFFFFFFFFFFFFFF.
+
+thread $2ec4:
+00413f06 heidisql.exe System                   @UStrCmp
+00413f74 heidisql.exe System                   @UStrEqual
+00bf0536 heidisql.exe dbconnection    8759  +4 TDBObject.IsSameAs
+00f1633a heidisql.exe Main            5680 +18 TMainForm.DataGridBeforePaint
+0096c31d heidisql.exe VirtualTrees   19522  +2 TBaseVirtualTree.DoBeforePaint
+0098635b heidisql.exe VirtualTrees   30484  +5 TBaseVirtualTree.PaintTree
+00977407 heidisql.exe VirtualTrees   23929 +23 TBaseVirtualTree.Paint
+006deb26 heidisql.exe Vcl.Controls             TCustomControl.PaintWindow
+006d4d93 heidisql.exe Vcl.Controls             TWinControl.PaintHandler
+006d5cff heidisql.exe Vcl.Controls             TWinControl.WMPaint
+006deab8 heidisql.exe Vcl.Controls             TCustomControl.WMPaint
+0096805d heidisql.exe VirtualTrees   17674  +8 TBaseVirtualTree.WMPaint
+0040f052 heidisql.exe System                   TObject.Dispatch
+006cd89d heidisql.exe Vcl.Controls             TControl.WndProc
+006d4afb heidisql.exe Vcl.Controls             TWinControl.WndProc
+0097c2e3 heidisql.exe VirtualTrees   25787 +32 TBaseVirtualTree.WndProc
+006d3c7a heidisql.exe Vcl.Controls             TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes           StdWndProc
+7ffd331d ntdll.dll                             KiUserCallbackDispatcher
+7ffd3143 USER32.dll                            DispatchMessageW
+004f0200 heidisql.exe madExcept                HandleException
+004fc561 heidisql.exe madExcept                InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls             TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes           StdWndProc
+7ffd331d ntdll.dll                             KiUserCallbackDispatcher
+7ffd3143 USER32.dll                            DispatchMessageW
+0088c25e heidisql.exe Vcl.Forms                TApplication.ProcessMessage
+0088c2d3 heidisql.exe Vcl.Forms                TApplication.HandleMessage
+0088c721 heidisql.exe Vcl.Forms                TApplication.Run
+00f4dfd8 heidisql.exe heidisql         104 +41 initialization
+7ffd3304 KERNEL32.DLL                          BaseThreadInitThunk
+7ffd3318 ntdll.dll                             RtlUserThreadStart
+
+thread $2ec4, inner exception level 1:
+>> EAccessViolation, Access violation at address 0000000000413F06 in module 'heidisql.exe'. Read of address FFFFFFFFFFFFFFFF
+00413f06 heidisql.exe System                    @UStrCmp
+7ffd3145 USER32.dll                             GetMessageW
+004f0183 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+7ffd3143 USER32.dll                             DispatchMessageW
+004f0200 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+00959050 heidisql.exe VirtualTrees   11430  +42 TVTHeader.Invalidate
+00950ab2 heidisql.exe VirtualTrees    7831  +11 TVirtualTreeColumns.GetNewIndex
+00950ead heidisql.exe VirtualTrees    7954   +1 TVirtualTreeColumns.AdjustHoverColumn
+00957998 heidisql.exe VirtualTrees   10816 +303 TVTHeader.HandleMessage
+0097c287 heidisql.exe VirtualTrees   25781  +26 TBaseVirtualTree.WndProc
+006d3c7a heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd3143 USER32.dll                             DispatchMessageW
+004f0200 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+7ffd3143 USER32.dll                             DispatchMessageW
+0088c25e heidisql.exe Vcl.Forms                 TApplication.ProcessMessage
+0088c2d3 heidisql.exe Vcl.Forms                 TApplication.HandleMessage
+0088c721 heidisql.exe Vcl.Forms                 TApplication.Run
+00f4dfd8 heidisql.exe heidisql         104  +41 initialization
+7ffd3304 KERNEL32.DLL                           BaseThreadInitThunk
+7ffd3318 ntdll.dll                              RtlUserThreadStart
+
+thread $2ec4, inner exception level 2:
+>> EAccessViolation, Access violation at address 0000000000413F06 in module 'heidisql.exe'. Read of address FFFFFFFFFFFFFFFF
+00413f06 heidisql.exe System                    @UStrCmp
+7ffd3145 USER32.dll                             GetMessageW
+004f0183 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+7ffd3143 USER32.dll                             DispatchMessageW
+004f0200 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+00959050 heidisql.exe VirtualTrees   11430  +42 TVTHeader.Invalidate
+00950ab2 heidisql.exe VirtualTrees    7831  +11 TVirtualTreeColumns.GetNewIndex
+00950ead heidisql.exe VirtualTrees    7954   +1 TVirtualTreeColumns.AdjustHoverColumn
+00957998 heidisql.exe VirtualTrees   10816 +303 TVTHeader.HandleMessage
+0097c287 heidisql.exe VirtualTrees   25781  +26 TBaseVirtualTree.WndProc
+006d3c7a heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd3143 USER32.dll                             DispatchMessageW
+004f0200 heidisql.exe madExcept                 HandleException
+004fc561 heidisql.exe madExcept                 InterceptAHandleExcept
+006d3c9e heidisql.exe Vcl.Controls              TWinControl.MainWndProc
+00568fd3 heidisql.exe System.Classes            StdWndProc
+7ffd331d ntdll.dll                              KiUserCallbackDispatcher
+7ffd3143 USER32.dll                             DispatchMessageW
+0088c25e heidisql.exe Vcl.Forms                 TApplication.ProcessMessage
+0088c2d3 heidisql.exe Vcl.Forms                 TApplication.HandleMessage
+0088c721 heidisql.exe Vcl.Forms                 TApplication.Run
+00f4dfd8 heidisql.exe heidisql         104  +41 initialization
+7ffd3304 KERNEL32.DLL                           BaseThreadInitThunk
+7ffd3318 ntdll.dll                              RtlUserThreadStart
+

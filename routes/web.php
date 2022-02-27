@@ -8,6 +8,7 @@ use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\MessagerieChefController;
 use App\Http\Controllers\messagerieController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
@@ -82,4 +83,5 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 // postulation marches
 // Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 
-Route::get('/marche/{id_marche}/message', [MessagerieController::class, 'enregister'])->name('chats');
+Route::get("/marche/{id_marche}/message", [MessagerieController::class, 'enregister'])->name('chats');
+Route::get("/marche/{id_marche}/message_chef", [MessagerieChefController::class, 'envoyer'])->name('chats_chef');

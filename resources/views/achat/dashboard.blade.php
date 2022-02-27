@@ -17,16 +17,20 @@
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="charts.html">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Message</span></a>
+</li>
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true"
+        aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-wrench"></i>
         <span>Mes Projets</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
             <a class="collapse-item" href="/Marches-en-cours-creation">En cours de creation</a>
@@ -37,12 +41,12 @@
     </div>
 </li>
 
+
 @endsection
 
 @section('title')
-
 @endsection
 
 @section('content')
-    @yield('contenu')
+@yield('contenu')
 @endsection
