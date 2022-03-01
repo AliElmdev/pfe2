@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(B_sectionsSeeder::class);
         $this->call(SectionsSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(DepartementsSeeder::class);
         Model::reguard();
         // \App\Models\User::factory(10)->create();
     }

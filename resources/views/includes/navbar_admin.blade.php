@@ -24,12 +24,13 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les utilisateurs:</h6>
             <a class="collapse-item" href="{{route('users')}}">Tous les utilisateurs</a>
-            <a class="collapse-item" href="#">Chefs de projet</a>
-            <a class="collapse-item" href="#">Responsables d'achat</a>
-            <a class="collapse-item" href="#">Entreprises</a>
+            <a class="collapse-item" href="{{route('create_user')}}">Créer un Nouvel Utilisateur</a>
+            {{-- <a class="collapse-item" href="#">Chefs de projet</a>
+            <a class="collapse-item" href="#">Responsables d'achat</a> --}}
+            <a class="collapse-item" href="{{route('entreprises')}}">Entreprises</a>
         </div>
     </div>
-</li>
+</li> 
 
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">

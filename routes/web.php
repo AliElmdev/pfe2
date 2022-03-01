@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\CreateUsersController;
 use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\ListEntreprisesController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
@@ -63,6 +66,14 @@ Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
 Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
 
+
+
+//Create Users
+Route::get("/create_user", [CreateUsersController::class, "index"])->name("create_user")->middleware('auth');
+Route::post("/create_user", [CreateUsersController::class, "store"])->name("create_user_store")->middleware('auth');
+
+//Show Entreprises
+Route::get("/entreprises", [ListEntreprisesController::class, "index"])->name("entreprises")->middleware('auth');
 
 //Show all users in admin panel
 
