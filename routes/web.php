@@ -119,4 +119,10 @@ Route::get('/Statistique', function () {
 Route::get("/test", [StatistiqueEntreprisesController::class, "index"]);
 
 Route::get("/RolePermissionEdit", [RolePermissionEditController::class, "index"])->name("RolePermissionEdit");
-Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexadd"])->name("AddRoleUser");
+
+
+Route::post("/AddRoleUser/new", [RolePermissionEditController::class, "storeroleuser"])->name("AddRoleUserNew");
+Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexroleuser"])->name("AddRoleUser");
+
+Route::post("/AddRolePermission/new", [RolePermissionEditController::class, "storerolepermission"])->name("AddRolePermissionNew");
+Route::get("/AddRolePermission", [RolePermissionEditController::class, "indexrolepermission"])->name("AddRolePermission");

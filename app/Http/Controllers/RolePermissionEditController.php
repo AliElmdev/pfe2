@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelRoles\Models\Permission;
 use jeremykenedy\LaravelRoles\Models\Role;
 
 class RolePermissionEditController extends Controller
@@ -14,14 +15,20 @@ class RolePermissionEditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexroleuser()
     {
         $roles = Role::all();
         $users = User::all();
         return View('admin.AddRoleUser')->with(array('users'=>$users,'roles'=>$roles));
     }
+
+    public function indexrolepermission(){
+        $roles = Role::all(); 
+        $permissions = Permission::all();
+        return View('admin.AddRolePermission')->with(array('roles'=>$roles,'permissions'=>$permissions));  
+    }
     
-    public function indexadd()
+    public function index()
     {
         $roles = Role::all();
         $users = User::all();
@@ -43,9 +50,25 @@ class RolePermissionEditController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeroleuser(Request $request)
     {
-        //
+        $role = Role::find($request->role_id);
+        $role->users()->detach($request->users);
+        foreach($request->users as $user_id){
+            $user = config('roles.models.defaultUser')::find($user_id);
+            $user->detachAllRoles();
+        }
+        $role->users()->attach($request->users);
+        return redirect()->route('RolePermissionEdit');
+    }
+
+    public function storerolepermission(Request $request)
+    {
+        $role_id = $request->role_id;
+        $role = config('roles.models.role')::find($role_id);
+        $role->detachAllPermissions();
+        $role->attachPermission($request->permissions);//add list permissions
+        return redirect()->route('RolePermissionEdit');     
     }
 
     /**

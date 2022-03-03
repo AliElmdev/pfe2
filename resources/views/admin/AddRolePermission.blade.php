@@ -11,9 +11,9 @@
 
 @section('content')
 <div class="container">
-<form action="{{route('AddRoleUserNew')}}" method="post" class="w-100">
-    <div class="row d-flex">
-        <div class="w-50"> 
+<form action="{{route('AddRolePermissionNew')}}" method="post" class="w-100">
+    <div class="row justify-content-center">
+        <div class="w-50">
          @csrf
             <div class="card">
                 <div class="card-header">Roles</div>
@@ -29,11 +29,11 @@
         </div>
         <div class="w-50">
             <div class="card">
-                <div class="card-header">Users</div>
+                <div class="card-header">Permissions</div>
                 <div class="card-body">
                    <ul>
-                    @foreach($users as $user)
-                        <li><input type="checkbox" name="users[]" value="{{$user->id}}">{{$user->name}}</li>
+                    @foreach($permissions as $permission)
+                        <li><input type="checkbox" name="permissions[]" value="{{$permission->id}}">{{$permission->name}}</li>
                     @endforeach
                    </ul>
                 </div>

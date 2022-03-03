@@ -13,8 +13,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="">
-            <a href="" class="btn btn-success">Add Role</a>
-            <a href="" class="btn btn-primary">Add User Role</a>
+            <a href="{{route('AddRolePermission')}}" class="btn btn-success">Role et Permission</a>
+            <a href="{{route('AddRoleUser')}}" class="btn btn-primary">Role Utilisateurs</a>
             <div class="card">
                 <div class="card-header">Roles</div>
                 <div class="card-body">
@@ -23,7 +23,7 @@
                             <tr class="text-center">
                                 <th>Roles</th>
                                 <th>Permissions</th>
-                                <th>User</th>
+                                <th>Utilisateurs</th>
                             </tr>
                         </thead>
                         <tbody>
