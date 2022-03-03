@@ -11,9 +11,12 @@ use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\ListEntreprisesController;
+use App\Http\Controllers\Gestion_Marches_ChefController;
+use App\Http\Controllers\RolePermissionEditController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
+use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
@@ -103,3 +106,17 @@ Route::get("/selection_Fichier_Technique/{id_marche}", [SelectionFichier_Techniq
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}", [SelectionFichier_TechniqueController::class, "show"])->name("selection_fichierTechnique_details");
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}/accept", [SelectionFichier_TechniqueController::class, "accept"])->name("selection_fichierTechnique_accept");
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}/refuse", [SelectionFichier_TechniqueController::class, "refuse"])->name("selection_fichierTechnique_refuse");
+// Gestion marchées chef
+Route::get("/marches-en-cours-{id_chef}", [Gestion_Marches_ChefController::class, "current"])->name("marches_en_cours_chef");
+Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, "closed"])->name("marches_fermes_chef");
+Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
+Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
+
+
+Route::get('/Statistique', function () {
+    return view('admin.Statistique');
+})->name("Statistique");
+Route::get("/test", [StatistiqueEntreprisesController::class, "index"]);
+
+Route::get("/RolePermissionEdit", [RolePermissionEditController::class, "index"])->name("RolePermissionEdit");
+Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexadd"])->name("AddRoleUser");
