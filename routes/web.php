@@ -101,4 +101,4 @@ Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
-Route::get("/profile{id}modifier", [ProfileController::class, "store"])->name("modifierProfile");
+Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile");

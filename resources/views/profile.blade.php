@@ -157,10 +157,10 @@
                                         <p class="text-primary m-0 fw-bold">Mon profile</p>
                                     </div>
                                     <div class="card-body">
-                                        <form method="GET" action="{{route('modifierProfile',['id' => Auth::user()->id])}}">
+                                        <form method="POST" action="{{route('modifierProfile',['id' => Auth::user()->id])}}">
                                             @csrf
                                             <div class="mb-3"><label class="form-label" for="phone"><strong>Numéro de&nbsp;téléphone</strong></label>
-                                                <input class="form-control" type="text" id="phone" value="{{$user->phone}}" name="address"></div>
+                                                <input class="form-control" type="text" id="phone" value="{{$user->phone}}" name="phone"></div>
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="mb-3"><label class="form-label" style="font-weight: bold;">Titre/Service<br></label>

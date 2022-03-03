@@ -35,13 +35,9 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-        $phone = $_GET['phone'];
-        $profile = Profile::where('user_id',$id)->get();
-        $profile->phone = $phone;
-        $profile->save();
-        return redirect(route('profile',['id' => $id]));
+        
     }
 
     /**
@@ -112,7 +108,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Profile::where('user_id',$id)
+            ->update(['phone'=>$request->input('phone')]);
+      
+        return redirect(route('profile',['id' => $id]));
+      
     }
 
     /**
