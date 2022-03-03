@@ -9,6 +9,7 @@ use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
@@ -98,3 +99,6 @@ Route::get("/marches-en-cours-{id_chef}", [Gestion_Marches_ChefController::class
 Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, "closed"])->name("marches_fermes_chef");
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
+
+Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
+Route::get("/profile{id}modifier", [ProfileController::class, "store"])->name("modifierProfile");
