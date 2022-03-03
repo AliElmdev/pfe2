@@ -8,12 +8,13 @@ use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
-use App\Http\Controllers\MessagerieChefController;
+use App\Http\Controllers\MessageChefController;
 use App\Http\Controllers\messagerieController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,4 +85,6 @@ Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'
 // Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 
 Route::get("/marche/{id_marche}/message", [MessagerieController::class, 'enregister'])->name('chats');
-Route::get("/marche/{id_marche}/message_chef", [MessagerieChefController::class, 'envoyer'])->name('chats_chef');
+Route::get("/marche/boite_message", [MessageChefController::class, 'index'])->name('chats_chef');
+Route::get("/marche/liste_entreprise/{id_marche?}", [MessageChefController::class, 'show'])->name('chat_entreprise');
+Route::get("/marche/message_chef_entreprise/{id_marche?}/{entreprise_id?}", [MessageChefController::class, 'enregister'])->name('chat_chef_entreprise');

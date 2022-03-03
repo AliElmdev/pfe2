@@ -49,9 +49,9 @@ class PostulationController extends Controller
     {
         // reponse_qst[]
         $user_id = auth()->user()->id;
-        $postulations = Postulation::where('user_id',$user_id)->where('marche_id',$_POST['marche_id'])->first();
+        $postulations = Postulation::where('user_id', $user_id)->where('marche_id', $_POST['marche_id'])->first();
 
-        if($postulations == null){
+        if ($postulations == null) {
 
             $postulation = new Postulation();
             $reponses_commercial = new Reponses_commercial();
@@ -61,14 +61,14 @@ class PostulationController extends Controller
 
             $result = array();
 
-            foreach($_FILES AS $file_k=>$file) {
-                $k_array = explode("_", $file_k); 
-                if(isset($k_array[0]) && $k_array[0] == "reponseqst") {
-                    if($file != ''){
+            foreach ($_FILES as $file_k => $file) {
+                $k_array = explode("_", $file_k);
+                if (isset($k_array[0]) && $k_array[0] == "reponseqst") {
+                    if ($file != '') {
                         $file_charge_o = $request->file($file_k);
                         // $file_chargeSaveAsName = time()."_qst.". $file_charge_o->getClientOriginalExtension();
                         $file_chargeSaveAsName = $file['name'];
-                        $upload_path = 'Postulations/Marche_'.$_POST['marche_id'].'/Entreprise_'.$user_id.'/';
+                        $upload_path = 'Postulations/Marche_' . $_POST['marche_id'] . '/Entreprise_' . $user_id . '/';
                         $file = $upload_path . $file_chargeSaveAsName;
                         $success = $file_charge_o->move($upload_path, $file_chargeSaveAsName);
 
@@ -82,10 +82,10 @@ class PostulationController extends Controller
             }
 
 
-            foreach($_POST AS $k=>$value) {
+            foreach ($_POST as $k => $value) {
                 //Explode k (reponseqst_*) into an array with max 2 values
-                $k_array = explode("_", $k); 
-                if(isset($k_array[0]) && $k_array[0] == "reponseqst") {
+                $k_array = explode("_", $k);
+                if (isset($k_array[0]) && $k_array[0] == "reponseqst") {
 
                     $question = new Reponse_question([
                         'reponse' => $value,
@@ -93,7 +93,7 @@ class PostulationController extends Controller
                     ]);
                     $reponses_question->reponse_question()->save($question);
                     // $result[$k_array[1]] = $value;
-                }elseif(isset($k_array[0]) && $k_array[0] == "type"){
+                } elseif (isset($k_array[0]) && $k_array[0] == "type") {
                     array_push($result, $k_array[1]);
                 }
             }
@@ -101,9 +101,9 @@ class PostulationController extends Controller
             foreach ($result as $prod) {
                 $commercial = new Reponse_commercial([
                     'produit_id' => $prod,
-                    'type' => $_POST['type_'.$prod],
-                    'devis' => $_POST['devis_'.$prod],
-                    'prix'=> $_POST['prix_'.$prod],
+                    'type' => $_POST['type_' . $prod],
+                    'devis' => $_POST['devis_' . $prod],
+                    'prix' => $_POST['prix_' . $prod],
                 ]);
                 $reponses_commercial->reponse_commercial()->save($commercial);
             }
@@ -116,46 +116,45 @@ class PostulationController extends Controller
             $postulation->save();
             // $postulation->reponses_question()->save($reponses_question);
             // $postulation->reponses_commercial()->save($reponses_commercial);
-        }else{
+        } else {
             $reponses_question = $postulations->reponses_question();
             $reponses_commercial = $postulations->reponses_commercial();
             $result = array();
 
-            foreach($_FILES AS $file_k=>$file) {
-                $k_array = explode("_", $file_k); 
-                if(isset($k_array[0]) && $k_array[0] == "reponseqst") {
-                    if($file["name"] != ''){
+            foreach ($_FILES as $file_k => $file) {
+                $k_array = explode("_", $file_k);
+                if (isset($k_array[0]) && $k_array[0] == "reponseqst") {
+                    if ($file["name"] != '') {
                         $file_charge_o = $request->file($file_k);
                         // $file_chargeSaveAsName = time()."_qst.". $file_charge_o->getClientOriginalExtension();
                         $file_chargeSaveAsName = $file['name'];
-                        $upload_path = 'Postulations/Marche_'.$_POST['marche_id'].'/Entreprise_'.$user_id.'/';
+                        $upload_path = 'Postulations/Marche_' . $_POST['marche_id'] . '/Entreprise_' . $user_id . '/';
                         $file = $upload_path . $file_chargeSaveAsName;
                         $success = $file_charge_o->move($upload_path, $file_chargeSaveAsName);
 
-                        $question = Reponse_question::where('reponses_question_id','=',$postulations->questions_id)->where('question_id','=',$k_array[1])->update(['reponse'=>$file]);
+                        $question = Reponse_question::where('reponses_question_id', '=', $postulations->questions_id)->where('question_id', '=', $k_array[1])->update(['reponse' => $file]);
                     }
                 }
             }
 
-            foreach($_POST AS $k=>$value) {
+            foreach ($_POST as $k => $value) {
                 //Explode k (reponseqst_*) into an array with max 2 values
-                $k_array = explode("_", $k); 
-                if(isset($k_array[0]) && $k_array[0] == "reponseqst") {
-                    if($value != ''){
-                        $question = Reponse_question::where('reponses_question_id','=',$postulations->questions_id)->where('question_id','=',$k_array[1])->update(['reponse'=>$value]);
+                $k_array = explode("_", $k);
+                if (isset($k_array[0]) && $k_array[0] == "reponseqst") {
+                    if ($value != '') {
+                        $question = Reponse_question::where('reponses_question_id', '=', $postulations->questions_id)->where('question_id', '=', $k_array[1])->update(['reponse' => $value]);
                     }
                     // $question->reponse = $value;
                     // $question->save();
                     // $result[$k_array[1]] = $value;
-                }elseif(isset($k_array[0]) && $k_array[0] == "type"){
+                } elseif (isset($k_array[0]) && $k_array[0] == "type") {
                     array_push($result, $k_array[1]);
                 }
             }
             foreach ($result as $prod) {
-                if(Reponse_commercial::where('reponses_commercial_id','=',$postulations->commercials_id)->where('produit_id','=',$prod)->exists()){
-                    $commercial = Reponse_commercial::where('reponses_commercial_id','=',$postulations->commercials_id)->where('produit_id','=',$prod)->update(['type'=>$_POST['type_'.$prod],'devis'=>$_POST['devis_'.$prod],'prix'=>$_POST['prix_'.$prod]]);
-                }else{
-                    
+                if (Reponse_commercial::where('reponses_commercial_id', '=', $postulations->commercials_id)->where('produit_id', '=', $prod)->exists()) {
+                    $commercial = Reponse_commercial::where('reponses_commercial_id', '=', $postulations->commercials_id)->where('produit_id', '=', $prod)->update(['type' => $_POST['type_' . $prod], 'devis' => $_POST['devis_' . $prod], 'prix' => $_POST['prix_' . $prod]]);
+                } else {
                 }
                 // $commercial->type = $_POST['type_'.$prod];
                 // $commercial->devis = $_POST['devis_'.$prod];
@@ -164,7 +163,7 @@ class PostulationController extends Controller
             }
         }
 
-        return redirect()->route('postulation',$_POST['marche_id']);
+        return redirect()->route('postulation', $_POST['marche_id']);
     }
 
     /**
@@ -179,13 +178,13 @@ class PostulationController extends Controller
         $marche = Marche::where('id', $id)->get();
         $produits = Produit::where('marche_id', $id)->get();
 
-        $postulations = Postulation::where('marche_id', $id)->where('user_id',auth()->user()->id)->first();
-        if($postulations !=null){
-            $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id)->get();
-            $reponses_commercial = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)->get();
-            return view("entreprise.postuler", compact(["b_sections","marche","produits","reponses_question","reponses_commercial"]));
-        }else{
-            return view("entreprise.postuler", compact(["b_sections","marche","produits"]));
+        $postulations = Postulation::where('marche_id', $id)->where('user_id', auth()->user()->id)->first();
+        if ($postulations != null) {
+            $reponses_question = Reponse_question::where('reponses_question_id', $postulations->questions_id)->get();
+            $reponses_commercial = Reponse_commercial::where('reponses_commercial_id', $postulations->commercials_id)->get();
+            return view("entreprise.postuler", compact(["b_sections", "marche", "produits", "reponses_question", "reponses_commercial"], 'id'));
+        } else {
+            return view("entreprise.postuler", compact(["b_sections", "marche", "produits", "id"]));
         }
     }
 

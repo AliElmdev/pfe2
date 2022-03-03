@@ -19,7 +19,11 @@
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
-
+<li class="nav-item">
+    <a class="nav-link" href="{{route('chats_chef')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Message</span></a>
+</li>
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true"
@@ -34,6 +38,7 @@
             <a class="collapse-item" href="utilities-color.html">En cours</a>
             <a class="collapse-item" href="utilities-border.html">Terminer</a>
             <a class="collapse-item" href="utilities-border.html">Tous les projets</a>
+
         </div>
     </div>
 </li>

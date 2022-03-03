@@ -21,16 +21,24 @@ class Marche extends Model
         'id_achat',
     ];
 
-    public function categorie(){
+    public function categorie()
+    {
         return $this->hasOne(\App\Models\Categorie::class);
     }
-    public function produit(){
+    public function produit()
+    {
         return $this->hasMany(\App\Models\Produit::class);
     }
-    public function question(){
+    public function question()
+    {
         return $this->hasMany(\App\Models\Question::class);
     }
-    public function postulation(){
+    public function postulation()
+    {
         return $this->hasMany(\App\Models\Postulation::class);
+    }
+    public function  donneMarche()
+    {
+        return $this->hasMany(Mess::class);
     }
 }

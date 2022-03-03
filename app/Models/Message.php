@@ -15,4 +15,8 @@ class Message extends Model
     {
         return $this->hasOne(\App\Models\User::class);
     }
+    public function donneMarche()
+    {
+        return $this->belongsTo(Marche::class, 'title');
+    }
 }

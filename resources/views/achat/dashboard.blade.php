@@ -17,11 +17,7 @@
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
-<li class="nav-item">
-    <a class="nav-link" href="charts.html">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Message</span></a>
-</li>
+
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
