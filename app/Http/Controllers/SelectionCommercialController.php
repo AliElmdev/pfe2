@@ -120,7 +120,7 @@ class SelectionCommercialController extends Controller
             ->where('postulations.marche_id','=',$id)
             ->where('produit_id','=',$produit->id)
             ->where('prix','=',$prix_min->prix)
-            ->selectRaw('prix, user_id as id, produit_id')
+            ->selectRaw('prix, entreprise_id as id, produit_id')
             ->first();
 
             $min_prix[$produit->nom] = $prix_minn;
@@ -134,7 +134,7 @@ class SelectionCommercialController extends Controller
         $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
         ->where('postulations.marche_id','=',$id)
         ->groupby('user_id')
-        ->selectRaw('sum(prix) as prix_total, user_id as entreprise_id , marche_id')
+        ->selectRaw('sum(prix) as prix_total, entreprise_id as entreprise_id , marche_id')
         ->orderby('prix_total')
         ->first();
         return response()->json($prix_min);
