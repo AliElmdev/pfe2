@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVillesTable extends Migration
+class CreateEtatMarchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateVillesTable extends Migration
      */
     public function up()
     {
-        Schema::create('villes', function (Blueprint $table) {
+        Schema::create('etat_marches', function (Blueprint $table) {
             $table->id();
-            $table->string('ville');
-            $table->string('region');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateVillesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('villes');
+        Schema::dropIfExists('etat_marches');
     }
 }

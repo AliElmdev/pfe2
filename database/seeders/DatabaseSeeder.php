@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TitreService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SectionsSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(DepartementsSeeder::class);
+        $this->call(Etat_MarcheSeeder::class);
+        $this->call(Etat_PostulationSeeder::class);
+        $this->call(Titre_ServiceSeeder::class);
+        $this->call(VilleSeeder::class);
         Model::reguard();
         // \App\Models\User::factory(10)->create();
     }

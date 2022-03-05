@@ -1,8 +1,7 @@
 @extends('layouts.dashboard')
 @section('navbar')
-<!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="/statistics">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Tableau de bord</span></a>
 </li>
@@ -13,7 +12,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <hr class="sidebar-divider">
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="{{route('profile',['id' => Auth::user()->id])}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
@@ -38,11 +37,14 @@
     </div>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link" href="/">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Page d'acceuil</span></a>
+</li>
+
 @endsection
 
-{{-- @section('title')
-
-@endsection --}}
 
 @section('content')
 
