@@ -20,6 +20,7 @@ class CreateReponseCommercialsTable extends Migration
             $table->enum('type',['article','variante']);
             $table->string('devis');
             $table->integer('prix');
+            $table->integer('note');
             $table->BigInteger('reponses_commercial_id')->unsigned();
             // $table->foreign('marche_id')->references('id')->on('marches')->onDelete('cascade');
             $table->foreign('produit_id')->references('id')->on('questions')->onDelete('cascade');
