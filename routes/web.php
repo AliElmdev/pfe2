@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
+use App\Http\Controllers\StatisticsMarchesController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
@@ -102,3 +103,10 @@ Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class
 
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
 Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile");
+
+//statistiques
+// Route::get("/statistiques", [StatisticsMarchesController::class, "index"])->name("statisticsMarches");
+// Route::get("/statistiques/chart{id}", [StatisticsMarchesController::class, "chart"])->name("statisticsMarcheschart");
+Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->name("statisticsInfo");
+
+Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware();

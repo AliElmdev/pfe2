@@ -4,7 +4,7 @@
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="/statistics">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Tableau de bord</span></a>
 </li>
@@ -40,8 +40,14 @@
     </div>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link" href="/">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Page d'acceuil</span></a>
+</li>
+
 @endsection
 
 @section('content')
-    @yield('contenuDashboardChef')
+@yield('contenuDashboardChef')
 @endsection
