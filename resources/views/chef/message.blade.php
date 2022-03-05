@@ -48,7 +48,7 @@
 @section('title')
 <!-- For demo purpose-->
 <header class="text-center">
-    <h1 class="display-4"> Messagerie </h1>
+    <h4>Nom entreprise : {{$nom_entreprise}}</h4>
 </header>
 @endsection
 
@@ -65,7 +65,7 @@
                 @foreach ($list as $item)
                 @if ($item->entreprise_id==$entreprise_id)
                 <div class="media w-50 mb-3"><img src="https://img.icons8.com/color/36/000000/administrator-male.png"
-                        alt="user" width="50" class="rounded-circle" style="padding: 0.9%">
+                        alt="user" width="50" class="rounded-circle">
                     <div class="media-body">
                         @if($item->type=="txt")
                         <div class="bg-light rounded py-2 px-3 mb-2">
@@ -86,7 +86,7 @@
                 </div>
                 <!-- Reciever Message-->
                 @elseif($item->sender_id==auth()->user()->id or $item->entreprise_id==0 )
-                <div class="d-flex flex-row justify-content-start" style="margin-left: 50% ;width: 50%">
+                <div class="d-flex flex-row justify-content-start" style="margin-left: 50% ;position: relative;">
                     <div class="media-body">
                         @if($item->type=="txt")
                         <div class="bg-primary rounded py-2 px-3 mb-2">
@@ -96,7 +96,7 @@
                         @elseif($item->type=="file")
                         <div class="bg-primary rounded py-2 px-3 mb-2 ">
                             <p class="text-small mb-0 text-white">
-                                <a style="color: azure" href={{URL::to('/') . "/" . $item->message}}
+                                <a style="color: azure;" href={{URL::to('/') . "/" . $item->message}}
                                     download={{$item->message}}
                                     title="{{$item->message}}">
                                     {{$item->message}}
@@ -125,15 +125,15 @@
                         <label for="file_input">
                             <span class="publisher-btn file-group">
                                 <i class="fa fa-paperclip file-browser">
-                                    <input id="file_input" name="file_input" type="file" size='50'
-                                        style="display: none;" /> </i>
+                                    <input id="file_input" name="file_input[]" type="file" size='50'
+                                        style="display: none;" multiple /> </i>
                             </span>
                         </label>
                     </div>
 
                     <div class="input-group-append " style="padding-left: 15% ; padding-top: 2%">
-                        <button type="submit" name="submit" value=" Submit" class="btn btn-link"> <i
-                                class="fa fa-paper-plane"></i>
+                        <button type="submit" name="submit" value=" Submit" class="btn btn-link">
+                            <i class="fa fa-paper-plane"></i>
                         </button>
                     </div>
 
@@ -147,9 +147,12 @@
 <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
-    }
-</script>
+      
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
+</script>
 @yield('contenu')
 @endsection

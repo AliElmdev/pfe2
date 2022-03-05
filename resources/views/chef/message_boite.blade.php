@@ -1,7 +1,6 @@
 @extends('layouts.dashboard')
 @section('navbar')
 
-
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
     <a class="nav-link" href="index.html">
@@ -41,10 +40,6 @@
 
 @endsection
 
-@section('title')
-
-@endsection
-
 @section('content')
 
 
@@ -64,14 +59,13 @@
                                 <div class="col-md-6">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"
                                         class="chosen form-select">
-                                        <label class="form-label text-uppercase">Afficher&nbsp;&nbsp;<select
-                                                class="d-inline-block form-select form-select-sm"
+                                        <label class="form-label text-uppercase">Afficher&nbsp;&nbsp;
+                                            <select class="d-inline-block form-select form-select-sm"
                                                 onchange="filtrage(this)">
                                                 <option value="all" selected></option>
                                                 <option value="NON">Non vue</option>
-
                                                 <option value="OUI">Vue</option>
-                                            </select>&nbsp;</label>
+                                            </select>&nbsp;</label><br>
                                     </div>
                                 </div>
                                 <br>
@@ -83,8 +77,9 @@
                                             <tr>
                                                 <th>Marché_id</th>
                                                 <th>Nom de marche</th>
-                                                <th>date limit</th>
+                                                <th>Date limite</th>
                                                 <th class="text-capitalize">Nombre De message</th>
+                                                <th>Description</th>
                                                 <th style="width: 10%;">Accéder<br></th>
                                             </tr>
                                         </thead>
@@ -96,7 +91,9 @@
                                                 <td>{{$item->id_marche}}</td>
                                                 <td>{{$item->title}}</td>
                                                 <td>{{ ($item->limit_date)}}</td>
+
                                                 <td>{{$item->total}}</td>
+                                                <td>Message vue</td>
                                                 <td style="width: 10%;"><a
                                                         href={{route('chat_entreprise',$item->id_marche)}}>
                                                         <button class="btn btn-primary" type="button">
@@ -110,6 +107,7 @@
                                                 <td>{{$item->title}}</td>
                                                 <td>{{ ($item->limit_date)}}</td>
                                                 <td>{{$item->total}}</td>
+                                                <td>Message non vue</td>
                                                 <td style="width: 10%;"><a
                                                         href={{route('chat_entreprise',$item->id_marche)}}>
                                                         <button class="btn btn-primary" type="button">
@@ -134,10 +132,14 @@
                     $("*[class*='message_non']").show();
                 }else if(value=='OUI'){
                     $("*[class*='message_vue']").show();
+                }else{
+                    $("*[class*='message_']").show();
                 }
             }
         
         </script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/theme.js"></script>
+        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/js/themeAchatGestionMarches.js"></script>
         @endsection

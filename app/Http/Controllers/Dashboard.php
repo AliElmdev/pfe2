@@ -23,7 +23,7 @@ class Dashboard extends Controller
             return view('entreprise.dashboard');
         }
         if ($user->hasRole('chef')) {
-            return view('chef.dashboard');
+            return redirect()->route('statistics');
         }
         if ($user->hasRole('achat')) {
             return view('achat.dashboard');

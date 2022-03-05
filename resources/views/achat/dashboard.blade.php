@@ -13,7 +13,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <hr class="sidebar-divider">
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="{{route('profile',['id' => Auth::user()->id])}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>

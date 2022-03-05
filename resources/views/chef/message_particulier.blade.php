@@ -60,11 +60,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                    <label class="form-label text-uppercase">Afficher&nbsp;&nbsp;<select
-                                            onchange="filtrage()" class="d-inline-block form-select form-select-sm">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"
+                                    class="chosen form-select">
+                                    <label class="form-label text-uppercase">Afficher&nbsp;&nbsp;
+                                        <select class="d-inline-block form-select form-select-sm"
+                                            onchange="filtrage(this)">
                                             <option value="all" selected></option>
-                                            <option value="NON">Non_vue</option>
+                                            <option value="NON">Non vue</option>
                                             <option value="OUI">Vue</option>
                                         </select>&nbsp;</label>
                                 </div>
@@ -76,9 +78,11 @@
                                 <table class="table my-0" id="dataTable">
                                     <thead style="text-align: center;background: #93d1e4;">
                                         <tr>
-                                            <th>ID Entreprise</th>
+
                                             <th>Nom Entreprise</th>
+                                            <th>Etat d'entreprise </th>
                                             <th class="text-capitalize">Nombre De message</th>
+                                            <th>Description</th>
                                             <th style="width: 10%;">Contacter<br></th>
                                         </tr>
                                     </thead>
@@ -86,25 +90,41 @@
                                     <tbody>
                                         @foreach ($list_messages_vue as $item)
                                         <tr style="text-align: center;" class="message_vue">
-                                            <td>{{$item->entreprise_id}}</td>
                                             <td>{{$item->social_name}}</td>
+                                            <td>{{$item->etat}}</td>
                                             <td>{{$item->total}}</td>
+                                            <td>Message vue</td>
                                             <td style="width: 10%;"><a
                                                     href={{route('chat_chef_entreprise',[$item->entreprise_id,$id_marche])}}>
                                                     <button class="btn btn-primary" type="button">
-                                                        <i class="fa fa-eye"></i></button></a>
+                                                        <i class="bi bi-envelope"><svg
+                                                                xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="21" fill="currentColor"
+                                                                style="padding-left: 3px" class="bi bi-envelope"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                                                            </svg></i></button></a>
                                             </td>
                                         </tr>
                                         @endforeach
                                         @foreach ($list_messages_non_vue as $item)
                                         <tr style="text-align: center;" class="message_non_vue">
-                                            <td>{{$item->entreprise_id}}</td>
                                             <td>{{$item->social_name}}</td>
-                                            <td>{{$item->total}} </td>
+                                            <td>{{$item->etat}}</td>
+                                            <td>{{$item->total}}</td>
+                                            <td>Message non vue</td>
                                             <td style="width: 10%;"><a
                                                     href={{route('chat_chef_entreprise',[$item->entreprise_id,$id_marche])}}>
                                                     <button class="btn btn-primary" type="button">
-                                                        <i class="fa fa-eye"></i></button></a>
+                                                        <i class="bi bi-envelope"><svg
+                                                                xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                height="21" fill="currentColor"
+                                                                style="padding-left: 3px" class="bi bi-envelope"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
+                                                            </svg></i></button></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -119,16 +139,17 @@
     </div>
     <script>
         function filtrage(selectObject) {
-                $("*[class*='message_']").hide();
                 var value = selectObject.value;
+                $("*[class*='message']").hide();
                 if(value=='NON'){
-                    $("*[class*='message_non_vue']").show();
+                    $("*[class*='message_no']").show();
                 }else if(value=='OUI'){
-                    $("*[class*='message_vue']").show();
+                    $("*[class*='message_v']").show();
+                }else{
+                    $("*[class*='message_']").show();
                 }
             }
         
-    </script>
     </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/theme.js"></script>

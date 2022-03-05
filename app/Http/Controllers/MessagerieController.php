@@ -32,23 +32,29 @@ class messagerieController extends Controller
             $name->type = "txt";
             $name->save();
         }
-        // tester si le file input est vide
+
         if (!(is_null($request->file('file_input')))) {
-            // enregister les file en rep and uplouad
-            $file_charge = $request->file('file_input');
-            $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
-            $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
-            $file_chargeo = $upload_path . $file_SaveAsName;
-            $success = $file_charge->move($upload_path, $file_SaveAsName);
-            // egregistrer des information 
-            $name = new Message();
-            $name->id_marche = $id_marche;
-            $name->sender_id = $id_receve;
-            $name->recever_id = $id_envoie;
-            $name->entreprise_id = $entreprise_id;
-            $name->message =  $file_chargeo; // enregistrer en path uploud 
-            $name->type = "file";
-            $name->save();
+            // tester si le file input est vide
+            $files = $request->file('file_input');
+            if ($request->hasFile('file_input')) {
+                foreach ($files as $file) {
+                    // enregister les file en rep and uplouad
+                    $file_charge = $file;
+                    $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
+                    $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
+                    $file_chargeo = $upload_path . $file_SaveAsName;
+                    $success = $file_charge->move($upload_path, $file_SaveAsName);
+                    // egregistrer des information 
+                    $name = new Message();
+                    $name->id_marche = $id_marche;
+                    $name->sender_id = $id_receve;
+                    $name->recever_id = $id_envoie;
+                    $name->entreprise_id = $entreprise_id;
+                    $name->message =  $file_chargeo; // enregistrer en path uploud 
+                    $name->type = "file";
+                    $name->save();
+                }
+            }
         }
         // SELECT * FROM messages WHERE recever_id=4 AND entreprise_id=1 AND id_marche=1 OR  recever_id=2 AND sender_id=4 AND id_marche=1
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entreprise;
 use App\Models\Marche;
 use App\Models\Message;
 
@@ -14,13 +15,15 @@ class MessageChefController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * 
+     * 
      */
+    // controller pour boite message
     public function index()
     {
         $id_receve =  auth()->user()->id;
 
-
-        // $list_messages = Message::where('recever_id', $id_receve)->get();
 
 
         // list messsage vue
@@ -46,8 +49,49 @@ class MessageChefController extends Controller
 
         return view("chef.message_boite", compact('list_messages_vue', 'list_messages_non_vue'));
     }
-    public function enregister($id_marche, $entreprise_id, Request $request)
 
+
+    // afficher les  message partuculier par entreprise
+
+    public function show($id_marche)
+    {
+        $id_receve =  auth()->user()->id;
+
+
+
+        $list_messages_vue = DB::table('entreprises')
+            ->join('messages', 'messages.entreprise_id', '=', 'entreprises.id')
+            ->join('postulations', 'postulations.entreprise_id', "=", 'entreprises.id')
+            ->join('etat_postulaions', "etat_postulaions.id", 'postulations.etat')
+            ->select('messages.entreprise_id', 'entreprises.social_name', "etat_postulaions.description as etat", DB::raw('count(*) as total'))
+            ->where('Vue', '=', 'Y')
+            ->where('messages.id_marche', '=', $id_marche)
+            ->whereNotNull("messages.entreprise_id")
+            ->groupby('messages.entreprise_id')
+            ->get();
+
+        //             SELECT COUNT(*),entreprise_id FROM messages WHERE recever_id=5 AND Vue='N'  id_marche=1
+        // GROUP BY(entreprise_id )
+        $list_messages_non_vue = DB::table('entreprises')
+            ->join('messages', 'messages.entreprise_id', '=', 'entreprises.id')
+            ->join('postulations', 'postulations.entreprise_id', "=", 'entreprises.id')
+            ->join('etat_postulaions', "etat_postulaions.id", 'postulations.etat')
+            ->select('messages.entreprise_id', 'entreprises.social_name', "etat_postulaions.description", DB::raw('count(*) as total'))
+            ->where('Vue', '=', 'N')
+            ->where('messages.id_marche', '=', $id_marche)
+            ->whereNotNull("messages.entreprise_id")
+            ->groupby('messages.entreprise_id')
+            ->get();
+
+
+
+        return view("chef.message_particulier", compact(['list_messages_vue', 'list_messages_non_vue', 'id_marche']));
+    }
+
+
+    // message entreprise chef
+
+    public function enregister($id_marche, $entreprise_id, Request $request)
     {
         $id_receve =  auth()->user()->id;
         $id_envoie =  DB::table('messages')->where('entreprise_id', $entreprise_id)->value('sender_id');
@@ -65,23 +109,29 @@ class MessageChefController extends Controller
             $name->type = "txt";
             $name->save();
         }
-        // tester si le file input est vide
+
         if (!(is_null($request->file('file_input')))) {
-            // enregister les file en rep and uplouad
-            $file_charge = $request->file('file_input');
-            $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
-            $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
-            $file_chargeo = $upload_path . $file_SaveAsName;
-            $success = $file_charge->move($upload_path, $file_SaveAsName);
-            // egregistrer des information 
-            $name = new Message();
-            $name->id_marche = $id_marche;
-            $name->sender_id = $id_receve;
-            $name->recever_id = $id_envoie;
-            $name->entreprise_id = 0;
-            $name->message =  $file_chargeo; // enregistrer en path uploud 
-            $name->type = "file";
-            $name->save();
+            // tester si le file input est vide
+            $files = $request->file('file_input');
+            if ($request->hasFile('file_input')) {
+                foreach ($files as $file) {
+                    // enregister les file en rep and uplouad
+                    $file_charge = $file;
+                    $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
+                    $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
+                    $file_chargeo = $upload_path . $file_SaveAsName;
+                    $success = $file_charge->move($upload_path, $file_SaveAsName);
+                    // egregistrer des information 
+                    $name = new Message();
+                    $name->id_marche = $id_marche;
+                    $name->sender_id = $id_receve;
+                    $name->recever_id = $id_envoie;
+                    $name->entreprise_id = 0;
+                    $name->message =  $file_chargeo; // enregistrer en path uploud 
+                    $name->type = "file";
+                    $name->save();
+                }
+            }
         }
 
         $list = Message::where("id_marche", "=", $id_marche)
@@ -94,13 +144,17 @@ class MessageChefController extends Controller
             ->get();
 
 
+        //nom entreprise
+        $nom_entreprise = Entreprise::where('id', '=', $entreprise_id)->value('social_name');
+
+
         // make message vue
         Message::where("id_marche", "=", $id_marche)
             ->where("recever_id", "=", $id_receve)
             ->update(['vue' => 'Y']);
 
 
-        return view("chef.message", compact(["list", "id_marche", "entreprise_id", "id_envoie"]));
+        return view("chef.message", compact(["list", "id_marche", "entreprise_id", "id_envoie", "nom_entreprise"]));
     }
     /**
      * Show the form for creating a new resource.
@@ -128,46 +182,7 @@ class MessageChefController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id_marche)
-    {
-        // // select id entreprise where id_user =..
-        $id_receve =  auth()->user()->id;
 
-        // list messsage vue par chef 
-        $list_messages_vue =
-            //  Message::selectRaw('count(*) as  total,entreprise_id')
-            //     ->where("recever_id", $id_receve)
-            //     // ->having('salary', '<', 10000)
-            //     ->where('Vue', '=', 'N')
-            //     ->where('id_marche', '=', $id_marche)
-            //     ->whereNotNull("entreprise_id")
-            //     ->groupby('entreprise_id')
-            //     ->get();
-            DB::table('messages')
-            ->join('entreprises', 'entreprises.id', '=', 'entreprise_id')
-            ->select('messages.entreprise_id', 'entreprises.social_name', DB::raw('count(*) as total'))
-            // ->where("recever_id", $id_receve)
-            ->where('Vue', '=', 'Y')
-            ->where('id_marche', '=', $id_marche)
-            ->whereNotNull("entreprise_id")
-            ->groupby('entreprise_id')
-            ->get();
-        //             SELECT COUNT(*),entreprise_id FROM messages WHERE recever_id=5 AND Vue='N'  id_marche=1
-        // GROUP BY(entreprise_id )
-        $list_messages_non_vue = DB::table('messages')
-            ->join('entreprises', 'entreprises.id', '=', 'entreprise_id')
-            ->select('messages.entreprise_id', 'entreprises.social_name', DB::raw('count(*) as total'))
-            // ->where("recever_id", $id_receve)
-            ->where('Vue', '=', 'N')
-            ->where('id_marche', '=', $id_marche)
-            ->whereNotNull("entreprise_id")
-            ->groupby('entreprise_id')
-            ->get();
-
-
-
-        return view("chef.message_particulier", compact(['list_messages_vue', 'list_messages_non_vue', 'id_marche']));
-    }
     /**
      * Show the form for editing the specified resource.
      *

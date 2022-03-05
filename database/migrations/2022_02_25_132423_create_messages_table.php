@@ -21,6 +21,7 @@ class CreateMessagesTable extends Migration
             $table->unsignedBigInteger('sender_id')->unsigned();
             $table->text('message');
             $table->enum('type', ['txt', 'file']);
+            $table->Integer('entreprise_id');
             $table->enum('Vue', ['Y', 'N'])->default('N');
             $table->foreign('id_marche')->references('id')->on('marches')->onDelete('cascade');
             $table->foreign('recever_id')->references('id')->on('users')->onDelete('cascade');
