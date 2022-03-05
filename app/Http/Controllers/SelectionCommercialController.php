@@ -78,8 +78,7 @@ class SelectionCommercialController extends Controller
                 //$entreprise_id = EntrepriseUser::where('user_id','=',$postulation->user_id)->select('entreprise_id')->first();
                 // $entreprises = Entreprise ::where('id','=',$entreprise_id)->select('commercial_name')->first();
                 $entreprises = Entreprise ::where('user_id','=',$postulation->user_id)->select('commercial_name')->first();
-                //$list_entreprises[$postulation->user_id] = $entreprises->commercial_name;
-                
+                //$list_entreprises[$postulation->user_id] = $entreprises->commercial_name;                                    
                 $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
                 foreach($reponses_commercials as $reponses_commercial){
                     if($reponses_commercial->produit_id == $produit->id){
@@ -89,9 +88,10 @@ class SelectionCommercialController extends Controller
                 $list_reponses_commercials[$produit->id] = $produit_prix;
             }
         }
-        // dd($total_price);
+
         
         //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
+
         return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price"]));
     }
 
@@ -106,6 +106,40 @@ class SelectionCommercialController extends Controller
         //
     }
 
+
+    public function min_prix_produit($id){
+        $min_prix = [];
+        $produits = Produit::where('marche_id','=',$id)->select('id','nom')->get();
+        foreach($produits as $produit){
+            $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+            ->where('postulations.marche_id','=',$id)
+            ->where('produit_id','=',$produit->id)
+            ->selectRaw('Min(prix) as prix')->first();
+
+            $prix_minn = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+            ->where('postulations.marche_id','=',$id)
+            ->where('produit_id','=',$produit->id)
+            ->where('prix','=',$prix_min->prix)
+            ->selectRaw('prix, user_id as id, produit_id')
+            ->first();
+
+            $min_prix[$produit->nom] = $prix_minn;
+        }
+        return response()->json($min_prix);
+    }
+
+    public function min_prix_marche($id){
+        $min_prix = [];
+        $produits = Produit::where('marche_id','=',$id)->select('id','nom')->get();
+        $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+        ->where('postulations.marche_id','=',$id)
+        ->groupby('user_id')
+        ->selectRaw('sum(prix) as prix_total, user_id as entreprise_id , marche_id')
+        ->orderby('prix_total')
+        ->first();
+        return response()->json($prix_min);
+    }
+    
     /**
      * Update the specified resource in storage.
      *

@@ -63,7 +63,8 @@ Auth::routes();
 //Selection
 
 Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
-
+Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"]);
+Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"]);
 //Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
