@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Entreprise;
 use App\Models\Marche;
 use App\Models\Postulation;
+use App\Models\Produit;
+use App\Models\Reponse_commercial;
+use App\Models\Reponses_commercial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,8 +49,20 @@ class SelectionFichier_TechniqueController extends Controller
      */
     public function accept(Request $request)
     {
-        $id = $_GET['id_postulation'];
         $id_marche = $_GET['id_marche'];
+        $id = $_GET['id_postulation'];
+
+       $items = Produit::where('marche_id',$id_marche)->get();
+       $reponsesCommercial = Postulation::where('id','=',$id)->select('commercials_id')->first();
+       $reponseCommercial = Reponse_commercial::where('reponses_commercial_id','=',$reponsesCommercial)->get();
+        foreach ($reponseCommercial as $reponse) {
+            $note = $_GET['produit_Note'+$reponse->produit_id];
+            $reponse->note = $note;
+            $reponse->save();
+        }
+
+        
+        
         $postulation = Postulation::find($id);
         $postulation->etat = 4;
         $postulation->save();
@@ -92,6 +107,7 @@ class SelectionFichier_TechniqueController extends Controller
                 ->where('b_sections.type_section','RFQ')
                 ->where('postulations.id',$id_postulation)
                 ->where('questions.marche_id',$id_marche)->get(),
+            'produits' => Produit::where('marche_id',$id_marche)->get(),
          ]);
     }
 
