@@ -65,8 +65,11 @@ Auth::routes();
 //Selection
 
 Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
-Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"]);
-Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"]);
+Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"])->name("min_prix_produit")->middleware('auth');
+Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"])->name("min_prix_marche")->middleware('auth');
+Route::get('/best_prixqualite_produit/{id}', [SelectionCommercialController::class, "best_prixqualite_produit"])->name("best_prixqualite_produit")->middleware('auth');
+Route::get('/best_prixqualite_marche/{id}', [SelectionCommercialController::class, "best_prixqualite_marche"])->name("best_prixqualite_marche")->middleware('auth');
+Route::post('/ouverture_commercial/{id}', [SelectionCommercialController::class, "store"])->name("selection_commercial_store")->middleware('auth');
 //Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
