@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contrat;
 use App\Models\Entreprise;
 use App\Models\EntrepriseUser;
 use App\Models\Postulation;
@@ -44,17 +45,65 @@ class SelectionCommercialController extends Controller
         if($request->type_selections == 'meilleurchoix'){
             if($request->type_filtrage == 'produit'){
                 $data = $this->best_prixqualite_produit($request->marche_id);
+                
+                foreach($data as $v){
+                    $postulations = Postulation ::where('marche_id',$request->marche_id)->where('entreprise_id',$v->entreprise_id)->get();
+                    $contrat = new Contrat();
+                    $contrat->id_produits = $v->produit_id;
+                    $contrat->id_marche = $request->marche_id;
+                    $contrat->id_entreprise = $v->entreprise_id;
+                    $contrat->id_postulation = $postulations->id;
+                    $contrat->save();
+                }
                 return $data;
             }elseif($request->type_filtrage == 'marche'){
                 $data = $this->best_prixqualite_marche($request->marche_id);
+                $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
+                
+                foreach($data as $v){
+                    $postulations = Postulation ::where('marche_id',$request->marche_id)->where('entreprise_id',$v->entreprise_id)->get();
+                    foreach($produits as $produit){
+                        $contrat = new Contrat();
+                        $contrat->id_produits = $produit->id;
+                        $contrat->id_marche = $request->marche_id;
+                        $contrat->id_entreprise = $v->entreprise_id;
+                        $contrat->id_postulation = $postulations->id;
+                        $contrat->save();
+                    }
+                }
                 return $data;
             }
         }elseif($request->type_selections == 'moinschere'){
             if($request->type_filtrage == 'produit'){
                 $data = $this->min_prix_produit($request->marche_id);
+                $data_decode = $data->getContent();
+                $data_decode = json_decode($data_decode);
+                foreach($data_decode as $v){
+                    $postulations = Postulation ::where('marche_id',$request->marche_id)
+                                                ->where('entreprise_id',$v->id)->first();
+                    $contrat = new Contrat();
+                    $contrat->id_produits = $v->produit_id;
+                    $contrat->id_marche = $request->marche_id;
+                    $contrat->id_entreprise = $v->id;
+                    $contrat->id_postulation = $postulations->id;
+                    $contrat->save();
+                }
                 return $data;
             }elseif($request->type_filtrage == 'marche'){
+                
                 $data = $this->min_prix_marche($request->marche_id);
+                $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
+                foreach($data as $k=>$v){
+                    $postulations = Postulation ::where('marche_id',$request->marche_id)->where('entreprise_id',$v->entreprise_id)->get();
+                    foreach($produits as $produit){
+                        $contrat = new Contrat();
+                        $contrat->id_produits = $produit->id;
+                        $contrat->id_marche = $request->marche_id;
+                        $contrat->id_entreprise = $v->id;
+                        $contrat->id_postulation = $postulations->id;
+                        $contrat->save();
+                    }
+                }
                 return $data;
             }
         }
@@ -122,6 +171,7 @@ class SelectionCommercialController extends Controller
         //
     }
 
+    
 
     public function min_prix_produit($id){
         $min_prix = [];
