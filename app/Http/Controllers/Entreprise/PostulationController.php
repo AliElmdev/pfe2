@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Entreprise;
 
 use App\Http\Controllers\Controller;
 use App\Models\B_section;
+use App\Models\EntrepriseUser;
 use App\Models\Marche;
 use App\Models\Postulation;
 use App\Models\Produit;
@@ -49,6 +50,7 @@ class PostulationController extends Controller
     {
         // reponse_qst[]
         $user_id = auth()->user()->id;
+        $entreprise_id = EntrepriseUser::where('user_id', '=', $user_id)->first('entreprise_id');
         $postulations = Postulation::where('user_id', $user_id)->where('marche_id', $_POST['marche_id'])->first();
 
         if ($postulations == null) {
@@ -109,6 +111,7 @@ class PostulationController extends Controller
             }
             $postulation->marche_id = $_POST['marche_id'];
             $postulation->user_id = $user_id;
+            $postulation->entreprise_id = $entreprise_id->entreprise_id;
             $postulation->etat = 1;
             $postulation->questions_id = $reponses_question->id;
             $postulation->commercials_id = $reponses_commercial->id;

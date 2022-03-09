@@ -26,9 +26,10 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les utilisateurs:</h6>
             <a class="collapse-item" href="{{route('users')}}">Tous les utilisateurs</a>
-            <a class="collapse-item" href="#">Chefs de projet</a>
-            <a class="collapse-item" href="#">Responsables d'achat</a>
-            <a class="collapse-item" href="#">Entreprises</a>
+            <a class="collapse-item" href="{{route('create_user')}}">Créer un Nouvel Utilisateur</a>
+            {{-- <a class="collapse-item" href="#">Chefs de projet</a>
+            <a class="collapse-item" href="#">Responsables d'achat</a> --}}
+            <a class="collapse-item" href="{{route('entreprises')}}">Entreprises</a>
         </div>
     </div>
 </li>
@@ -44,8 +45,7 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestion:</h6>
-            <a class="collapse-item" href="utilities-color.html">Roles</a>
-            <a class="collapse-item" href="utilities-border.html">Permission</a>
+            <a class="collapse-item" href="{{route('RolePermissionEdit')}}">Roles/Permission</a>
         </div>
     </div>
 </li>
@@ -116,7 +116,7 @@
                         ?>
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Marches( <?php echo "$yearnow" ?> )</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$MarchesCount}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -180,8 +180,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            REQUÊTES EN COURS</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            entreprises</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$EntreprisesCount}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>

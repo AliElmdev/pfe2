@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use jeremykenedy\LaravelRoles\Models\Role;
 
-class AllUsersController extends Controller
+class ListEntreprisesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,8 @@ class AllUsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $roleslist = Role::all();
-        return view("admin.users", compact(["users", "roleslist"]));
+        $entreprises = Entreprise::all();
+        return view('admin.ListEntreprises', compact(["entreprises"]));
     }
 
     /**
@@ -61,13 +59,7 @@ class AllUsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $user->name = $_POST['name_input'];
-        $user->email = $_POST['email_input'];
-        $user->detachRole($user->role);
-        $user->attachRole($_POST['role_input']);
-        $user->save();
-        return Redirect::route('users');
+        //
     }
 
     /**
@@ -90,7 +82,6 @@ class AllUsersController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return Redirect::route('users');
+        //
     }
 }

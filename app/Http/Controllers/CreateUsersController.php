@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Departement;
+use App\Models\DepartementUser;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use jeremykenedy\LaravelRoles\Models\Role;
 
-class AllUsersController extends Controller
+class CreateUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +18,9 @@ class AllUsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $roleslist = Role::all();
-        return view("admin.users", compact(["users", "roleslist"]));
+        $roles = Role::all();
+        $departements = Departement::all();
+        return view('admin.createusers', compact(["roles","departements"]));
     }
 
     /**
@@ -39,7 +41,21 @@ class AllUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request[str_random(8)]),
+        ]);
+        $user->save();
+        $role = config('roles.models.role')::where('name', '=', $request['user_role'])->first();  //choose the default role upon user creation.
+        $user->attachRole($role); 
+        if($request['user_role'] == 'chef'){
+            $attache_departement = new DepartementUser();
+            $attache_departement->departement_id = $request['departement'];
+            $attache_departement->user_id = $user->id;
+            $attache_departement->save();
+        }
+        return redirect(route('create_user'));
     }
 
     /**
@@ -61,13 +77,7 @@ class AllUsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $user->name = $_POST['name_input'];
-        $user->email = $_POST['email_input'];
-        $user->detachRole($user->role);
-        $user->attachRole($_POST['role_input']);
-        $user->save();
-        return Redirect::route('users');
+        //
     }
 
     /**
@@ -90,7 +100,6 @@ class AllUsersController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return Redirect::route('users');
+        //
     }
 }

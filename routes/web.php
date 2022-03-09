@@ -1,16 +1,21 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\CreateUsersController;
 use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\ListEntreprisesController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
 use App\Http\Controllers\MessageChefController;
-use App\Http\Controllers\messagerieController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RolePermissionEditController;
+use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
@@ -63,12 +68,21 @@ Auth::routes();
 //Selection
 
 Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
-
+Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"]);
+Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"]);
 //Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
 Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
 
+
+
+//Create Users
+Route::get("/create_user", [CreateUsersController::class, "index"])->name("create_user")->middleware('auth');
+Route::post("/create_user", [CreateUsersController::class, "store"])->name("create_user_store")->middleware('auth');
+
+//Show Entreprises
+Route::get("/entreprises", [ListEntreprisesController::class, "index"])->name("entreprises")->middleware('auth');
 
 //Show all users in admin panel
 
@@ -102,6 +116,20 @@ Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, 
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
+
+Route::get('/Statistique', function () {
+    return view('admin.Statistique');
+})->name("Statistique");
+Route::get("/test", [StatistiqueEntreprisesController::class, "index"]);
+
+Route::get("/RolePermissionEdit", [RolePermissionEditController::class, "index"])->name("RolePermissionEdit");
+
+
+Route::post("/AddRoleUser/new", [RolePermissionEditController::class, "storeroleuser"])->name("AddRoleUserNew");
+Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexroleuser"])->name("AddRoleUser");
+
+Route::post("/AddRolePermission/new", [RolePermissionEditController::class, "storerolepermission"])->name("AddRolePermissionNew");
+Route::get("/AddRolePermission", [RolePermissionEditController::class, "indexrolepermission"])->name("AddRolePermission");
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
 Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile");
 
@@ -112,13 +140,17 @@ Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->n
 
 Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware();
 
-
-
-
 // message // postulation marches
 
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
-Route::get("/marche/{id_marche}/message", [messagerieController::class, 'enregister'])->name('chats');
-Route::get("/marche/boite_message", [MessageChefController::class, 'index'])->name('chats_chef');
-Route::get("/marche/liste_entreprise/{id_marche?}", [MessageChefController::class, 'show'])->name('chat_entreprise');
+Route::get("/marche/{id_marche}/message", [MessageController::class, 'enregister_entreprise'])->name('chats');
+Route::get("/marche/boite_message", [MessageController::class, 'index'])->name('chats_chef');
+Route::get("/marche/liste_entreprise/{id_marche?}", [MessageController::class, 'show'])->name('chat_entreprise');
 Route::get("/marche/message_chef_entreprise/{id_marche?}/{entreprise_id?}", [MessageChefController::class, 'enregister'])->name('chat_chef_entreprise');
+
+
+Route::get('/marche/inforamationmarches', [MarcheController::class, 'afficher'])->name('infosMarche');
+
+Route::get('/marche/inforamationmarches/marche{id_marche}', [Gestion_Marches_ChefController::class, 'show'])->name('modifierMarche');
+
+Route::post('/marche/inforamationmarches/marche{id_marche}', [Gestion_Marches_ChefController::class, 'update'])->name('modification_marches');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entreprise;
+use App\Models\Marche;
 use Illuminate\Http\Request;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 
@@ -17,7 +19,9 @@ class Dashboard extends Controller
     {
         $user = auth()->user();
         if ($user->hasRole('admin')) {
-            return view('admin.dashboard');
+            $EntreprisesCount = Entreprise::all()->count();
+            $MarchesCount = Marche::all()->count();
+            return view('admin.dashboard', compact(["EntreprisesCount", "MarchesCount"]));
         }
         if ($user->hasRole('user')) {
             return view('entreprise.dashboard');

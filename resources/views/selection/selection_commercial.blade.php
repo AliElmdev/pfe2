@@ -1,10 +1,10 @@
 @extends('layouts.page')
 @section('content')
 
-    <main style="background: rgba(220,53,69,0);height: 574px;margin-top: 0px;">
+    <main style="background: rgba(220,53,69,0);margin-top: 0px;">
         <div style="height: 100px;background: url('/assets/img/gettyimages-1205700615.jpg') bottom / cover;"></div>
         <div style="text-align: center;margin-top: 20px;">
-            <h2 style="text-align: center;margin-bottom: 30px;">Ouverture Commercial</h2><select class="type" style="height: 30px;border-radius: 13px;width: 169px;" onchange="myfunction();">
+            <h2 style="text-align: center;margin-bottom: 30px;">Ouverture Commercial</h2><select class="type" style="height: 30px;border-radius: 13px;width: 169px;" onchange="myfunction();filtre_selection();">
                 <optgroup label="Type de selection">
                     <option value=""></option>
                     <option value="produit">Par Produit</option>
@@ -52,8 +52,76 @@
                 </table>
             </div>
         </div>
+        <div class="mb-1000">
+            <h2 class="text-center">Resultats</h2>
+            <table class="table table-hover table-bordered resultats_final_1">
+                <thead>
+                    <tr>
+                        <th>Produits</th>
+                        <th>Entreprise</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <table class="table table-hover table-bordered resultats_final_2" style="display: none">
+                <thead>
+                    <tr>
+                        <th>Marche</th>
+                        <th>Entreprise</th>
+                        <th>Prix Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
     </main>
 
+
+    <script>
+
+
+        function filtre_selection(){
+            if($('.type').val() == 'produit'){
+                min_prix_produit(2);
+            }else{
+                min_prix_marche(2);
+            }
+        }
+
+        function min_prix_produit($id_marche){ 
+
+            $('.resultats_final_2').hide();
+            $('.resultats_final_1').show();
+
+            $('.resultats_final_1 tbody').text('');
+            // var url = "{{url('/test/2')}}";
+            var url1 = "/min_prix_produit/"+$id_marche;
+            $.get(url1, function(response){
+                $.each(response, function(k,v) {
+                    $('.resultats_final_1 tbody').append("<tr><td>"+v.produit_id+"</td><td>"+v.id+"</td><td>"+v.prix+" Dh/u</td></tr>");
+                });
+            });
+        }
+
+        function min_prix_marche($id_marche){ 
+
+            $('.resultats_final_1').hide();
+            $('.resultats_final_2').show();
+
+            $('.resultats_final_2 tbody').text('');
+            // var url = "{{url('/test/2')}}";
+            var url1 = "/min_prix_marche/"+$id_marche;
+            $.get(url1, function(response){
+                $('.resultats_final_2 tbody').append("<tr><td>"+response.marche_id+"</td><td>"+response.entreprise_id+"</td><td>"+response.prix_total+" Dh/u</td></tr>");
+            });
+        }
+        
+    </script>
 
     <script>
 
@@ -221,25 +289,25 @@
 
     <style>
         /*.high .min {
-  background-color: #e27b7b;
-}*/
+    background-color: #e27b7b;
+    }*/
 
-.high .max {
-  background-color: #8bce6f;
-}
+    .high .max {
+    background-color: #8bce6f;
+    }
 
-.low .min {
-  background-color: #8bce6f;
-}
-/*
-.low .max {
-  background-color: #e27b7b;
-}*/
-.tb_footer td{
-	background: rgb(37,71,106);
-	color: #ffffff;
-	text-align: center;"
-}
+    .low .min {
+    background-color: #8bce6f;
+    }
+    /*
+    .low .max {
+    background-color: #e27b7b;
+    }*/
+    .tb_footer td{
+        background: rgb(37,71,106);
+        color: #ffffff;
+        text-align: center;"
+    }
 
     </style>
 @endsection

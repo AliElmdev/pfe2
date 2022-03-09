@@ -46,16 +46,18 @@
 @endsection
 
 @section('title')
-<!-- For demo purpose-->
-<header class="text-center">
-    <h4>Nom entreprise : {{$nom_entreprise}}</h4>
-</header>
+
 @endsection
 
 @section('content')
 
 <div class="card card-bordered" style="background-color: rgb(163, 206, 206);margin-bottom : 5% ;">
     <div class="container py-5 px-4 ">
+        <!-- For demo purpose-->
+        <header class="text-center" style="padding-bottom: 2%">
+            <h4>Nom entreprise : {{$nom_entreprise}}</h4>
+        </header>
+
         <!-- Chat Box-->
         <div class="col-12 px-0" id="some_div">
             <div class="px-4 py-5 chat-box bg-white" " style=" border-radius: 10px; ">
@@ -111,8 +113,8 @@
                 @endforeach
                 <!-- Typing area -->
             </div>
-            <form action={{route('chat_chef_entreprise',[$entreprise_id,$id_marche])}} enctype="multipart/form-data"
-                method="POST" style="max-width:100% ;border: 2px">
+            <form action="{{route('infosMarche')}}" enctype="multipart/form-data" type="POST"
+                style="max-width:100% ;border: 2px">
                 @csrf
                 @method('GET')
                 <div class="input-group">
@@ -148,10 +150,6 @@
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
       
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
 </script>
 @yield('contenu')
