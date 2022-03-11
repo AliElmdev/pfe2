@@ -13,5 +13,6 @@ class Contrat extends Model
         'id_marche',
         'id_entreprise',
         'id_postulation',
+        'prix',
     ];
 }

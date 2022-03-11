@@ -15,7 +15,6 @@
     <canvas id="myChart1" width="100" height="100"></canvas>
 </div>
 <script>
-const ctx = document.getElementById('myChart');
 // const ctx1 = document.getElementById('myChart1');
 
 // const myChart1 = new Chart(ctx1, {
@@ -40,6 +39,7 @@ const ctx = document.getElementById('myChart');
 //         }]
 //     },
 // });
+const ctx = document.getElementById('myChart');
 const myChart = new Chart(ctx, { 
     type: 'line',
     data: {
