@@ -4,7 +4,6 @@
 
 @endsection
 
-
 @section('content')
 <div id="wrapper">
     <div class="d-flex flex-column" id="content-wrapper">
