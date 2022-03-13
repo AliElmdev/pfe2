@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marche;
+use App\Models\Postulation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OuvertureMarcheController extends Controller
 {
@@ -16,7 +18,9 @@ class OuvertureMarcheController extends Controller
     {
         return view('selection.ouverture_marche',[
             "marche" => Marche::find($id),
-            
+            "nbrRFI" => Postulation::where('marche_id',$id)->where('etat',2)->count(), // Nombre des entreprises dans l'etape de RFI
+            "nbrTechnique" => Postulation::where('marche_id',$id)->where('etat',3)->count(), // Nombre des entreprises dans l'etape de technique
+            "nbrCommerciale" => Postulation::where('marche_id',$id)->where('etat',4)->count(), // Nombre des entreprises dans l'etape de commerciale
         ]);
     }
 
