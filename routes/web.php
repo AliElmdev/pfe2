@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\ListEntreprisesController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
+use App\Http\Controllers\OuvertureController;
 use App\Http\Controllers\RolePermissionEditController;
 use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ProfileController;
@@ -139,5 +140,6 @@ Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name(
 // Route::get("/statistiques", [StatisticsMarchesController::class, "index"])->name("statisticsMarches");
 // Route::get("/statistiques/chart{id}", [StatisticsMarchesController::class, "chart"])->name("statisticsMarcheschart");
 Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->name("statisticsInfo");
-
 Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware();
+
+Route::get("/Ouverture", [OuvertureController::class, "index"])->name("Ouverture")->middleware();

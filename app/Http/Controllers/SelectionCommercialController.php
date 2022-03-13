@@ -137,7 +137,8 @@ class SelectionCommercialController extends Controller
         $postulations = Postulation ::where('marche_id',$id)->get();
         $list_entreprises = [];
         $list_reponses_commercials = [];
-        $list_produits = Produit::where('marche_id',$id)->select('id')->get();
+        $list_qte = [];
+        $list_produits = Produit::where('marche_id',$id)->select()->get();
         $total_price = array('Total');
         foreach ($postulations as $postulation) {
             $entreprises = Entreprise ::where('user_id','=',$postulation->user_id)->select('commercial_name')->first();
@@ -166,17 +167,16 @@ class SelectionCommercialController extends Controller
                 $reponses_commercials = Reponse_commercial ::where('reponses_commercial_id',$postulation->commercials_id)->get();
                 foreach($reponses_commercials as $reponses_commercial){
                     if($reponses_commercial->produit_id == $produit->id){
-                        array_push($produit_prix, $reponses_commercial->prix);
+                        $produit_prix[$reponses_commercial->note] = $reponses_commercial->prix;
+                        //array_push($produit_prix, $reponses_commercial->prix);
                     }
                 }
                 $list_reponses_commercials[$produit->id] = $produit_prix;
+                $list_qte[$produit->id] = $produit->qte;
             }
         }
-
-        
         //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
-
-        return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price","id"]));
+        return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price","id","list_qte"]));
     }
 
     /**

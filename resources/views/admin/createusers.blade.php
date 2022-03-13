@@ -23,10 +23,20 @@
                         @endif
                     @endforeach 
                 </select>
+                <div class="titre">
+                    <div class="ml-1">Titre : </div>
+                    <select name="titre" class="form-select titre text-capitalize" aria-label="Default select example">
+                        <option value="m">M</option>
+                        <option value="mme">Mme</option>
+                        <option value="mlle">Mlle</option>
+                    </select>
+                </div>
                 <div class="ml-1">Nom : </div>
                 <div><input type="text" name="name" id="" class="form-control" required></div>
                 <div class="ml-1">Email : </div>
                 <div><input type="email" name="email" id="" class="form-control" required></div>
+                <div class="ml-1">Tele : </div>
+                <div><input type="text" name="phone" placeholder="06 00 00 00 00" id="" class="form-control" required></div>
                 <div class="departements" style="display: none">
                     <div class="ml-1">Departement : </div>
                     <select name="departement" class="form-select departements_list text-capitalize" aria-label="Default select example">
@@ -35,6 +45,15 @@
                         @endforeach 
                     </select>
                 </div>
+                <div class="titre_services">
+                    <div class="ml-1">Titre Services : </div>
+                    <select name="titre_services" class="form-select titre_services text-capitalize" aria-label="Default select example">
+                        @foreach ($titre_services as $titre_service)
+                            <option value="{{$titre_service->id}}" class="text-capitalize">{{$titre_service->description}}</option>
+                        @endforeach 
+                    </select>
+                </div>
+                
                 <div class="ml-1 mt-5 text-center"><button type="submit" class="btn btn-success border-dark">Ajouter</button></div>
                 <div class="ml-1 mt-5 alert-primary font-weight-bold text-center">Le mot de passe sera envoyé par e-mail</div>
             </div>
