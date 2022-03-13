@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contrat;
 use App\Models\Entreprise;
 use App\Models\Marche;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 
 class Dashboard extends Controller
@@ -21,7 +23,8 @@ class Dashboard extends Controller
         if ($user->hasRole('admin')) {
             $EntreprisesCount = Entreprise::all()->count();
             $MarchesCount = Marche::all()->count();
-            return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount"]));
+            $depenses = Contrat::whereYear('created_at', date('Y'))->sum('prix');
+            return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount","depenses"]));
         }
         if ($user->hasRole('user')) {
             return view('entreprise.dashboard');

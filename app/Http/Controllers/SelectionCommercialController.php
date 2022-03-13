@@ -95,7 +95,7 @@ class SelectionCommercialController extends Controller
                     $contrat->id_marche = $request->marche_id;
                     $contrat->id_entreprise = $v->id;
                     $contrat->id_postulation = $postulations->id;
-                    $contrat->prix = $v->prix;
+                    $contrat->prix = $v->prix_total;
                     $contrat->save();
                 }
                 return $data;
@@ -203,9 +203,10 @@ class SelectionCommercialController extends Controller
 
             $prix_minn = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
             ->where('postulations.marche_id','=',$id)
+            ->join('produits', 'produits.id','=','produit_id') 
             ->where('produit_id','=',$produit->id)
             ->where('prix','=',$prix_min->prix)
-            ->selectRaw('prix, entreprise_id as id, produit_id')
+            ->selectRaw('prix, entreprise_id as id, produit_id,(prix*qte) as prix_total')
             ->first();
 
             $min_prix[$produit->nom] = $prix_minn;
