@@ -9,6 +9,7 @@ use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
+use App\Http\Controllers\OuvertureMarcheController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
@@ -110,3 +111,6 @@ Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name(
 Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->name("statisticsInfo");
 
 Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware();
+
+Route::get("/ouverture-marche/{id}", [OuvertureMarcheController::class, "index"])->name("ouvertureMarche");
+
