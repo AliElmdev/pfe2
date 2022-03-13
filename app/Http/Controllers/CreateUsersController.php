@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Entreprise;
-use App\Models\Marche;
+use App\Http\Controllers\Controller;
+use App\Models\Departement;
+use App\Models\DepartementUser;
+use App\Models\User;
 use Illuminate\Http\Request;
-use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
+use jeremykenedy\LaravelRoles\Models\Role;
 
-class Dashboard extends Controller
+class CreateUsersController extends Controller
 {
-    use HasRoleAndPermission;
     /**
      * Display a listing of the resource.
      *
@@ -17,22 +18,9 @@ class Dashboard extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if ($user->hasRole('admin')) {
-            $EntreprisesCount = Entreprise::all()->count();
-            $MarchesCount = Marche::all()->count();
-            return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount"]));
-        }
-        if ($user->hasRole('user')) {
-            return view('entreprise.dashboard');
-        }
-        if ($user->hasRole('chef')) {
-            return redirect()->route('statistics');
-        }
-        if ($user->hasRole('achat')) {
-            return view('achat.dashboard');
-        }
-        return view('homepage');
+        $roles = Role::all();
+        $departements = Departement::all();
+        return view('admin.createusers', compact(["roles","departements"]));
     }
 
     /**
@@ -53,7 +41,21 @@ class Dashboard extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request[str_random(8)]),
+        ]);
+        $user->save();
+        $role = config('roles.models.role')::where('name', '=', $request['user_role'])->first();  //choose the default role upon user creation.
+        $user->attachRole($role); 
+        if($request['user_role'] == 'chef'){
+            $attache_departement = new DepartementUser();
+            $attache_departement->departement_id = $request['departement'];
+            $attache_departement->user_id = $user->id;
+            $attache_departement->save();
+        }
+        return redirect(route('create_user'));
     }
 
     /**

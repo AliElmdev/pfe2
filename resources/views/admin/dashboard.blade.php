@@ -26,9 +26,10 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les utilisateurs:</h6>
             <a class="collapse-item" href="{{route('users')}}">Tous les utilisateurs</a>
-            <a class="collapse-item" href="#">Chefs de projet</a>
-            <a class="collapse-item" href="#">Responsables d'achat</a>
-            <a class="collapse-item" href="#">Entreprises</a>
+            <a class="collapse-item" href="{{route('create_user')}}">Créer un Nouvel Utilisateur</a>
+            {{-- <a class="collapse-item" href="#">Chefs de projet</a>
+            <a class="collapse-item" href="#">Responsables d'achat</a> --}}
+            <a class="collapse-item" href="{{route('entreprises')}}">Entreprises</a>
         </div>
     </div>
 </li>
@@ -44,8 +45,7 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestion:</h6>
-            <a class="collapse-item" href="utilities-color.html">Roles</a>
-            <a class="collapse-item" href="utilities-border.html">Permission</a>
+            <a class="collapse-item" href="{{route('RolePermissionEdit')}}">Roles/Permission</a>
         </div>
     </div>
 </li>
@@ -116,7 +116,7 @@
                         ?>
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Marches( <?php echo "$yearnow" ?> )</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">40,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$MarchesCount}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -180,8 +180,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            REQUÊTES EN COURS</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            entreprises</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$EntreprisesCount}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -221,7 +221,7 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
@@ -251,8 +251,8 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
+                <div class="chart-pie mb-2">
+                    <canvas id="myChart1"></canvas>
                 </div>
                 <div class="mt-4 text-center small">
                     <span class="mr-2">
@@ -285,4 +285,84 @@
     </div>
 </footer>
 <!-- End of Footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const myChart = new Chart(ctx, { 
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Nombre d\'entreprises',
+                data: [12, 19, 3, 5, 2, 50],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<script>
+    var url = "{{url('/test')}}";
+       var Years = new Array();
+       var Labels = new Array();
+       var Prices = new Array();
+       var NbrTotal = 0;
+       $(document).ready(function(){
+         $.get(url, function(response){
+           response.forEach(function(data){
+               Years.push(data.year);
+               Labels.push(data.myChart1);
+               Prices.push(data.data);
+               NbrTotal += data.data;
+           });
+           var ctx = document.getElementById("myChart1").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'pie',
+                 data: {
+                     labels:Years,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal + ' )',
+                         data: Prices,
+                         backgroundColor: [
+                           'blue',
+                           'red',
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
+</script>
 @endsection

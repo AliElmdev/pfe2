@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Entreprise;
-use App\Models\Marche;
 use Illuminate\Http\Request;
-use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
+use Illuminate\Support\Facades\DB;
 
-class Dashboard extends Controller
+class StatistiqueEntreprisesController extends Controller
 {
-    use HasRoleAndPermission;
     /**
      * Display a listing of the resource.
      *
@@ -17,22 +16,10 @@ class Dashboard extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if ($user->hasRole('admin')) {
-            $EntreprisesCount = Entreprise::all()->count();
-            $MarchesCount = Marche::all()->count();
-            return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount"]));
-        }
-        if ($user->hasRole('user')) {
-            return view('entreprise.dashboard');
-        }
-        if ($user->hasRole('chef')) {
-            return redirect()->route('statistics');
-        }
-        if ($user->hasRole('achat')) {
-            return view('achat.dashboard');
-        }
-        return view('homepage');
+        $result = Entreprise::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+        ->groupby('year','month')
+        ->get();
+        return response()->json($result);
     }
 
     /**

@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Entreprise;
-use App\Models\Marche;
 use Illuminate\Http\Request;
-use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
 
-class Dashboard extends Controller
+class ListEntreprisesController extends Controller
 {
-    use HasRoleAndPermission;
     /**
      * Display a listing of the resource.
      *
@@ -17,22 +15,8 @@ class Dashboard extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        if ($user->hasRole('admin')) {
-            $EntreprisesCount = Entreprise::all()->count();
-            $MarchesCount = Marche::all()->count();
-            return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount"]));
-        }
-        if ($user->hasRole('user')) {
-            return view('entreprise.dashboard');
-        }
-        if ($user->hasRole('chef')) {
-            return redirect()->route('statistics');
-        }
-        if ($user->hasRole('achat')) {
-            return view('achat.dashboard');
-        }
-        return view('homepage');
+        $entreprises = Entreprise::all();
+        return view('admin.ListEntreprises', compact(["entreprises"]));
     }
 
     /**

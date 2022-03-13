@@ -1,15 +1,20 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
+use App\Http\Controllers\CreateUsersController;
 use App\Http\Controllers\EcMarcheCreationController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
+use App\Http\Controllers\ListEntreprisesController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
 use App\Http\Controllers\OuvertureMarcheController;
+use App\Http\Controllers\RolePermissionEditController;
+use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
@@ -61,12 +66,24 @@ Auth::routes();
 //Selection
 
 Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
-
+Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"])->name("min_prix_produit")->middleware('auth');
+Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"])->name("min_prix_marche")->middleware('auth');
+Route::get('/best_prixqualite_produit/{id}', [SelectionCommercialController::class, "best_prixqualite_produit"])->name("best_prixqualite_produit")->middleware('auth');
+Route::get('/best_prixqualite_marche/{id}', [SelectionCommercialController::class, "best_prixqualite_marche"])->name("best_prixqualite_marche")->middleware('auth');
+Route::post('/ouverture_commercial/{id}', [SelectionCommercialController::class, "store"])->name("selection_commercial_store")->middleware('auth');
 //Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
 Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
 
+
+
+//Create Users
+Route::get("/create_user", [CreateUsersController::class, "index"])->name("create_user")->middleware('auth');
+Route::post("/create_user", [CreateUsersController::class, "store"])->name("create_user_store")->middleware('auth');
+
+//Show Entreprises
+Route::get("/entreprises", [ListEntreprisesController::class, "index"])->name("entreprises")->middleware('auth');
 
 //Show all users in admin panel
 
@@ -102,6 +119,20 @@ Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, 
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
+
+Route::get('/Statistique', function () {
+    return view('admin.Statistique');
+})->name("Statistique");
+Route::get("/test", [StatistiqueEntreprisesController::class, "index"]);
+
+Route::get("/RolePermissionEdit", [RolePermissionEditController::class, "index"])->name("RolePermissionEdit");
+
+
+Route::post("/AddRoleUser/new", [RolePermissionEditController::class, "storeroleuser"])->name("AddRoleUserNew");
+Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexroleuser"])->name("AddRoleUser");
+
+Route::post("/AddRolePermission/new", [RolePermissionEditController::class, "storerolepermission"])->name("AddRolePermissionNew");
+Route::get("/AddRolePermission", [RolePermissionEditController::class, "indexrolepermission"])->name("AddRolePermission");
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
 Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile");
 
