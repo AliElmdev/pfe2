@@ -13,6 +13,7 @@ use App\Http\Controllers\Entreprise\PostulationController;
 use App\Http\Controllers\ListEntreprisesController;
 use App\Http\Controllers\Gestion_Marches_ChefController;
 use App\Http\Controllers\OuvertureController;
+use App\Http\Controllers\OuvertureMarcheController;
 use App\Http\Controllers\RolePermissionEditController;
 use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ProfileController;
@@ -143,3 +144,5 @@ Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->n
 Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware();
 
 Route::get("/Ouverture", [OuvertureController::class, "index"])->name("Ouverture")->middleware();
+Route::get("/ouverture-marche/{id}", [OuvertureMarcheController::class, "index"])->name("ouvertureMarche");
+

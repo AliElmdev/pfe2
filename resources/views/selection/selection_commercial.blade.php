@@ -1,4 +1,9 @@
-@extends('layouts.page')
+@extends('layouts.dashboard')
+
+@section('navbar')
+
+@endsection
+
 @section('content')
 
     <main style="background: rgba(220,53,69,0);margin-top: 0px;">
