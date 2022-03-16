@@ -15,12 +15,12 @@ use App\Http\Controllers\Gestion_Marches_ChefController;
 use App\Http\Controllers\OuvertureController;
 use App\Http\Controllers\OuvertureMarcheController;
 use App\Http\Controllers\RolePermissionEditController;
-use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
 use App\Http\Controllers\StatisticsMarchesController;
+use App\Http\Controllers\StatistiqueEntreprisesController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
@@ -120,7 +120,7 @@ Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, 
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
-
+//admin statistiques
 Route::get('/Statistique', function () {
     return view('admin.Statistique');
 })->name("Statistique");

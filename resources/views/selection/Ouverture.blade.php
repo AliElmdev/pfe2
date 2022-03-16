@@ -11,7 +11,7 @@
     </div>
     <div id="cards" class="cards">
       @foreach ($Marches as $Marche)
-      <a href="">
+      <a href="{{route('ouvertureMarche',$Marche->id)}}">
         <div  class="card"><span class="card-code">#Marche{{$Marche->id}}</span>
           <h2 class="card-title">{{$Marche->title}}</h2>
           <div class="card-tags">

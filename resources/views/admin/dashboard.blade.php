@@ -287,9 +287,9 @@
 <!-- End of Footer -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart1');
     const myChart = new Chart(ctx, { 
-        type: 'line',
+        type: 'pie',
         data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
@@ -337,17 +337,16 @@
                Prices.push(data.data);
                NbrTotal += data.data;
            });
-           var ctx = document.getElementById("myChart1").getContext('2d');
+           var ctx = document.getElementById("myChart").getContext('2d');
                var myChart = new Chart(ctx, {
-                 type: 'pie',
+                 type: 'bar',
                  data: {
                      labels:Years,
                      datasets: [{
                          label: 'Nombres Entreprises ( Total : ' + NbrTotal + ' )',
                          data: Prices,
                          backgroundColor: [
-                           'blue',
-                           'red',
+                            'rgba(2, 187, 103, 0.8)',
                          ],
                          borderWidth: 1
                      }]
