@@ -37,7 +37,6 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**
@@ -50,41 +49,41 @@ class ProfileController extends Controller
     {
         return view('profile', [
             'user' => DB::table('users')
-            ->join('profiles','users.id','=','profiles.user_id')
-            ->join('role_user','users.id','=','role_user.user_id')
-            ->join('roles','role_user.role_id','=','roles.id')
-            ->select('users.name AS nom','users.email','profiles.service_title','profiles.phone','roles.description AS role')
-            ->where('users.id',$id)->first(),
+                ->join('profiles', 'users.id', '=', 'profiles.user_id')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                ->select('users.name AS nom', 'users.email', 'profiles.service_title', 'profiles.phone', 'roles.description AS role')
+                ->where('users.id', $id)->first(),
 
-            'marchesEnCoursChef' => Marche::where('id_chef',$id)
-            ->whereBetween('etat',[1,2])
-            ->count(),
+            'marchesEnCoursChef' => Marche::where('id_chef', $id)
+                ->whereBetween('etat', [1, 2])
+                ->count(),
 
-            'marchesEnCoursAchat' => Marche::where('id_achat',$id)
-            ->whereBetween('etat',[1,2])
-            ->count(),
+            'marchesEnCoursAchat' => Marche::where('id_achat', $id)
+                ->whereBetween('etat', [1, 2])
+                ->count(),
 
-            'marchesFermesChef' => Marche::where('id_chef',$id)
-            ->whereBetween('etat',[3,5])
-            ->count(),          
-            
-            'marchesFermesAchat' => Marche::where('id_achat',$id)
-            ->whereBetween('etat',[3,5])
-            ->count(), 
+            'marchesFermesChef' => Marche::where('id_chef', $id)
+                ->whereBetween('etat', [3, 5])
+                ->count(),
 
-            'marchesTerminesChef' => Marche::where('id_chef',$id)
-            ->where('etat',6)
-            ->count(),   
-            
-            'marchesTerminesAchat' => Marche::where('id_achat',$id)
-            ->where('etat',6)
-            ->count(), 
+            'marchesFermesAchat' => Marche::where('id_achat', $id)
+                ->whereBetween('etat', [3, 5])
+                ->count(),
 
-            'marchesAllChef' => Marche::where('id_chef',$id)
-            ->count(),  
+            'marchesTerminesChef' => Marche::where('id_chef', $id)
+                ->where('etat', 6)
+                ->count(),
 
-            'marchesAllAchat' => Marche::where('id_achat',$id)
-            ->count(), 
+            'marchesTerminesAchat' => Marche::where('id_achat', $id)
+                ->where('etat', 6)
+                ->count(),
+
+            'marchesAllChef' => Marche::where('id_chef', $id)
+                ->count(),
+
+            'marchesAllAchat' => Marche::where('id_achat', $id)
+                ->count(),
         ]);
     }
 
@@ -108,11 +107,10 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Profile::where('user_id',$id)
-            ->update(['phone'=>$request->input('phone')]);
-      
-        return redirect(route('profile',['id' => $id]));
-      
+        Profile::where('user_id', $id)
+            ->update(['phone' => $request->input('phone')]);
+
+        return redirect(route('profile', ['id' => $id]));
     }
 
     /**

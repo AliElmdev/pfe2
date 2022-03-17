@@ -9,6 +9,7 @@ use App\Models\Message;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class MessageController extends Controller
 {
@@ -29,8 +30,18 @@ class MessageController extends Controller
 
         // list messsage vue
         $list_messages_vue = DB::table('messages')
-            ->join('marches', 'marches.id', '=', 'id_marche')
-            ->select('marches.title', 'messages.id_marche', 'marches.limit_date', DB::raw('count(*) as total'))
+            ->join(
+                'marches',
+                'marches.id',
+                '=',
+                'id_marche'
+            )
+            ->select(
+                'marches.title',
+                'messages.id_marche',
+                'marches.limit_date',
+                DB::raw('count(*) as total')
+            )
             ->where("messages.recever_id", $id_receve)
             ->where('Vue', '=', 'Y')
             ->whereNotNull("entreprise_id")
@@ -40,7 +51,12 @@ class MessageController extends Controller
 
         $list_messages_non_vue = DB::table('messages')
             ->join('marches', 'marches.id', '=', 'id_marche')
-            ->select('marches.title', 'messages.id_marche', 'marches.limit_date', DB::raw('count(*) as total'))
+            ->select(
+                'marches.title',
+                'messages.id_marche',
+                'marches.limit_date',
+                DB::raw('count(*) as total')
+            )
             ->where("messages.recever_id", $id_receve)
             ->where('Vue', '=', 'N')
             ->whereNotNull("entreprise_id")
@@ -64,7 +80,7 @@ class MessageController extends Controller
             ->join('messages', 'messages.entreprise_id', '=', 'entreprises.id')
             ->join('postulations', 'postulations.entreprise_id', "=", 'entreprises.id')
             ->join('etat_postulaions', "etat_postulaions.id", 'postulations.etat')
-            ->select('messages.entreprise_id', 'entreprises.social_name', "etat_postulaions.description as etat", DB::raw('count(*) as total'))
+            ->select('messages.entreprise_id as entreprise_id', 'entreprises.social_name', "etat_postulaions.description as etat", DB::raw('count(*) as total'))
             ->where('Vue', '=', 'Y')
             ->where('messages.id_marche', '=', $id_marche)
             ->whereNotNull("messages.entreprise_id")
@@ -74,19 +90,44 @@ class MessageController extends Controller
         //             SELECT COUNT(*),entreprise_id FROM messages WHERE recever_id=5 AND Vue='N'  id_marche=1
         // GROUP BY(entreprise_id )
         $list_messages_non_vue = DB::table('entreprises')
-            ->join('messages', 'messages.entreprise_id', '=', 'entreprises.id')
-            ->join('postulations', 'postulations.entreprise_id', "=", 'entreprises.id')
-            ->join('etat_postulaions', "etat_postulaions.id", 'postulations.etat')
-            ->select('messages.entreprise_id', 'entreprises.social_name', "etat_postulaions.description", DB::raw('count(*) as total'))
+            ->join(
+                'messages',
+                'messages.entreprise_id',
+                '=',
+                'entreprises.id'
+            )
+            ->join(
+                'postulations',
+                'postulations.entreprise_id',
+                "=",
+                'entreprises.id'
+            )
+            ->join(
+                'etat_postulaions',
+                "etat_postulaions.id",
+                'postulations.etat'
+            )
+            ->select(
+                'messages.entreprise_id as entreprise_id',
+                'entreprises.social_name',
+                "etat_postulaions.description as etat",
+                DB::raw('count(*) as total')
+            )
             ->where('Vue', '=', 'N')
-            ->where('messages.id_marche', '=', $id_marche)
+            ->where(
+                'messages.id_marche',
+                '=',
+                $id_marche
+            )
             ->whereNotNull("messages.entreprise_id")
             ->groupby('messages.entreprise_id')
             ->get();
 
 
-
-        return view("chef.message_particulier", compact(['list_messages_vue', 'list_messages_non_vue', 'id_marche']));
+        return view(
+            "chef.message_particulier",
+            compact(['list_messages_vue', 'list_messages_non_vue', 'id_marche'])
+        );
     }
 
 
@@ -96,7 +137,7 @@ class MessageController extends Controller
     {
         $id_receve =  auth()->user()->id;
         $id_envoie =  DB::table('messages')->where('entreprise_id', $entreprise_id)->value('sender_id');
-
+        // dd($id_envoie);
 
         // tester si le txt input est vide 
         if (!(is_null($request->input('text_input')))) {
@@ -111,10 +152,38 @@ class MessageController extends Controller
             $name->save();
         }
 
+
+        // if (!(is_null($request->file('file_input')))) {
+        //     // tester si le file input est vide
+        //     $files = $request->file('file_input');
+        //     if ($request->hasFile('file_input')) {
+        //         foreach ($files as $file) {
+        //             // enregister les file en 
+        //             foreach ($files as $file) {
+        //                 // enregister les file en rep and uplouad
+        //                 $file_charge = $file;
+        //                 $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
+        //                 $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
+        //                 $file_chargeo = $upload_path . $file_SaveAsName;
+        //                 $success = $file_charge->move($upload_path, $file_SaveAsName);
+        //                 // egregistrer des information 
+        //                 $name = new Message();
+        //                 $name->id_marche = $id_marche;
+        //                 $name->sender_id = $id_receve;
+        //                 $name->recever_id = $id_envoie;
+        //                 $name->entreprise_id = 0;
+        //                 $name->message =  $file_chargeo; // enregistrer en path uploud 
+        //                 $name->type = "file";
+        //                 $name->save();
+        //             }
+        //         }
+        //     }
+        // }
         if (!(is_null($request->file('file_input')))) {
             // tester si le file input est vide
-            $files = $request->file('file_input');
+
             if ($request->hasFile('file_input')) {
+                $files = $request->file('file_input');
                 foreach ($files as $file) {
                     // enregister les file en rep and uplouad
                     $file_charge = $file;
@@ -135,15 +204,19 @@ class MessageController extends Controller
             }
         }
 
+
         $list = Message::where("id_marche", "=", $id_marche)
             ->where("recever_id", "=", $id_receve)
             ->where("entreprise_id", "=", $entreprise_id)
+
             ->orwhere("sender_id", "=", $id_receve)
+            ->where("recever_id", "=", $id_envoie)
+            ->where("id_marche", "=", $id_marche)
+
             ->orwhere("entreprise_id", "=", $entreprise_id)
             ->whereNotNull("entreprise_id")
             ->where("id_marche", "=", $id_marche)
             ->get();
-
 
         //nom entreprise
         $nom_entreprise = Entreprise::where('id', '=', $entreprise_id)->value('social_name');
@@ -153,7 +226,6 @@ class MessageController extends Controller
         Message::where("id_marche", "=", $id_marche)
             ->where("recever_id", "=", $id_receve)
             ->update(['vue' => 'Y']);
-
 
         return view("chef.message", compact(["list", "id_marche", "entreprise_id", "id_envoie", "nom_entreprise"]));
     }
@@ -205,15 +277,21 @@ class MessageController extends Controller
                 }
             }
         }
-        // SELECT * FROM messages WHERE recever_id=4 AND entreprise_id=1 AND id_marche=1 OR  recever_id=2 AND sender_id=4 AND id_marche=1
+
 
         $list = Message::where("id_marche", "=", $id_marche)
-            ->where("recever_id",  $id_envoie)
+            ->where("recever_id",  $id_receve)
+            ->where("sender_id", $id_envoie)
+
+            // ->where('entreprise_id', $entreprise_id)
+
+
+            ->orwhere("sender_id",  $id_envoie)
+            ->where("id_marche", "=", $id_marche)
             ->where('entreprise_id', $entreprise_id)
-
-            ->orwhere("id_marche", "=", $id_marche)
-            ->where("sender_id",  $id_envoie)
-
+            ->orwhere('entreprise_id', '=', $entreprise_id)
+            ->where("id_marche", "=", $id_marche)
+            ->whereNotNull("entreprise_id")
             ->get();
 
 

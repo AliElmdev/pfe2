@@ -10,7 +10,7 @@
                     <div class="card shadow">
                         <div class="card-header py-3">
                             <p class="text-uppercase text-primary m-0 fw-bold" style="text-align: center;">Marches
-                                Information
+                                Informations
                             </p>
                         </div>
                         <div class="card-body">
@@ -23,7 +23,7 @@
                                                 onchange="filtrage(this)">
                                                 <option value="all" selected></option>
                                                 @foreach ($list_etat_marches as $item)
-                                                <option value="{{$item->id}}">{{$item->description}}</option>
+                                                <option value={{$item->id}}>{{$item->description}}</option>
                                                 @endforeach
                                             </select>
                                         </label>
@@ -37,10 +37,11 @@
                                         <thead style="text-align: center;background: #93d1e4;">
 
                                             <tr>
-                                                <th>ID marche</th>
+
                                                 <th>Nom</th>
-                                                <th>Nombre de postulation
+                                                <th>Description</th>
                                                 <th>Etat </th>
+                                                <th>Date affichage</th>
                                                 <th> Date limite</th>
                                                 <th style="width: 10%;">Accéder</th>
                                             </tr>
@@ -48,15 +49,19 @@
 
                                         <tbody>
                                             @foreach ($list_marches as $item)
-                                            <tr style="text-align: center;" class="marches_" {{$item->etat_num}}>
-                                                <td>{{$item->id}}</td>
+                                            <tr style="text-align: center;" class={{$item->etat_num}} class
+                                                ="marches">
                                                 <td>{{$item->titre}}</td>
-                                                <td>{{$item->total}}</td>
+                                                <td>{{$item->description}}</td>
                                                 <td>{{$item->etat}}</td>
+                                                <td>{{$item->date_affichage}}</td>
                                                 <td>{{$item->date}}</td>
-                                                <td style="width: 10%;"><a href="">
+                                                <td style="width: 10%;">
+                                                    <a href={{route('modifierMarche',$item->id)}}>
                                                         <button class="btn btn-primary" type="button">
-                                                            <i class="fa fa-eye"></i></button></a>
+                                                            <i class="fa fa-eye"></i>
+                                                        </button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -76,9 +81,9 @@
                 if(value=='all'){
                     $("*[class*='marches']").show();
                 }else if(value=='1'){
-                    $("*[class*='marches_ 1']").show();
+                    $("*[class*='1']").show();
                 }else if(value=='2'){
-                    $("*[class*='marches_ 2']").show();
+                    $("*[class*='2']").show();
                 }else if(value=='3'){
                     $("*[class*='marches_3']").show();
                 }else if(value=='4'){
@@ -87,11 +92,12 @@
                     $("*[class*='marches_5']").show();
                 }else if(value=='6'){
                     $("*[class*='marches_6']").show();
-                }
-            }
-        
-
-<script src="/assets/bootstrap/js/bootstrap.min.js">
+                }}
+               
         </script>
-        <script src="/assets/js/themeAchatGestionMarches.js"></script>
+
+        <script src="/assets/bootstrap/js/bootstrap.min.js">
+        </script>
+        <script src="/assets/js/themeAchatGestionMarches.js">
+        </script>
         @endsection

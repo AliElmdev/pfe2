@@ -19,20 +19,23 @@
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true"
+        aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-wrench"></i>
         <span>Mes Projets</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
             <a class="collapse-item" href="{{route('create_project')}}">Créer un nouveau projet</a>
-            <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés en cours</a>
-            <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés fermés</a>
-            <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés terminés</a>
-            <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les marchés</a>
+            <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                en cours</a>
+            <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                fermés</a>
+            <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                terminés</a>
+            <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les
+                marchés</a>
         </div>
     </div>
 </li>
@@ -49,21 +52,29 @@
 @section('content')
 
 <div class="container-fluid">
-    <form class="bootstrap-form-with-validation" id="insert_form" method="POST" action="{{route('create_project')}}" enctype="multipart/form-data">
+    <form class="bootstrap-form-with-validation" id="insert_form" method="POST" action="{{route('create_project')}}"
+        enctype="multipart/form-data">
         @csrf
         <h2 class="text-center">Crée Nouveau Projet</h2>
         @foreach($errors->all() as $error)
-            <div class="alert alert-danger" role="alert">{!! $error !!}</div>
+        <div class="alert alert-danger" role="alert">{!! $error !!}</div>
         @endforeach
-        <div class="form-group mb-3"><label class="form-label" for="text-input">Titre</label><input class="form-control" type="text" id="text-input" name="titre_input" /></div>
-        <div class="form-group mb-3"><label class="form-label" for="password-input">Description</label><textarea class="form-control" name="desc_input"></textarea></div>
+        <div class="form-group mb-3"><label class="form-label" for="text-input">Titre</label><input class="form-control"
+                type="text" id="text-input" name="titre_input" /></div>
+        <div class="form-group mb-3"><label class="form-label" for="password-input">Description</label><textarea
+                class="form-control" name="desc_input"></textarea></div>
         <div class="form-group mb-3">
             <label class="form-label" for="email-input">Categorie</label>
             <select class="custom-select" name="categ_input">
-                <optgroup label="This is a group"><option value="1" selected="">This is item 1</option><option value="1">This is item 2</option><option value="1">This is item 3</option></optgroup>
+                <optgroup label="This is a group">
+                    <option value="1" selected="">This is item 1</option>
+                    <option value="1">This is item 2</option>
+                    <option value="1">This is item 3</option>
+                </optgroup>
             </select>
         </div>
-        <div class="form-group mb-3"><label class="form-label" for="textarea-input">Cachier des charges</label><input class="form-control bg-white" type="file" id="textarea-input" name="file_charge" /></div>
+        <div class="form-group mb-3"><label class="form-label" for="textarea-input">Cachier des charges</label><input
+                class="form-control bg-white" type="file" id="textarea-input" name="file_charge" /></div>
         <div class="form-group mb-3">
             <div class="table-responsive">
                 <table class="table" id="item_table">
@@ -75,200 +86,89 @@
                             <th><strong>Unit/Mesure</strong><br /></th>
                             <th><strong>Quantité</strong><br /></th>
                             <th href="#">
-                                <button class="btn btn-primary add" name="add" type="button" style="font-size: 16px; font-weight: bold; background: rgb(0, 177, 39);"><strong>+</strong></button>
+                                <button class="btn btn-primary add" name="add" type="button"
+                                    style="font-size: 16px; font-weight: bold; background: rgb(0, 177, 39);"><strong>+</strong></button>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><input class="form-control" name="nom[]" type="text" /></td>
-                            <td><textarea class="form-control" name="description[]" style="height: 34px;"></textarea></td>
+                            <td><textarea class="form-control" name="description[]" style="height: 34px;"></textarea>
+                            </td>
                             <td>
                                 <select class="custom-select" name="serv_prod[]">
-                                    <optgroup label="This is a group"><option value="service" selected="">Service</option><option value="Produit">Produit</option></optgroup>
+                                    <optgroup label="This is a group">
+                                        <option value="service" selected="">Service</option>
+                                        <option value="Produit">Produit</option>
+                                    </optgroup>
                                 </select>
                             </td>
                             <td>
                                 <select class="custom-select" name="unit[]">
-                                    <optgroup label="This is a group"><option value="u" selected="">Unit</option><option value="m">Metre</option><option value="kg">KiloGramme</option></optgroup>
+                                    <optgroup label="This is a group">
+                                        <option value="u" selected="">Unit</option>
+                                        <option value="m">Metre</option>
+                                        <option value="kg">KiloGramme</option>
+                                    </optgroup>
                                 </select>
                             </td>
                             <td><input class="form-control" name="qte[]" type="number" /></td>
                             <td>
-                                <button class="btn btn-primary remove" name="remove" type="button" style="background: rgb(230, 0, 0);"><strong>x</strong></button>
+                                <button class="btn btn-primary remove" name="remove" type="button"
+                                    style="background: rgb(230, 0, 0);"><strong>x</strong></button>
                             </td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
             </div>
         </div>
 
         {{-- testtttttttttttttttttttttttttttttttttttttttt --}}
-            <div id="Fome_Apply">
-                <div id="Questions_RFI">
-                    <h1 class="rfi_rfq_title">RFI</h1>
-                    <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
-                    <section>
-                        <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
-                            <table class="table table-hover table-bordered">
-                                <thead class="bill-header cs">
-                                    <tr>
-                                        <th id="trs-hd-7" class="col-lg-3" style="width: 500px;">Question</th>
-                                        <th id="trs-hd-1" class="col-lg-3" style="width: 500px;">Description</th>
-                                        <th id="trs-hd-11" class="col-lg-3" style="width: 500px;">Type de Question</th>
-                                        <th id="trs-hd-6" class="col-lg-3" style="width: 500px;">Options</th>
-                                        <th id="trs-hd-9" class="col-lg-3" style="width: 500px;">Section</th>
-                                        <th id="trs-hd-8" class="col-lg-2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                    <tr class="warning no-result">
-                                        <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <section style="text-align: right;padding: 50px;"><button class="btn btn-primary btn_qts_rfi_rfq mb-5" type="button" onclick="add_RFI_qst()">Ajouter une question<i class="fa fa-caret-square-o-down"></i></button>
-                            <div>
-                                <div id="rfinv_qst_rfi" style="display:none;">
-                                    <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">Ajouter Questions</h4>
-                                    <div class="d-flex justify-content-between"><select class="chosen" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFI()">
-                                            <option value="0"></option>
-                                            @foreach ($questions_RFI as $question)
-                                                <option value="{{$question->id}}">{{$question->question}}</option>
-                                            @endforeach
-                                            <option selected="selected" value="0">Nouvelle Question</option>
-                                        </select><select onclick="changetype_RFI()" class="types_qst_RFI" style="width: 29%;margin: 0;">
-                                            <optgroup label="Types de questions">
-                                                <option value="cm" selected="">Choix multiple</option>
-                                                <option value="f">Fichier</option>
-                                                <option value="cr">Court réponse</option>
-                                                <option value="on">Oui / Non</option>
-                                            </optgroup>
-                                        </select></div>
-                                </div>
-                                <div class="text-center rfinv_cr" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                    <div><span>Question :&nbsp;</span><input class="rfiqstcr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div><span>Description :&nbsp;</span><input class="rfidesccr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div>
-                                        <span>Section :&nbsp;</span>
-                                        <select class="section_rfiqst_cr_input" style="width: 35%;margin: 0; margin-top:2%;">
-                                            <optgroup label="Section de question">
-                                                @foreach ($sections_RFI as $section)
-                                                <option value="{{$section->id}}">{{$section->nom_section}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <button onclick="Annuler_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                    <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
-                                </div>
-                                <div class="text-center rfinv_f" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                    <div><span>Question :&nbsp;</span><input class="rfiqstf_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div><span>Description :&nbsp;</span><input class="rfidescf_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div>
-                                        <span>Section :&nbsp;</span>
-                                        <select class="section_rfiqst_f_input" style="width: 35%;margin: 0; margin-top:2%;">
-                                            <optgroup label="Section de question">
-                                                @foreach ($sections_RFI as $section)
-                                                <option value="{{$section->id}}">{{$section->nom_section}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <button onclick="Annuler_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button onclick="Ajouter_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
-                                </div>
-                                <div class="text-center rfinv_on" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                    <div><span>Question :&nbsp;</span><input class="rfiqston_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div><span>Description :&nbsp;</span><input class="rfidescon_input" type="text" style="width: 79%;margin-top: 10px;"></div>
-                                    <div>
-                                        <span>Section :&nbsp;</span>
-                                        <select class="section_rfiqst_on_input" style="width: 35%;margin: 0; margin-top:2%;">
-                                            <optgroup label="Section de question">
-                                                @foreach ($sections_RFI as $section)
-                                                <option value="{{$section->id}}">{{$section->nom_section}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div style="margin-top: 30px;">
-                                        <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
-                                        <div id="sect_sqt_rfi">
-                                            
-                                        </div>
-                                        <button class="btn btn-primary add" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button>
-                                    </div>
-                                    <button onclick="Annuler_RFI()" class="btn btn-primary add_nvl_qst_rfi" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                    <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
-                                </div>
-                                <div class="text-center rfinv_cm" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                    <div><span>Question :&nbsp;</span><input class="rfiqstcm_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                    <div><span>Description :&nbsp;</span><input class="rfidesccm_input" type="text" style="width: 79%;margin-top: 10px;"></div>
-                                    <div>
-                                        <span>Section :&nbsp;</span>
-                                        <select class="section_rfiqst_cm_input" style="width: 35%;margin: 0; margin-top:2%;">
-                                            <optgroup label="Section de question">
-                                                @foreach ($sections_RFI as $section)
-                                                <option value="{{$section->id}}">{{$section->nom_section}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                    <div style="margin-top: 30px;">
-                                        <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
-                                        <div id="sect_sqt_rfi_b">
-                                            
-                                        </div>
-                                        <span style="margin-top: 0px;padding-top: 0px;width: 51px;"><button class="btn btn-primary add_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button></span>
-                                    </div>
-                                    <button onclick="Annuler_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                    <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
-                                </div>
-                            </div>
-                        </section>
-                    </section>
-                </div>
-                <div id="Questions_RFQ">
-                    <h1 class="rfi_rfq_title">RFQ</h1>
-                    <hr style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
-                    <section>
-                        <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
-                            <table class="table table-hover table-bordered">
-                                <thead class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
-                                    <tr>
-                                        <th id="trs-hd-9" class="col-lg-3" style="width: 500px;">Question</th>
-                                        <th id="trs-hd-14" class="col-lg-3" style="width: 500px;">Descriptions</th>
-                                        <th id="trs-hd-13" class="col-lg-3" style="width: 500px;">Types</th>
-                                        <th id="trs-hd-12" class="col-lg-3" style="width: 500px;">Options</th>
-                                        <th id="trs-hd-15" class="col-lg-3" style="width: 500px;">Section</th>
-                                        <th id="trs-hd-10" class="col-lg-2"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   
-                                    <tr class="warning no-result">
-                                        <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <section style="text-align: right;padding: 50px;">
-                            <button class="btn btn-primary btn_qts_rfi_rfq" type="button" onclick="add_RFQ_qst()">Ajouter une question<i class="fa fa-caret-square-o-down"></i>
-                            </button>
-                        </section>
+        <div id="Fome_Apply">
+            <div id="Questions_RFI">
+                <h1 class="rfi_rfq_title">RFI</h1>
+                <hr
+                    style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
+                <section>
+                    <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
+                        <table class="table table-hover table-bordered">
+                            <thead class="bill-header cs">
+                                <tr>
+                                    <th id="trs-hd-7" class="col-lg-3" style="width: 500px;">Question</th>
+                                    <th id="trs-hd-1" class="col-lg-3" style="width: 500px;">Description</th>
+                                    <th id="trs-hd-11" class="col-lg-3" style="width: 500px;">Type de Question</th>
+                                    <th id="trs-hd-6" class="col-lg-3" style="width: 500px;">Options</th>
+                                    <th id="trs-hd-9" class="col-lg-3" style="width: 500px;">Section</th>
+                                    <th id="trs-hd-8" class="col-lg-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="warning no-result">
+                                    <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <section style="text-align: right;padding: 50px;"><button
+                            class="btn btn-primary btn_qts_rfi_rfq mb-5" type="button" onclick="add_RFI_qst()">Ajouter
+                            une question<i class="fa fa-caret-square-o-down"></i></button>
                         <div>
-                            <div id="rfqnv_qst_rfq" style="display:none;">
-                                <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">Ajouter Questions</h4>
-                                <div class="d-flex justify-content-between">
-                                    <select class="chosen chosen_rfq" required="" style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ();">
+                            <div id="rfinv_qst_rfi" style="display:none;">
+                                <h4
+                                    style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">
+                                    Ajouter Questions</h4>
+                                <div class="d-flex justify-content-between"><select class="chosen" required=""
+                                        style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFI()">
                                         <option value="0"></option>
-                                        @foreach ($questions_RFQ as $question)
-                                            <option value="{{$question->id}}">{{$question->question}}</option>
+                                        @foreach ($questions_RFI as $question)
+                                        <option value="{{$question->id}}">{{$question->question}}</option>
                                         @endforeach
                                         <option selected="selected" value="0">Nouvelle Question</option>
-                                    </select><select onclick="changetype_RFQ()" class="types_qst_RFQ" style="width: 29%;margin: 0;">
+                                    </select><select onclick="changetype_RFI()" class="types_qst_RFI"
+                                        style="width: 29%;margin: 0;">
                                         <optgroup label="Types de questions">
                                             <option value="cm" selected="">Choix multiple</option>
                                             <option value="f">Fichier</option>
@@ -277,46 +177,61 @@
                                         </optgroup>
                                     </select></div>
                             </div>
-                            <div class="text-center rfqnv_cr" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                <div><span>Question :&nbsp;</span><input class="rfqqstcr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                <div><span>Description :&nbsp;</span><input class="rfqdesccr_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                            <div class="text-center rfinv_cr"
+                                style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="rfiqstcr_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="rfidesccr_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
                                 <div>
                                     <span>Section :&nbsp;</span>
-                                    <select class="section_rfqqst_cr_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <select class="section_rfiqst_cr_input"
+                                        style="width: 35%;margin: 0; margin-top:2%;">
                                         <optgroup label="Section de question">
-                                            @foreach ($sections_RFQ as $section)
+                                            @foreach ($sections_RFI as $section)
                                             <option value="{{$section->id}}">{{$section->nom_section}}</option>
                                             @endforeach
                                         </optgroup>
                                     </select>
                                 </div>
-                                <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                                <button onclick="Annuler_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                                <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
                             </div>
-                            <div class="text-center rfqnv_f" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                <div><span>Question :&nbsp;</span><input class="rfqqstf_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                <div><span>Description :&nbsp;</span><input class="rfqdescf_input" type="text" style="width: 80%;margin-top: 10px;"></div>
+                            <div class="text-center rfinv_f"
+                                style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="rfiqstf_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="rfidescf_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
                                 <div>
                                     <span>Section :&nbsp;</span>
-                                    <select class="section_rfqqst_f_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <select class="section_rfiqst_f_input" style="width: 35%;margin: 0; margin-top:2%;">
                                         <optgroup label="Section de question">
-                                            @foreach ($sections_RFQ as $section)
+                                            @foreach ($sections_RFI as $section)
                                             <option value="{{$section->id}}">{{$section->nom_section}}</option>
                                             @endforeach
                                         </optgroup>
                                     </select>
                                 </div>
-                                <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                                <button onclick="Annuler_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button><button
+                                    onclick="Ajouter_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
                             </div>
-                            <div class="text-center rfqnv_on" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                <div><span>Question :&nbsp;</span><input class="rfqqston_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                <div><span>Description :&nbsp;</span><input class="rfqdescon_input" type="text" style="width: 79%;margin-top: 10px;"></div>
+                            <div class="text-center rfinv_on"
+                                style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="rfiqston_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="rfidescon_input" type="text"
+                                        style="width: 79%;margin-top: 10px;"></div>
                                 <div>
                                     <span>Section :&nbsp;</span>
-                                    <select class="section_rfqqst_on_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <select class="section_rfiqst_on_input"
+                                        style="width: 35%;margin: 0; margin-top:2%;">
                                         <optgroup label="Section de question">
-                                            @foreach ($sections_RFQ as $section)
+                                            @foreach ($sections_RFI as $section)
                                             <option value="{{$section->id}}">{{$section->nom_section}}</option>
                                             @endforeach
                                         </optgroup>
@@ -324,22 +239,35 @@
                                 </div>
                                 <div style="margin-top: 30px;">
                                     <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
-                                    <div id="sect_sqt_rfq">
-                                        
+                                    <div id="sect_sqt_rfi">
+
                                     </div>
-                                    <button class="btn btn-primary add" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button>
+                                    <button class="btn btn-primary add" type="button"
+                                        style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i
+                                            class="fa fa-plus"
+                                            style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button
+                                        class="btn btn-primary remove" type="button"
+                                        style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i
+                                            class="fa fa-remove"
+                                            style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button>
                                 </div>
-                                <button onclick="Annuler_RFQ()" class="btn btn-primary add_nvl_qst_rfq" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                                <button onclick="Annuler_RFI()" class="btn btn-primary add_nvl_qst_rfi" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                                <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
                             </div>
-                            <div class="text-center rfqnv_cm" style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
-                                <div><span>Question :&nbsp;</span><input class="rfqqstcm_input" type="text" style="width: 80%;margin-top: 10px;"></div>
-                                <div><span>Description :&nbsp;</span><input class="rfqdesccm_input" type="text" style="width: 79%;margin-top: 10px;"></div>
+                            <div class="text-center rfinv_cm"
+                                style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                                <div><span>Question :&nbsp;</span><input class="rfiqstcm_input" type="text"
+                                        style="width: 80%;margin-top: 10px;"></div>
+                                <div><span>Description :&nbsp;</span><input class="rfidesccm_input" type="text"
+                                        style="width: 79%;margin-top: 10px;"></div>
                                 <div>
                                     <span>Section :&nbsp;</span>
-                                    <select class="section_rfqqst_cm_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <select class="section_rfiqst_cm_input"
+                                        style="width: 35%;margin: 0; margin-top:2%;">
                                         <optgroup label="Section de question">
-                                            @foreach ($sections_RFQ as $section)
+                                            @foreach ($sections_RFI as $section)
                                             <option value="{{$section->id}}">{{$section->nom_section}}</option>
                                             @endforeach
                                         </optgroup>
@@ -347,23 +275,204 @@
                                 </div>
                                 <div style="margin-top: 30px;">
                                     <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
-                                    <div id="sect_sqt_rfq_b">
-                                        
+                                    <div id="sect_sqt_rfi_b">
+
                                     </div>
-                                    <span style="margin-top: 0px;padding-top: 0px;width: 51px;"><button class="btn btn-primary add_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-plus" style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button class="btn btn-primary remove_b" type="button" style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i class="fa fa-remove" style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button></span>
+                                    <span style="margin-top: 0px;padding-top: 0px;width: 51px;"><button
+                                            class="btn btn-primary add_b" type="button"
+                                            style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i
+                                                class="fa fa-plus"
+                                                style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button
+                                            class="btn btn-primary remove_b" type="button"
+                                            style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i
+                                                class="fa fa-remove"
+                                                style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button></span>
                                 </div>
-                                <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
-                                <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button" style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                                <button onclick="Annuler_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                                <button onclick="Ajouter_RFI()" class="btn btn-primary" type="button"
+                                    style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
                             </div>
                         </div>
                     </section>
-                </div>
+                </section>
             </div>
+            <div id="Questions_RFQ">
+                <h1 class="rfi_rfq_title">RFQ</h1>
+                <hr
+                    style="color: #004979;text-decoration: underline;height: 5px;width: 200px;margin-left: 50px;font-weight: bold;">
+                <section>
+                    <div class="table-responsive table table-hover table-bordered results" style="padding: 50px;">
+                        <table class="table table-hover table-bordered">
+                            <thead class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
+                                <tr>
+                                    <th id="trs-hd-9" class="col-lg-3" style="width: 500px;">Question</th>
+                                    <th id="trs-hd-14" class="col-lg-3" style="width: 500px;">Descriptions</th>
+                                    <th id="trs-hd-13" class="col-lg-3" style="width: 500px;">Types</th>
+                                    <th id="trs-hd-12" class="col-lg-3" style="width: 500px;">Options</th>
+                                    <th id="trs-hd-15" class="col-lg-3" style="width: 500px;">Section</th>
+                                    <th id="trs-hd-10" class="col-lg-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="warning no-result">
+                                    <td colspan="12"><i class="fa fa-warning"></i>&nbsp; No Result !!!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <section style="text-align: right;padding: 50px;">
+                        <button class="btn btn-primary btn_qts_rfi_rfq" type="button" onclick="add_RFQ_qst()">Ajouter
+                            une question<i class="fa fa-caret-square-o-down"></i>
+                        </button>
+                    </section>
+                    <div>
+                        <div id="rfqnv_qst_rfq" style="display:none;">
+                            <h4 style="text-align: center;background: rgba(37,71,106,0.56);color: rgb(255,255,255);">
+                                Ajouter Questions</h4>
+                            <div class="d-flex justify-content-between">
+                                <select class="chosen chosen_rfq" required=""
+                                    style="color: #232323;width: 69%;margin: 0;" onchange="myFunctionRFQ();">
+                                    <option value="0"></option>
+                                    @foreach ($questions_RFQ as $question)
+                                    <option value="{{$question->id}}">{{$question->question}}</option>
+                                    @endforeach
+                                    <option selected="selected" value="0">Nouvelle Question</option>
+                                </select><select onclick="changetype_RFQ()" class="types_qst_RFQ"
+                                    style="width: 29%;margin: 0;">
+                                    <optgroup label="Types de questions">
+                                        <option value="cm" selected="">Choix multiple</option>
+                                        <option value="f">Fichier</option>
+                                        <option value="cr">Court réponse</option>
+                                        <option value="on">Oui / Non</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center rfqnv_cr"
+                            style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                            <div><span>Question :&nbsp;</span><input class="rfqqstcr_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div><span>Description :&nbsp;</span><input class="rfqdesccr_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div>
+                                <span>Section :&nbsp;</span>
+                                <select class="section_rfqqst_cr_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <optgroup label="Section de question">
+                                        @foreach ($sections_RFQ as $section)
+                                        <option value="{{$section->id}}">{{$section->nom_section}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                            <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                        </div>
+                        <div class="text-center rfqnv_f"
+                            style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                            <div><span>Question :&nbsp;</span><input class="rfqqstf_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div><span>Description :&nbsp;</span><input class="rfqdescf_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div>
+                                <span>Section :&nbsp;</span>
+                                <select class="section_rfqqst_f_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <optgroup label="Section de question">
+                                        @foreach ($sections_RFQ as $section)
+                                        <option value="{{$section->id}}">{{$section->nom_section}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                            <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                        </div>
+                        <div class="text-center rfqnv_on"
+                            style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                            <div><span>Question :&nbsp;</span><input class="rfqqston_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div><span>Description :&nbsp;</span><input class="rfqdescon_input" type="text"
+                                    style="width: 79%;margin-top: 10px;"></div>
+                            <div>
+                                <span>Section :&nbsp;</span>
+                                <select class="section_rfqqst_on_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <optgroup label="Section de question">
+                                        @foreach ($sections_RFQ as $section)
+                                        <option value="{{$section->id}}">{{$section->nom_section}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div style="margin-top: 30px;">
+                                <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
+                                <div id="sect_sqt_rfq">
+
+                                </div>
+                                <button class="btn btn-primary add" type="button"
+                                    style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i
+                                        class="fa fa-plus"
+                                        style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button
+                                    class="btn btn-primary remove" type="button"
+                                    style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;"><i
+                                        class="fa fa-remove"
+                                        style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button>
+                            </div>
+                            <button onclick="Annuler_RFQ()" class="btn btn-primary add_nvl_qst_rfq" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                            <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                        </div>
+                        <div class="text-center rfqnv_cm"
+                            style="display:none;background: rgba(37,71,106,0.15);margin: 0px;margin-top: 20px;">
+                            <div><span>Question :&nbsp;</span><input class="rfqqstcm_input" type="text"
+                                    style="width: 80%;margin-top: 10px;"></div>
+                            <div><span>Description :&nbsp;</span><input class="rfqdesccm_input" type="text"
+                                    style="width: 79%;margin-top: 10px;"></div>
+                            <div>
+                                <span>Section :&nbsp;</span>
+                                <select class="section_rfqqst_cm_input" style="width: 35%;margin: 0; margin-top:2%;">
+                                    <optgroup label="Section de question">
+                                        @foreach ($sections_RFQ as $section)
+                                        <option value="{{$section->id}}">{{$section->nom_section}}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div style="margin-top: 30px;">
+                                <h5 class="text-start" style="padding-left: 36%;">Options :</h5>
+                                <div id="sect_sqt_rfq_b">
+
+                                </div>
+                                <span style="margin-top: 0px;padding-top: 0px;width: 51px;"><button
+                                        class="btn btn-primary add_b" type="button"
+                                        style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i
+                                            class="fa fa-plus"
+                                            style="color: rgb(0,183,62);font-size: 19px;margin-right: 20px;"></i></button><button
+                                        class="btn btn-primary remove_b" type="button"
+                                        style="background: rgba(13,110,253,0);border-width: 0px;padding-bottom: 0px;margin-bottom: 0px;padding-top: 0px;"><i
+                                            class="fa fa-remove"
+                                            style="color: rgb(170,0,0);font-size: 19px;margin-right: 20px;border-color: rgb(174,0,0);"></i></button></span>
+                            </div>
+                            <button onclick="Annuler_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Annuler</button>
+                            <button onclick="Ajouter_RFQ()" class="btn btn-primary" type="button"
+                                style="margin-top: 18px;background: rgba(37,71,106,0.98);border-radius: 10px;">Ajouter</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
 
         {{-- testttttttttttttttttttttttttttttttttttttttttttttt --}}
 
         <div class="form-group mb-3" style="margin-top: 100px;">
-            <button class="btn btn-primary" type="submit" style="font-weight: bold; width: 20%; margin-left: 40%; min-width: 80px;">Envoi</button>
+            <button class="btn btn-primary" type="submit"
+                style="font-weight: bold; width: 20%; margin-left: 40%; min-width: 80px;">Envoi</button>
         </div>
     </form>
 </div>
@@ -399,7 +508,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script>
-    
     // $(".chosen").val(0).select2({
     // matcher: function(params, data) {
     //     if (data.id === "0") { // <-- option value of "Other", always appears in results
@@ -597,17 +705,12 @@
     $('#sect_sqt_rfq_b').append(html);
     }
     
-    // function add_option_b_rfq($option) {
-    //     $(this).closest('tr').remove();
-    // }
+ 
     $(document).on('click', '.rfqqst_item', function() {
     $(this).closest('tr').remove();
     });
     
-    $(document).on('click', '.rfiqst_item', function() {
-    $(this).closest('tr').remove();
-    });
-    
+
     
     $(document).on('click', '.add', function() {
     var html = '<div class="option_rfi" style="font-size: 19px;height: auto;"><div class="form-check text-start" style="margin-left: 29%;width: 26%;min-width: 150px;margin-bottom: 0px;"><input class="form-check-input" type="radio" id="formCheck-1" disabled=""><label class="form-check-label" for="formCheck-1" style="width: 100%;"><input class="option_input_rfi" type="text" style="width: 100%;" placeholder="Oui"></label></div><span style="margin-top: 0px;padding-top: 0px;width: 51px;"></span></div>';
@@ -634,9 +737,7 @@
     html += '';
     $('#sect_sqt_rfq_b').append(html);
     });
-    $(document).on('click', '.remove', function() {
-    $('#sect_sqt_rfi .option_rfi:last').remove()
-    });
+  
     
     $(document).on('click', '.remove', function() {
     $('#sect_sqt_rfq .option_rfq:last').remove()
@@ -651,7 +752,7 @@
     $('#sect_sqt_rfq_b .option_b_rfq:last').remove()
     });
     
-    </script>
+</script>
 
 
 @endsection

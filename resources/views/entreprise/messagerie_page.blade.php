@@ -10,8 +10,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href={{route('chats',[$id_marche])}}
-                    style="background: #3c8447; color: #ffffff; box-shadow: 0px 0px; border-radius: 10px; border-top-left-radius: 0px; border-top-right-radius: 0px; border-width: 1px; border-color: #003b0d;">
+                <a class="nav-link" href={{route('chat_entreprise',$id_marche)}} style="background: #3c8447; color: #ffffff; box-shadow: 0px 0px; border-radius: 10px;
+                    border-top-left-radius: 0px; border-top-right-radius: 0px; border-width: 1px; border-color:
+                    #003b0d;">
                     Messagerie</a>
             </li>
             <li class="nav-item">
@@ -44,11 +45,14 @@
                                     <p class="text-small mb-0 text-muted">{{$item->message}}</p>
                                 </div>
                                 @elseif($item->type=="file")
+                                @php
+                                $pieces = explode("/",$item->message);
+                                @endphp
                                 <div class="bg-light rounded py-2 px-3 mb-2">
                                     <p class="text-small mb-0 text-muted">
                                         <a href={{URL::to('/') .'/'. $item->message}}
                                             download={{$item->message}} >
-                                            {{$item->message}}
+                                            {{$pieces[3]}}
                                         </a>
                                     </p>
                                 </div>
@@ -66,12 +70,15 @@
                                     </p>
                                 </div>
                                 @elseif($item->type=="file")
+                                @php
+                                $pieces = explode("/",$item->message);
+                                @endphp
                                 <div class="bg-primary rounded py-2 px-3 mb-2">
                                     <p class="text-small mb-0 text-white">
                                         <a href={{URL::to('/') . "/" . $item->message}}
                                             download={{$item->message}}
                                             title="{{$item->message}}">
-                                            {{$item->message}}
+                                            {{$pieces[3]}}
                                         </a>
                                     </p>
                                 </div>

@@ -7,6 +7,7 @@ use App\Models\Domaine;
 use App\Models\EtatMarche;
 use App\Models\Marche;
 use App\Models\Produit;
+use App\Models\Reponse_commercial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,11 @@ class MarcheController extends Controller
     {
         $list_categories = Categorie::all();
         $list_domaines = Domaine::all();
-        $list_marches = Marche::all();
+        $list_marches = Marche::join('categories', 'categories.id', 'marches.id_categorie')
+            ->select('marches.*', 'categories.name as categories')
+            ->get();
         $catg = Categorie::all()->keyBy('id');
-        return view("Marches", compact(["list_categories", "list_domaines", "list_marches", "catg"]));
+        return view("Marches", compact(["list_categories", "list_domaines", "list_marches", 'catg']));
     }
 
 
@@ -31,10 +34,11 @@ class MarcheController extends Controller
     {
         $list_marches = DB::table('Marches')
             ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
-            ->join('postulations', 'postulations.marche_id', '=', 'marches.id')
+            // ->join('postulations', 'postulations.marche_id', '=', 'marches.id')
             ->select(
                 'marches.id as id',
-                DB::raw('count(*) as total'),
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
                 'marches.title as titre',
                 'marches.etat as etat_num',
                 'etat_marches.description as etat',
@@ -43,6 +47,7 @@ class MarcheController extends Controller
             ->groupBy('Marches.id')
             ->where('marches.id_chef', auth()->user()->id)
             ->get();
+
         $list_etat_marches = EtatMarche::all();
         return view('chef.marche_information', compact(['list_marches', 'list_etat_marches']));
     }

@@ -94,8 +94,9 @@
                                             <td>{{$item->etat}}</td>
                                             <td>{{$item->total}}</td>
                                             <td>Message vue</td>
+
                                             <td style="width: 10%;"><a
-                                                    href={{route('chat_chef_entreprise',[$item->entreprise_id,$id_marche])}}>
+                                                    href={{route('chat_chef_entreprise',[$id_marche,$item->entreprise_id])}}>
                                                     <button class="btn btn-primary" type="button">
                                                         <i class="bi bi-envelope"><svg
                                                                 xmlns="http://www.w3.org/2000/svg" width="20"
@@ -115,7 +116,7 @@
                                             <td>{{$item->total}}</td>
                                             <td>Message non vue</td>
                                             <td style="width: 10%;"><a
-                                                    href={{route('chat_chef_entreprise',[$item->entreprise_id,$id_marche])}}>
+                                                    href={{route('chat_chef_entreprise',[$id_marche,$item->entreprise_id])}}>
                                                     <button class="btn btn-primary" type="button">
                                                         <i class="bi bi-envelope"><svg
                                                                 xmlns="http://www.w3.org/2000/svg" width="20"

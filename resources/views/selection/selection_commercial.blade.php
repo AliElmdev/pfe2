@@ -2,11 +2,23 @@
 @section('content')
 
     <main style="background: rgba(220,53,69,0);margin-top: 0px;">
+        <form action="{{route('selection_commercial_store',$id )}}" method="post">
+        @csrf
+        <input name="marche_id" type="number" value="{{$id}}" hidden>
         <div style="height: 100px;background: url('/assets/img/gettyimages-1205700615.jpg') bottom / cover;"></div>
         <div style="text-align: center;margin-top: 20px;">
-            <h2 style="text-align: center;margin-bottom: 30px;">Ouverture Commercial</h2><select class="type" style="height: 30px;border-radius: 13px;width: 169px;" onchange="myfunction();filtre_selection();">
-                <optgroup label="Type de selection">
-                    <option value=""></option>
+            <h2 style="text-align: center;margin-bottom: 30px;">Ouverture Commercial</h2>
+            <h4 style="text-align: center;margin-bottom: 30px;">Marche #{{$id}}</h4>
+            <select name="type_selections"  class="type_selections" style="height: 30px;border-radius: 13px;width: 169px;" onchange="filtre_selection();">
+                <option selected disabled class="text-bold">Type de selection :</option>
+                <optgroup>
+                    <option value="meilleurchoix">Meilleur Choix</option>
+                    <option value="moinschere">Moins Chére</option>
+                </optgroup>
+            </select>
+            <select name="type_filtrage" class="type" style="height: 30px;border-radius: 13px;width: 169px;" onchange="myfunction();filtre_selection();">
+                <option selected disabled class="text-bold">Filtre de selection :</option>
+                <optgroup>
                     <option value="produit">Par Produit</option>
                     <option value="marche">Par Marche</option>
                 </optgroup>
@@ -54,10 +66,10 @@
         </div>
         <div class="mb-1000">
             <h2 class="text-center">Resultats</h2>
-            <table class="table table-hover table-bordered resultats_final_1">
-                <thead>
+            <table class="table table-hover table-bordered resultats_final_1 text-center">
+                <thead class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
                     <tr>
-                        <th>Produits</th>
+                        <th>Produits/Marche</th>
                         <th>Entreprise</th>
                         <th>Prix</th>
                     </tr>
@@ -66,30 +78,43 @@
 
                 </tbody>
             </table>
-            <table class="table table-hover table-bordered resultats_final_2" style="display: none">
-                <thead>
+            <table class="table table-hover table-bordered resultats_final_2 text-center" style="display: none">
+                <thead  class="bill-header cs" style="background: rgba(37, 71, 106, 0.56);">
                     <tr>
-                        <th>Marche</th>
+                        <th>Produits/Marche</th>
                         <th>Entreprise</th>
                         <th>Prix Total</th>
+                        <th>Qualiter/Prix</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
+            <div class="text-center"><button class="btn btn-success mb-5 send" style="display: none" type="submit">Confirmer</button></div>
         </div>
+    </form>
     </main>
 
 
     <script>
-
-
         function filtre_selection(){
-            if($('.type').val() == 'produit'){
-                min_prix_produit(2);
+            if($('.type_selections').val()=='moinschere'){
+                if($('.type').val() == 'produit'){
+                    $('.send').show();
+                    min_prix_produit({{$id}});
+                }else{
+                    min_prix_marche({{$id}});
+                    $('.send').show();
+                }
             }else{
-                min_prix_marche(2);
+                if($('.type').val() == 'produit'){
+                    $('.send').show();
+                    best_prixqualite_produit({{$id}});
+                }else{
+                    $('.send').show();
+                    best_prixqualite_marche({{$id}});
+                }
             }
         }
 
@@ -103,24 +128,49 @@
             var url1 = "/min_prix_produit/"+$id_marche;
             $.get(url1, function(response){
                 $.each(response, function(k,v) {
-                    $('.resultats_final_1 tbody').append("<tr><td>"+v.produit_id+"</td><td>"+v.id+"</td><td>"+v.prix+" Dh/u</td></tr>");
+                    $('.resultats_final_1 tbody').append("<tr><td>#Produit"+v.produit_id+"</td><td>"+v.id+"</td><td>"+v.prix+" Dh/u</td></tr>");
                 });
             });
         }
 
         function min_prix_marche($id_marche){ 
-
+            $('.resultats_final_2').hide();
+            $('.resultats_final_1').show();
+            $('.resultats_final_1 tbody').text('');
+            // var url = "{{url('/test/2')}}";
+            var url1 = "/min_prix_marche/"+$id_marche;
+            $.get(url1, function(response){
+                $('.resultats_final_1 tbody').append("<tr><td>#Marche"+response.marche_id+"</td><td>"+response.entreprise_id+"</td><td>"+response.prix_total+" Dh/u</td></tr>");
+            });
+        }
+        
+        function best_prixqualite_produit($id_marche){ 
             $('.resultats_final_1').hide();
             $('.resultats_final_2').show();
 
             $('.resultats_final_2 tbody').text('');
             // var url = "{{url('/test/2')}}";
-            var url1 = "/min_prix_marche/"+$id_marche;
+            var url1 = "/best_prixqualite_produit/"+$id_marche;
             $.get(url1, function(response){
-                $('.resultats_final_2 tbody').append("<tr><td>"+response.marche_id+"</td><td>"+response.entreprise_id+"</td><td>"+response.prix_total+" Dh/u</td></tr>");
+                $.each(response, function(k,v) {
+                    $('.resultats_final_2 tbody').append("<tr><td>#Produit"+v.produit_id+"</td><td>"+v.entreprise_id+"</td><td>"+(v.prix)+"Dh</td><td>"+v.qualiter_prix+"%</td></tr>");
+                });
+            });
+        }
+
+        function best_prixqualite_marche($id_marche){ 
+            $('.resultats_final_1').hide();
+            $('.resultats_final_2').show();
+
+            $('.resultats_final_2 tbody').text('');
+            // var url = "{{url('/test/2')}}";
+            var url1 = "/best_prixqualite_marche/"+$id_marche;
+            $.get(url1, function(response){
+                $('.resultats_final_2 tbody').append("<tr><td>#Marche"+$id_marche+"</td><td>"+response.entreprise_id+"</td><td>"+response.prix_total+"Dh</td><td>"+response.qualiter_prix.toFixed(3)+"%</td></tr>");
             });
         }
         
+
     </script>
 
     <script>

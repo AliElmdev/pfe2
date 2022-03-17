@@ -16,23 +16,30 @@
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
-
+<li class="nav-item">
+    <a class="nav-link" href="{{route('chats_chef')}}">
+        <i class="fas fa-fw fa-chart-area"></i>
+        <span>Message</span></a>
+</li>
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true"
+        aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-wrench"></i>
         <span>Mes Projets</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
             <a class="collapse-item" href="{{route('create_project')}}">Créer un nouveau projet</a>
-            <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés en cours</a>
-            <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés fermés</a>
-            <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés terminés</a>
-            <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les marchés</a>
+            <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                en cours</a>
+            <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                fermés</a>
+            <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés
+                terminés</a>
+            <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les
+                marchés</a>
         </div>
     </div>
 </li>
@@ -46,13 +53,16 @@
 @endsection
 
 @section('title')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+    integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-    canvas{
+    canvas {
         max-width: 100%;
         max-height: 100%;
     }
-    .container{
+
+    .container {
         display: flex;
         justify-content: space-around
     }
@@ -150,8 +160,7 @@
 <div class="row">
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
-            <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Statistiques</h6>
             </div>
             <div class="card-body">
@@ -166,11 +175,11 @@
 </div>
 
 <script>
- 
+
 </script>
 
 <script>
-var url = "{{route('statisticsInfo',['id' => Auth::user()->id])}}";
+    var url = "{{route('statisticsInfo',['id' => Auth::user()->id])}}";
 var enCours;
 var ferme;
 var termine;

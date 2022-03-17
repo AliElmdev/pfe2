@@ -74,11 +74,15 @@
                             <p class="text-small mb-0 text-muted">{{$item->message}}</p>
                         </div>
                         @elseif($item->type=="file")
+                        @php
+                        $pieces = explode("/",$item->message);
+                        @endphp
                         <div class="bg-light rounded py-2 px-3 mb-2">
                             <p class="text-small mb-0 text-muted">
+
                                 <a style="color: gray" href={{URL::to('/') .'/'. $item->message}}
                                     download={{$item->message}} >
-                                    {{$item->message}}
+                                    {{$pieces[3]}}
                                 </a>
                             </p>
                         </div>
@@ -96,12 +100,15 @@
                             </p>
                         </div>
                         @elseif($item->type=="file")
+                        @php
+                        $pieces = explode("/",$item->message);
+                        @endphp
                         <div class="bg-primary rounded py-2 px-3 mb-2 ">
                             <p class="text-small mb-0 text-white">
-                                <a style="color: azure;" href={{URL::to('/') . "/" . $item->message}}
-                                    download={{$item->message}}
-                                    title="{{$item->message}}">
-                                    {{$item->message}}
+
+                                <a style="color: gray" href={{URL::to('/') .'/'. $item->message}}
+                                    download={{$item->message}} >
+                                    {{$pieces[3]}}
                                 </a>
                             </p>
                         </div>
@@ -113,8 +120,8 @@
                 @endforeach
                 <!-- Typing area -->
             </div>
-            <form action="{{route('infosMarche')}}" enctype="multipart/form-data" type="POST"
-                style="max-width:100% ;border: 2px">
+            <form action="{{route('chat_chef_entreprise',[$id_marche,$entreprise_id])}}" method="POST"
+                enctype="multipart/form-data" style="max-width:100% ;border: 1px">
                 @csrf
                 @method('GET')
                 <div class="input-group">
@@ -134,7 +141,7 @@
                     </div>
 
                     <div class="input-group-append " style="padding-left: 15% ; padding-top: 2%">
-                        <button type="submit" name="submit" value=" Submit" class="btn btn-link">
+                        <button type="submit" name="submit" value="Submit" class="btn btn-link">
                             <i class="fa fa-paper-plane"></i>
                         </button>
                     </div>
@@ -145,12 +152,13 @@
         </div>
     </div>
 </div>
-</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+{{-- don't sendding data when refreshing page --}}
 <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
-      
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
+    }
 </script>
 @yield('contenu')
 @endsection

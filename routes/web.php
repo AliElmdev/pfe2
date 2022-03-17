@@ -68,8 +68,11 @@ Auth::routes();
 //Selection
 
 Route::get('/ouverture_commercial/{id}', [SelectionCommercialController::class, "show"])->name("selection_commercial")->middleware('auth');
-Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"]);
-Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"]);
+Route::get('/min_prix_produit/{id}', [SelectionCommercialController::class, "min_prix_produit"])->name("min_prix_produit")->middleware('auth');
+Route::get('/min_prix_marche/{id}', [SelectionCommercialController::class, "min_prix_marche"])->name("min_prix_marche")->middleware('auth');
+Route::get('/best_prixqualite_produit/{id}', [SelectionCommercialController::class, "best_prixqualite_produit"])->name("best_prixqualite_produit")->middleware('auth');
+Route::get('/best_prixqualite_marche/{id}', [SelectionCommercialController::class, "best_prixqualite_marche"])->name("best_prixqualite_marche")->middleware('auth');
+Route::post('/ouverture_commercial/{id}', [SelectionCommercialController::class, "store"])->name("selection_commercial_store")->middleware('auth');
 //Postulations
 
 Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("postulation")->middleware('auth');
@@ -142,13 +145,17 @@ Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name(
 
 // message // postulation marches
 
+
+// mesggagerie controller 
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 Route::get("/marche/{id_marche}/message", [MessageController::class, 'enregister_entreprise'])->name('chats');
 Route::get("/marche/boite_message", [MessageController::class, 'index'])->name('chats_chef');
-Route::get("/marche/liste_entreprise/{id_marche?}", [MessageController::class, 'show'])->name('chat_entreprise');
-Route::get("/marche/message_chef_entreprise/{id_marche?}/{entreprise_id?}", [MessageChefController::class, 'enregister'])->name('chat_chef_entreprise');
+Route::get("/marche/liste_entreprise/marche{id_marche?}", [MessageController::class, 'show'])->name('chat_entreprise');
+Route::get("/marche/message/marche{id_marche?}/entreprise{entreprise_id?}", [MessageController::class, 'enregister'])->name('chat_chef_entreprise');
 
 
+
+// modifier marcher controller
 Route::get('/marche/inforamationmarches', [MarcheController::class, 'afficher'])->name('infosMarche');
 
 Route::get('/marche/inforamationmarches/marche{id_marche}', [Gestion_Marches_ChefController::class, 'show'])->name('modifierMarche');

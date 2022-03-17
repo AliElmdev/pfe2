@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Marche;
 use App\Models\Produit;
+use App\Models\Question;
 use Hamcrest\Core\IsNull;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,9 +120,63 @@ class Gestion_Marches_ChefController extends Controller
             ->select('marches.*', 'categories.name as name', 'categories.id as id_cat')
             ->where('marches.id', $id)
             ->first();
+
         $list_categories = Categorie::all();
         $list_produits = Produit::all()->where('marche_id', $id);
-        return view('chef.marche_modifier', compact(['list_marches_information', 'list_categories', 'list_produits']));
+
+        $questions = Question::all();
+
+        $questions_RFI = DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFI')
+            ->select('questions.id', 'questions.question')
+            ->get();
+
+        $questions_RFQ = DB::table('questions')
+            ->join('sections', 'questions.section_id', '=', 'sections.id')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFQ')
+            ->select('questions.id', 'questions.question')
+            ->get();
+
+        $sections_RFI =  DB::table('sections')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFI')
+            ->select("nom_section", "sections.id")
+            ->get();
+
+        $sections_RFQ = DB::table('sections')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFQ')
+            ->select("nom_section", "sections.id")
+            ->get();
+
+        $questions_RFI_marche = DB::table('questions')
+            ->join('sections', 'questions.section_id', '=', 'sections.id')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFI')
+            ->where('marche_id', $id)
+            ->get();
+
+        $questions_RFQ_marche = DB::table('questions')
+            ->join('sections', 'questions.section_id', '=', 'sections.id')
+            ->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')
+            ->where('type_section', 'RFQ')
+            ->where('marche_id', $id)
+            ->get();
+
+        return view('chef.marche_modifier', compact([
+            'list_marches_information',
+            'list_categories',
+            'list_produits',
+            'questions',
+            'questions_RFI',
+            'questions_RFQ',
+            'sections_RFQ',
+            'sections_RFI',
+            'questions_RFI_marche',
+            'questions_RFQ_marche',
+        ]));
     }
 
     /**
@@ -146,29 +201,90 @@ class Gestion_Marches_ChefController extends Controller
     {
 
 
-        $c_charge = Marche::select('c_charge')->where('id', $id)->first();
+        // 1 its works
 
-        if (is_file($request->file('c_charge'))) {
-            $file_charge = $request->file('c_charge');
+
+
+        if (is_file($request->file('c_charge_input'))) {
+            $file_charge = $request->file('c_charge_input');
             $file_SaveAsName = time() . "_marches_" . $file_charge->getClientOriginalName();
             $upload_path = '/Marche_' . $id .  '/';
             $file_chargeo = $upload_path . $file_SaveAsName;
             $success = $file_charge->move($upload_path, $file_SaveAsName);
             // egregistrer des information 
             $c_charge = $file_chargeo;
-        }
+        } else {
 
+            $c_charge = Marche::where('id', $id)->value('c_charge');
+        }
 
         Marche::where('id', '=', $id)
             ->update([
                 'title' => $request->input('title'),
-                'description' => $request->input('description'),
+                'description' => $request->input('descriptionm'),
                 'limit_date' => $request->input('limit_date'),
                 'affichage_date' => $request->input('date_affichage'),
                 'c_charge' => $c_charge,
-                'etat' => 0,
+                'etat' => 1,
                 'id_categorie' => $request->input('categorie')
             ]);
+
+        Produit::where('marche_id', "=", $id)->delete();
+        if (isset(($_POST["nom"]))) {
+            for ($count = 0; $count < count($_POST["nom"]); $count++) {
+                $produit = new Produit();
+                $produit->nom = $_POST["nom"][$count];
+                $produit->commentaire = $_POST["description"][$count];
+                $produit->serv_prod = $_POST["serv_prod"][$count];
+                $produit->qte = $_POST["qte"][$count];
+                $produit->unit = $_POST["unit"][$count];
+                $produit->marche_id = $id;
+                $produit->save();
+            }
+        }
+
+        Question::where('marche_id', "=", $id)->delete();
+        if (isset($_POST["question_input_rfi"])) {
+
+            DB::table('questions')
+                ->join('b_sections', 'questions.section_id', 'b_sections.id')
+                ->where('b_sections.type_section', '=', 'RFI')
+                ->where('questions.marche_id', "=", $id)
+                ->delete();
+            for ($count = 0; $count < count($_POST["question_input_rfi"]); $count++) {
+                $question = new Question([
+                    'question' => $_POST["question_input_rfi"][$count],
+                    'description' => $_POST["description_input_rfi"][$count],
+                    'type' => $_POST["type_input_rfi"][$count],
+                    'options' => $_POST["option_input_rfi"][$count],
+                    'section_id' => (int)$_POST["section_input_rfi"][$count],
+                    'marche_id' => $id,
+                ]);
+                $question->save();
+            }
+        }
+
+        if (isset($_POST["question_input_rfq"])) {
+
+            DB::table('questions')
+                ->join('b_sections', 'questions.section_id', 'b_sections.id')
+                ->where('b_sections.type_section', '=', 'RFQ')
+                ->where('questions.marche_id', "=", $id)
+                ->delete();
+
+
+            for ($count = 0; $count < count($_POST["question_input_rfq"]); $count++) {
+                $question = new Question([
+                    'question' => $_POST["question_input_rfq"][$count],
+                    'description' => $_POST["description_input_rfq"][$count],
+                    'type' => $_POST["type_input_rfq"][$count],
+                    'options' => $_POST["option_input_rfq"][$count],
+                    'section_id' => (int)$_POST["section_input_rfq"][$count],
+                    'marche_id' => $id,
+                ]);
+                $question->save();
+            }
+        }
 
         return redirect(route('modifierMarche',  $id));
     }

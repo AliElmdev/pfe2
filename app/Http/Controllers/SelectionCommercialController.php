@@ -40,7 +40,23 @@ class SelectionCommercialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->type_selections == 'meilleurchoix') {
+            if ($request->type_filtrage == 'produit') {
+                $data = $this->best_prixqualite_produit($request->marche_id);
+                return $data;
+            } elseif ($request->type_filtrage == 'marche') {
+                $data = $this->best_prixqualite_marche($request->marche_id);
+                return $data;
+            }
+        } elseif ($request->type_selections == 'moinschere') {
+            if ($request->type_filtrage == 'produit') {
+                $data = $this->min_prix_produit($request->marche_id);
+                return $data;
+            } elseif ($request->type_filtrage == 'marche') {
+                $data = $this->min_prix_marche($request->marche_id);
+                return $data;
+            }
+        }
     }
 
     /**
@@ -91,7 +107,7 @@ class SelectionCommercialController extends Controller
 
         //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
 
-        return view("selection.selection_commercial", compact(["list_reponses_commercials", "list_entreprises", "total_price"]));
+        return view("selection.selection_commercial", compact(["list_reponses_commercials", "list_entreprises", "total_price", "id"]));
     }
 
     /**
@@ -139,6 +155,51 @@ class SelectionCommercialController extends Controller
             ->orderby('prix_total')
             ->first();
         return response()->json($prix_min);
+    }
+
+    public function best_prixqualite_produit($id)
+    {
+        $min_prix = [];
+        $produits = Produit::where('marche_id', '=', $id)->select('id', 'nom')->get();
+        foreach ($produits as $produit) {
+            $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+                ->where('postulations.marche_id', '=', $id)
+                ->where('produit_id', '=', $produit->id)
+                ->selectRaw('max(note/prix) as prix_quality,prix,note')
+                ->first();
+
+            $prix_minn = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+                ->where('postulations.marche_id', '=', $id)
+                ->where('produit_id', '=', $produit->id)
+                ->where('prix', '=', $prix_min->prix)
+                ->where('note', '=', $prix_min->note)
+                ->selectRaw('(note/prix)*100 as qualiter_prix,prix, entreprise_id as entreprise_id, produit_id')
+                ->first();
+
+            $min_prix[$produit->nom] = $prix_minn;
+        }
+        return response()->json($min_prix);
+    }
+
+    public function best_prixqualite_marche($id)
+    {
+        $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
+            ->where('postulations.marche_id', '=', $id)
+            ->groupby('user_id')
+            ->selectRaw('sum(prix) as prix_total,sum(note) as note_total, entreprise_id as entreprise_id , marche_id')
+            //->selectRaw('note/prix as qua_pr')
+            ->orderby('note_total')
+            ->get();
+        $prix = 0;
+        $minn = 0;
+        foreach ($prix_min as $index => $prixx) {
+            if ($prix <= ($prixx->note_total / $prixx->prix_total)) {
+                $minn = $index;
+                $prix = ($prixx->note_total / $prixx->prix_total);
+            }
+        }
+        $prix_min[$minn]['qualiter_prix'] = $prix * 100;
+        return response()->json($prix_min[$minn]);
     }
 
     /**

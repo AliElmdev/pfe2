@@ -91,7 +91,6 @@
                                                 <td>{{$item->id_marche}}</td>
                                                 <td>{{$item->title}}</td>
                                                 <td>{{ ($item->limit_date)}}</td>
-
                                                 <td>{{$item->total}}</td>
                                                 <td>Message vue</td>
                                                 <td style="width: 10%;"><a
@@ -108,8 +107,8 @@
                                                 <td>{{ ($item->limit_date)}}</td>
                                                 <td>{{$item->total}}</td>
                                                 <td>Message non vue</td>
-                                                <td style="width: 10%;"><a
-                                                        href={{route('chat_entreprise',$item->id_marche)}}>
+                                                <td style="width: 10%;">
+                                                    <a href={{route('chat_entreprise',$item->id_marche)}}>
                                                         <button class="btn btn-primary" type="button">
                                                             <i class="fa fa-eye"></i></button></a>
                                                 </td>
