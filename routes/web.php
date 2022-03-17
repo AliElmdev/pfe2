@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\StatistiqueCategoriesController;
+use App\Http\Controllers\Admin\StatistiqueEntreprisesController;
 use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard;
@@ -20,7 +22,7 @@ use App\Http\Controllers\Selection_RFIController;
 use App\Http\Controllers\SelectionCommercialController;
 use App\Http\Controllers\SelectionFichier_TechniqueController;
 use App\Http\Controllers\StatisticsMarchesController;
-use App\Http\Controllers\StatistiqueEntreprisesController;
+use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\ValiderInscriptionController;
 use Illuminate\Support\Facades\Auth;
 
@@ -120,18 +122,16 @@ Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, 
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
+//Statistiques
+Route::get("/Statistique", [StatistiqueController::class, "index"])->name("Statistique");
 //admin statistiques
-Route::get('/Statistique', function () {
-    return view('admin.Statistique');
-})->name("Statistique");
-Route::get("/test", [StatistiqueEntreprisesController::class, "index"]);
+Route::get("/StatistiqueEntrepriseInscrits", [StatistiqueEntreprisesController::class, "index"]);
+Route::get("/StatistiqueMarchesCategories", [StatistiqueCategoriesController::class, "index"]);
+
 
 Route::get("/RolePermissionEdit", [RolePermissionEditController::class, "index"])->name("RolePermissionEdit");
-
-
 Route::post("/AddRoleUser/new", [RolePermissionEditController::class, "storeroleuser"])->name("AddRoleUserNew");
 Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexroleuser"])->name("AddRoleUser");
-
 Route::post("/AddRolePermission/new", [RolePermissionEditController::class, "storerolepermission"])->name("AddRolePermissionNew");
 Route::get("/AddRolePermission", [RolePermissionEditController::class, "indexrolepermission"])->name("AddRolePermission");
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");

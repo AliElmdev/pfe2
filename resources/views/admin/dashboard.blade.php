@@ -83,7 +83,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="{{route('Statistique')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Statistiques</span></a>
 </li>
@@ -252,18 +252,9 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-pie mb-2">
-                    <canvas id="myChart1"></canvas>
-                </div>
-                <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
-                    </span>
+                    <div class="chart-area">
+                        <canvas id="myChart1"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -286,7 +277,7 @@
 </footer>
 <!-- End of Footer -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+{{-- <script>
     const ctx = document.getElementById('myChart1');
     const myChart = new Chart(ctx, { 
         type: 'pie',
@@ -322,9 +313,9 @@
             }
         }
     });
-</script>
+</script> --}}
 <script>
-    var url = "{{url('/test')}}";
+    var url = "{{url('/StatistiqueEntrepriseInscrits')}}";
        var Years = new Array();
        var Labels = new Array();
        var Prices = new Array();
@@ -347,6 +338,49 @@
                          data: Prices,
                          backgroundColor: [
                             'rgba(2, 187, 103, 0.8)',
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
+
+    var url1 = "{{url('/StatistiqueMarchesCategories')}}";
+       var Categorie1 = new Array();
+       var Prices1 = new Array();
+       var NbrTotal1 = 0;
+       $(document).ready(function(){
+         $.get(url1, function(response){
+           response.forEach(function(data){
+               Categorie1.push(data.categorie);
+               Prices1.push(data.data);
+               NbrTotal1 += data.data;
+           });
+           var ctx = document.getElementById("myChart1").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'doughnut',
+                 data: {
+                     labels:Categorie1,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal1 + ' )',
+                         data: Prices1,
+                         backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
                          ],
                          borderWidth: 1
                      }]

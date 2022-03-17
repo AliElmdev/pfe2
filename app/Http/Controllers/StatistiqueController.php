@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entreprise;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class StatistiqueEntreprisesController extends Controller
+class StatistiqueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +14,22 @@ class StatistiqueEntreprisesController extends Controller
      */
     public function index()
     {
-        $result = Entreprise::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
-        ->groupby('year','month')
-        ->get();
-        return response()->json($result);
+        $user = auth()->user();
+        if ($user->hasRole('admin')) {
+            return view('admin.Statistique');
+        }
+        if ($user->hasRole('user')) {
+            return view('entreprise.Statistique');
+        }
+        if ($user->hasRole('chef')) {
+            return view('chef.Statistique');
+        }
+        if ($user->hasRole('achat')) {
+            return view('achat.Statistique');
+        }
+        return view('homepage');
     }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -81,7 +81,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="{{route('Statistique')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Statistiques</span></a>
 </li>

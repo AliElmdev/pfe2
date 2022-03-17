@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entreprise;
+use App\Models\Marche;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class StatistiqueEntreprisesController extends Controller
+class StatistiqueCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,17 @@ class StatistiqueEntreprisesController extends Controller
      */
     public function index()
     {
-        $result = Entreprise::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
-        ->groupby('year','month')
+        $result = Marche::join('categories', 'categories.id', '=', 'id_categorie')
+        ->select(DB::raw('count(categories.id) as `data`'),'categories.name as categorie')
+        ->groupby('categorie')
         ->get();
         return response()->json($result);
+        // $result = Entreprise::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+        // ->groupby('year','month')
+        // ->get();
+        // return response()->json($result);
     }
+
     /**
      * Show the form for creating a new resource.
      *
