@@ -19,7 +19,7 @@ class EcMarcheCreationController extends Controller
      */
     public function showEtatZero()
     {
-        $marches = Marche::where('etat',0)->get();
+        $marches = Marche::where('etat',1)->get();
         return view('achat.MarchesEnCoursCreation',compact(["marches"]));
         
         // return view('achat.MarchesEnCoursCreation',[
@@ -56,7 +56,7 @@ class EcMarcheCreationController extends Controller
         $marche = Marche::find($id);
         $marche->affichage_date = $_POST['dateAffichage'];
         $marche->limit_date = $_POST['dateLimite'];
-        $marche->etat = 1;
+        $marche->etat = 2;
         $marche->id_achat = Auth::user()->id;
         $marche->save();
 

@@ -37,8 +37,8 @@
                             <tr>
                                 <form action="{{route('edit_user',$user->id)}}" method="POST">
                                     @csrf
-                                    <td><input name="name_input" class="border-0 col-5 bg-white name_input" type="text" value="{{$user->name}}" placeholder="{{$user->name}}" disabled></td>
-                                    <td class="email" style="display: none;"><input name="email_input" class="border-0 col-10 bg-white name_input" type="text" value="{{$user->email}}" placeholder="{{$user->email}}"></td>
+                                    <td><input name="name_input" class="border-0 col-5 bg-white name_input name_input-{{$user->id}}" type="text" value="{{$user->name}}" placeholder="{{$user->name}}" disabled></td>
+                                    <td class="email email-{{$user->id}}" style="display: none;"><input name="email_input" class="border-0 col-10 bg-white name_input name_input-{{$user->id}}" type="text" value="{{$user->email}}" placeholder="{{$user->email}}"></td>
                                     <td> 
                                     @if(count($user->roles)>0)
                                         @foreach($user->roles as $role)
@@ -47,7 +47,7 @@
                                                     <button type="button" class="badge  badge-success role {{$role->name}}" value="{{$role->id}}">{{$role->name}}</button>
                                                     <input class="role_input" name="role_input" value='{{$role->id}}' hidden />
                                                 @else
-                                                    <button type="button" style="display: none" class="badge  badge-danger other_role role" value='{{$item->id}}'>{{$item->name}}</button>
+                                                    <button type="button" style="display: none" class="badge  badge-danger other_role other_role-{{$user->id}} role" value='{{$item->id}}'>{{$item->name}}</button>
                                                 @endif
                                             @endforeach 
                                         @endforeach
@@ -59,8 +59,8 @@
                                         <button type="button" class="badge badge-danger">No group</button>
                                     </td>
                                     <td>
-                                        <button id="myBtn_edit" onclick="edit();" type="button" class="badge badge-warning btn_edit">Edit</button>
-                                        <button id="myBtn_save" onclick="edit();" type="submit" class="badge badge-warning btn_edit" style="display: none;">Save</button>
+                                        <button id="myBtn_edit-{{$user->id}}" onclick="edit(this.id);" type="button" class="badge badge-warning btn_edit">Edit</button>
+                                        <button id="myBtn_save-{{$user->id}}" onclick="edit(this.id);" type="submit" class="badge badge-warning btn_edit" style="display: none;">Save</button>
                                     </td>
                                 </form>    
                                 <td>
@@ -90,19 +90,31 @@
         }   
     }
 
-    function edit(){
-        if($(".other_role").is(":visible")){
-            $(".other_role").hide();
-            $(".email").hide();
-            $("#myBtn_edit").show();
-            $("#myBtn_save").hide();
+    function edit(clicked_id){
+        const myArray = clicked_id.split("-");
+        id_item = myArray[1];
+        other_role = ".other_role-" + id_item;
+        email = ".email-" + id_item;
+        myBtn_edit = "#myBtn_edit-"+ id_item;
+        myBtn_save = "#myBtn_save-" + id_item;
+        name_input = ".name_input-"+id_item;
+        if($(other_role).is(":visible")){
+            $(other_role).hide();
+            $(email).hide();
+            $(myBtn_edit).show();
+            $(myBtn_save).hide();
         }
         else{
-            $(".other_role").show();
-            $(".email").show();
-            $(".name_input").prop('disabled', false);
-            $("#myBtn_edit").hide();
-            $("#myBtn_save").show();
+            $("button[class^='other_role-']").hide();
+            $("button[id^='myBtn_save-']").hide();
+            $("button[id^='myBtn_edit-']").show();
+            $("button[class^='name_input-']").prop('disabled', true);
+            $("input[class^='email-']").hide();
+            $(other_role).show();
+            $(email).show();
+            $(name_input).prop('disabled', false);
+            $(myBtn_edit).hide();
+            $(myBtn_save).show();
             //document.getElementById("myBtn").type = "submit";
         }
     }

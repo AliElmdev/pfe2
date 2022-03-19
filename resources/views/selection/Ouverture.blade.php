@@ -12,7 +12,7 @@
     <div id="cards" class="cards">
       @foreach ($Marches as $Marche)
       <a href="{{route('ouvertureMarche',$Marche->id)}}">
-        <div  class="card"><span class="card-code">#Marche{{$Marche->id}}</span>
+        <div class="card"><span class="card-code">#Marche{{$Marche->id}}</span>
           <h2 class="card-title">{{$Marche->title}}</h2>
           <div class="card-tags">
             <div class="card-tag tag-{{$Marche->etat_id}}">{{$Marche->etat}}</div>
@@ -21,6 +21,9 @@
             @else
               <div class="card-tag tag-1">0 Postulations</div>
             @endisset
+            @if($Marche->etat_id<5)
+            <div class="card-tag tag-0"><i class="icon-lock"></i></div>
+            @endif
           </div>
           <span class="card-description">{{$Marche->description}}</span>
           <span class="card-footer">Date Limite : {{$Marche->limit_date}}</span>
@@ -31,7 +34,6 @@
     </div>
   </div>
 </main>
-
 <style>
     main div, main div * {
     display: flex;

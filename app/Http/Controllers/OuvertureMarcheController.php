@@ -16,6 +16,11 @@ class OuvertureMarcheController extends Controller
      */
     public function index($id)
     {
+        $marche = Marche::where('id',$id)->first();
+        if($marche->etat < 5){
+            $marche->etat = 5;
+            $marche->save();
+        }
         return view('selection.ouverture_marche',[
             "marche" => Marche::find($id),
             "nbrRFI" => Postulation::where('marche_id',$id)->where('etat',2)->count(), // Nombre des entreprises dans l'etape de RFI

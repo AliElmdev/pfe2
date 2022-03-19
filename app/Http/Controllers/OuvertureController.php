@@ -18,7 +18,7 @@ class OuvertureController extends Controller
      */
     public function index()
     {
-        $Marches = DB::table('marches')->join('etat_marches', 'etat_marches.id', '=', 'etat')
+        $Marches = DB::table('marches')->join('etat_marches', 'etat_marches.id', '=', 'etat')->where('etat','>=',4)
         ->select('marches.id as id','title','marches.description as description','etat_marches.description as etat','etat_marches.id as etat_id','limit_date')                   
         ->get();
         $currentTime = Carbon::now();

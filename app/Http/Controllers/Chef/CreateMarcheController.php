@@ -66,6 +66,7 @@ class CreateMarcheController extends Controller
             'id_categorie' => $_POST["categ_input"],
             'c_charge' => $file_charge,
             'id_chef' => Auth::id(),
+            'etat' => 1,
         ]);
 
         $marche->save();
