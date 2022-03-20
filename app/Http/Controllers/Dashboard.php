@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Contrat;
 use App\Models\Entreprise;
+use App\Models\EntrepriseUser;
 use App\Models\Marche;
+use App\Models\Postulation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission;
@@ -27,10 +29,33 @@ class Dashboard extends Controller
             return view('admin.dashboard',compact(["EntreprisesCount","MarchesCount","depenses"]));
         }
         if ($user->hasRole('user')) {
-            return view('entreprise.dashboard');
+            $id_entreprise = EntrepriseUser::where('user_id',$user->id)->first('entreprise_id');
+            $NbrContrats = Contrat::where('etat',0)
+            ->join('entreprise_users', 'entreprise_id', '=', 'id_entreprise')
+            ->where('user_id',$user->id)
+            ->count();
+            $NbrRfi = DB::table('postulations')->where('etat',2)
+            ->join('entreprise_users', 'postulations.entreprise_id', '=', 'entreprise_users.entreprise_id')
+            ->where('entreprise_users.user_id',$user->id)
+            ->count();
+            $NbrRfq = DB::table('postulations')->whereBetween('etat',[3,4])
+            ->join('entreprise_users', 'postulations.entreprise_id', '=', 'entreprise_users.entreprise_id')
+            ->where('entreprise_users.user_id',$user->id)
+            ->count();
+            $listofrfi = DB::table('postulations')->where('postulations.etat',2)
+            ->join('entreprise_users', 'postulations.entreprise_id', '=', 'entreprise_users.entreprise_id')
+            ->join('marches', 'marches.id', '=', 'postulations.marche_id')
+            ->where('entreprise_users.user_id',$user->id)
+            ->get();
+            $listofrfq = DB::table('postulations')->whereBetween('postulations.etat',[3,4])
+            ->join('entreprise_users', 'postulations.entreprise_id', '=', 'entreprise_users.entreprise_id')
+            ->join('marches', 'marches.id', '=', 'postulations.marche_id')
+            ->where('entreprise_users.user_id',$user->id)
+            ->get();
+            return view('entreprise.dashboard',compact(["NbrContrats","NbrRfi","NbrRfq","listofrfi","listofrfq"]));
         }
         if ($user->hasRole('chef')) {
-            return redirect()->route('statistics');
+            return redirect()-> route('statistics');
         }
         if ($user->hasRole('achat')) {
             return view('achat.dashboard');

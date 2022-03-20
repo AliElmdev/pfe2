@@ -67,10 +67,10 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les Projets:</h6>
-            <a class="collapse-item" href="#">En cours</a>
-            <a class="collapse-item" href="#">Terminer</a>
-            <a class="collapse-item" href="#">Annuler</a>
-            <a class="collapse-item" href="#">Tous les projets</a>
+            <a class="collapse-item" href="{{route('marches_en_cours_admin')}}">En cours</a>
+            <a class="collapse-item" href="{{route('marches_termines_admin')}}">Terminer</a>
+            <a class="collapse-item" href="{{route('marches_fermes_admin')}}">Annuler</a>
+            <a class="collapse-item" href="{{route('tous_marches_admin')}}">Tous les projets</a>
             {{-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
             <a class="collapse-item" href="404.html">404 Page</a>

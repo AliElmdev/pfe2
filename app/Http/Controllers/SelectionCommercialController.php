@@ -56,6 +56,7 @@ class SelectionCommercialController extends Controller
                     $contrat->id_entreprise = $v->entreprise_id;
                     $contrat->id_postulation = $postulations->id;
                     $contrat->prix = $v->prix;
+                    $contrat->etat = 0;
                     $contrat->save();
                 }
                 return $data;
@@ -78,6 +79,7 @@ class SelectionCommercialController extends Controller
                     $contrat->id_entreprise = $data_decode->entreprise_id;
                     $contrat->id_postulation = $postulations->id;
                     $contrat->prix = $prix->prix_produit;
+                    $contrat->etat = 0;
                     $contrat->save();
                 }
                 return $data;
@@ -96,6 +98,7 @@ class SelectionCommercialController extends Controller
                     $contrat->id_entreprise = $v->id;
                     $contrat->id_postulation = $postulations->id;
                     $contrat->prix = $v->prix_total;
+                    $contrat->etat = 0;
                     $contrat->save();
                 }
                 return $data;
@@ -119,6 +122,7 @@ class SelectionCommercialController extends Controller
                     $contrat->id_entreprise = $data_decode->entreprise_id;
                     $contrat->id_postulation = $postulations->id;
                     $contrat->prix = $prix->prix_produit;
+                    $contrat->etat = 0;
                     $contrat->save();
                 }
                 return $data;

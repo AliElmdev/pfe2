@@ -20,6 +20,7 @@ class CreateContratsTable extends Migration
             $table->bigInteger('id_entreprise')->unsigned();
             $table->bigInteger('id_postulation')->unsigned();
             $table->double('prix');
+            $table->integer('etat');
             $table->foreign('id_produits')->references('id')->on('produits')->onDelete('cascade');
             $table->foreign('id_marche')->references('id')->on('marches')->onDelete('cascade');
             $table->foreign('id_entreprise')->references('id')->on('entreprises')->onDelete('cascade');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GestionMarchesAdminController;
 use App\Http\Controllers\Admin\StatistiqueCategoriesController;
 use App\Http\Controllers\Admin\StatistiqueEntreprisesController;
 use App\Http\Controllers\AllUsersController;
@@ -121,6 +122,11 @@ Route::get("/marches-en-cours-{id_chef}", [Gestion_Marches_ChefController::class
 Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, "closed"])->name("marches_fermes_chef");
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
+// Gestion marchées admin
+Route::get("/marches_en_cours", [GestionMarchesAdminController::class, "current"])->name("marches_en_cours_admin");
+Route::get("/marches_fermes", [GestionMarchesAdminController::class, "closed"])->name("marches_fermes_admin");
+Route::get("/marches_termines", [GestionMarchesAdminController::class, "ended"])->name("marches_termines_admin");
+Route::get("/tous_les_marches", [GestionMarchesAdminController::class, "index"])->name("tous_marches_admin");
 
 //Statistiques
 Route::get("/Statistique", [StatistiqueController::class, "index"])->name("Statistique");
