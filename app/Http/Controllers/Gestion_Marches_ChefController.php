@@ -225,7 +225,6 @@ class Gestion_Marches_ChefController extends Controller
                 'limit_date' => $request->input('limit_date'),
                 'affichage_date' => $request->input('date_affichage'),
                 'c_charge' => $c_charge,
-                'etat' => 1,
                 'id_categorie' => $request->input('categorie')
             ]);
 

@@ -14,6 +14,7 @@
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Opportunitéss</span></a>
 </li>
+
 <hr class="sidebar-divider">
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
@@ -27,6 +28,7 @@
             <h6 class="collapse-header">Mon organisation:</h6>
             <a class="collapse-item" href="#">Mon profil</a>
             <a class="collapse-item" href="#">Organisation</a>
+            <a class="collapse-item" href="{{route('chats_chef')}}">Message</a>
         </div>
     </div>
 </li>

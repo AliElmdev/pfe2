@@ -152,7 +152,7 @@ Route::get("/marche/{id_marche}/message", [MessageController::class, 'enregister
 Route::get("/marche/boite_message", [MessageController::class, 'index'])->name('chats_chef');
 Route::get("/marche/liste_entreprise/marche{id_marche?}", [MessageController::class, 'show'])->name('chat_entreprise');
 Route::get("/marche/message/marche{id_marche?}/entreprise{entreprise_id?}", [MessageController::class, 'enregister'])->name('chat_chef_entreprise');
-
+Route::get("/marche/notificationMessage", [MessageController::class, 'notificationMessage'])->name('chats_notification');
 
 
 // modifier marcher controller

@@ -137,7 +137,7 @@ class MessageController extends Controller
     {
         $id_receve =  auth()->user()->id;
         $id_envoie =  DB::table('messages')->where('entreprise_id', $entreprise_id)->value('sender_id');
-        // dd($id_envoie);
+
 
         // tester si le txt input est vide 
         if (!(is_null($request->input('text_input')))) {
@@ -153,32 +153,7 @@ class MessageController extends Controller
         }
 
 
-        // if (!(is_null($request->file('file_input')))) {
-        //     // tester si le file input est vide
-        //     $files = $request->file('file_input');
-        //     if ($request->hasFile('file_input')) {
-        //         foreach ($files as $file) {
-        //             // enregister les file en 
-        //             foreach ($files as $file) {
-        //                 // enregister les file en rep and uplouad
-        //                 $file_charge = $file;
-        //                 $file_SaveAsName = time() . "_message_" . $file_charge->getClientOriginalName();
-        //                 $upload_path = 'Messages/Marche_' . $id_marche . '/Envoie_' . $id_envoie . '/';
-        //                 $file_chargeo = $upload_path . $file_SaveAsName;
-        //                 $success = $file_charge->move($upload_path, $file_SaveAsName);
-        //                 // egregistrer des information 
-        //                 $name = new Message();
-        //                 $name->id_marche = $id_marche;
-        //                 $name->sender_id = $id_receve;
-        //                 $name->recever_id = $id_envoie;
-        //                 $name->entreprise_id = 0;
-        //                 $name->message =  $file_chargeo; // enregistrer en path uploud 
-        //                 $name->type = "file";
-        //                 $name->save();
-        //             }
-        //         }
-        //     }
-        // }
+
         if (!(is_null($request->file('file_input')))) {
             // tester si le file input est vide
 
@@ -302,6 +277,73 @@ class MessageController extends Controller
 
 
         return view("entreprise.messagerie_page", compact(["list", "id_marche",  "id_receve", "entreprise_id", "id_envoie"]));
+    }
+    public function notificationMessage($id_marche)
+    {
+        $id_receve =  auth()->user()->id;
+
+
+        //             SELECT COUNT(*),entreprise_id FROM messages WHERE recever_id=5 AND Vue='N'  id_marche=1
+        // GROUP BY(entreprise_id )
+        $list_messages_non_vue = DB::table('entreprises')
+            ->join(
+                'messages',
+                'messages.entreprise_id',
+                '=',
+                'entreprises.id'
+            )
+            ->select(
+                'messages.entreprise_id as entreprise_id',
+                'messages.message as message ',
+                DB::raw('count(*) as total')
+            )
+            ->where('Vue', '=', 'N')
+            ->where(
+                'messages.recever_id',
+                '=',
+                $id_receve
+            )
+            ->whereNotNull("messages.entreprise_id")
+            ->groupby('messages.entreprise_id')
+            ->get();
+        $list_messages_non_vue = DB::table('messages')
+            ->select(
+                DB::raw('count(*) as total')
+            )
+            ->where('Vue', '=', 'N')
+            ->where(
+                'recever_id',
+                '=',
+                $id_receve
+            )
+            ->whereNotNull("messages.entreprise_id")
+            ->get();
+
+        foreach ($list_messages_non_vue as $item) {
+            $count = $item->total;
+        }
+
+        $div = "<a class=\"nav-link dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
+        <i class=\"fas fa-envelope fa-fw\"></i>\"  <!-- Counter - Messages -->"
+            + " <span class='badge badge-danger badge-counter' id='noti_number'>" + $count + "</span>  </a>   <!-- Dropdown - Messages -->";
+        "<div class='dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in' aria-labelledby='messagesDropdown'>
+            <h6 class='dropdown-header'> Message Center</h6>"
+            +      "  <div>";
+
+        foreach ($list_messages_non_vue as $item) {
+            $div .=
+
+                "<a class='dropdown-item d-flex align-items-center' href='#'>" +
+                " <div class='dropdown-list-image mr-3'>" +
+                // "<img class='rounded-circle' src='img/undraw_profile_3.svg' alt='...'> " +
+                "<div class='status-indicator bg-warning'></div> </div> <div>" +
+                "<div class='text-truncate'>" + $item->message +
+                "</div>" +
+                +"<div class='small text-gray-500'>Morgan Alvarez · 2d</div></div></a></div>";
+        }
+        $div .= "<a class='dropdown-item text-center small text-gray-500' href='#'>Read More Messages</a></div>";
+
+        return  $div;
     }
     /**
      * Show the form for creating a new resource.

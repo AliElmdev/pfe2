@@ -62,7 +62,7 @@
                         </div>
                         <!-- Reciever Message-->
                         @elseif($item->sender_id== $id_receve or $item->entreprise_id==$entreprise_id)
-                        <div class="media w-50 ml-auto mb-3 " style=" position: relative; left: 50%; width: 250px;">
+                        <div class="media w-50 ml-auto mb-3" style="position: relative; left: 50%; width: 250px;">
                             <div class="media-body">
                                 @if($item->type=="txt")
                                 <div class="bg-primary rounded py-2 px-3 mb-2">
