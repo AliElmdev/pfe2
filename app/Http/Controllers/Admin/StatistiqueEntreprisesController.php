@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Departement;
-use App\Models\DepartementUser;
-use App\Models\Profile;
-use App\Models\TitreService;
-use App\Models\User;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
-use jeremykenedy\LaravelRoles\Models\Role;
+use Illuminate\Support\Facades\DB;
 
-class CreateUsersController extends Controller
+class StatistiqueEntreprisesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,12 +16,11 @@ class CreateUsersController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        $departements = Departement::all();
-        $titre_services = TitreService::all();
-        return view('admin.createusers', compact(["roles","departements","titre_services"]));
+        $result = Entreprise::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+        ->groupby('year','month')
+        ->get();
+        return response()->json($result);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -44,29 +39,7 @@ class CreateUsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => bcrypt('password'),
-        ]);
-        $user->save();
-        $role = config('roles.models.role')::where('name', '=', $request['user_role'])->first();  //choose the default role upon user creation.
-        $user->attachRole($role); 
-        if($request['user_role'] == 'chef'){
-            $attache_departement = new DepartementUser();
-            $attache_departement->departement_id = $request['departement'];
-            $attache_departement->user_id = $user->id;
-            $attache_departement->save();
-        }
-        $profile = new Profile([
-            'user_id'=>$user->id,
-            'title'=>$request['titre'],
-            'service_title'=>$request['titre_services'],
-            'phone'=>$request['phone'],
-            'lang'=>'fr',
-        ]);
-        $profile->save();
-        return redirect(route('create_user'));
+        //
     }
 
     /**

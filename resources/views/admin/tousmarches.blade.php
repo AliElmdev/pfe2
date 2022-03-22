@@ -1,13 +1,21 @@
-@extends('chef.dashboard')
+@extends('layouts.dashboard')
+@section('navbar')
 
-@section('contenuDashboardChef')
+@include('includes.navbar_admin')
+
+@endsection
+
+@section('title')
+@endsection
+
+@section('content')
 <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <div class="container-fluid">
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-uppercase text-primary m-0 fw-bold">Marchés fermés<br></p>
+                            <p class="text-uppercase text-primary m-0 fw-bold">Tous les marchés<br></p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -40,7 +48,15 @@
                                                 <td>{{$marche->title}}</td>
                                                 <td>{{$marche->domaine}}</td>
                                                 <td>{{$marche->categorie}}</td>
-                                                <td>Fermé</td>
+                                                @if ($marche->etat == 1)
+                                                    <td>Non Lancer</td>
+                                                @elseif($marche->etat ==  2)
+                                                    <td>Lancer</td>
+                                                @elseif($marche->etat>=3 AND $marche->etat<=5)
+                                                    <td>Fermé</td>
+                                                @elseif($marche->etat == 6)
+                                                    <td>Terminé</td>
+                                                @endif
                                                 <td style="width: 10%;"><a href="#"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
                                             </tr>
                                         @endforeach

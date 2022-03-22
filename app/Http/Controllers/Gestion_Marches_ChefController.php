@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorie;
+use App\Models\EtatMarche;
 use App\Models\Marche;
 use App\Models\Produit;
 use App\Models\Question;
@@ -21,16 +22,26 @@ class Gestion_Marches_ChefController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id_chef)
+    public function index()
     {
-        return view('chef.tousmarches', [
-            'marches' => DB::table('marches')
-                ->join('categories', 'marches.id_categorie', '=', 'categories.id')
-                ->join('domaines', 'categories.id_domaine', '=', 'domaines.id')
-                ->select('marches.*', 'categories.name AS categorie', 'domaines.name AS domaine')
-                ->where('marches.id_chef', $id_chef)
-                ->get(),
-        ]);
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_chef', auth()->user()->id)
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
     }
 
     /**
@@ -38,17 +49,28 @@ class Gestion_Marches_ChefController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function current($id_chef)
+    public function current()
     {
-        return view('chef.marchesEnCours', [
-            'marches' => DB::table('marches')
-                ->join('categories', 'marches.id_categorie', '=', 'categories.id')
-                ->join('domaines', 'categories.id_domaine', '=', 'domaines.id')
-                ->select('marches.*', 'categories.name AS categorie', 'domaines.name AS domaine')
-                ->where('marches.id_chef', $id_chef)
-                ->whereBetween('marches.etat', [1, 2])
-                ->get(),
-        ]);
+
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_chef', auth()->user()->id)
+            ->whereBetween('marches.etat', [1, 2])
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
     }
 
     /**
@@ -56,34 +78,57 @@ class Gestion_Marches_ChefController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function closed($id_chef)
+    public function closed()
     {
-        return view('chef.marchesFermee', [
-            'marches' => DB::table('marches')
-                ->join('categories', 'marches.id_categorie', '=', 'categories.id')
-                ->join('domaines', 'categories.id_domaine', '=', 'domaines.id')
-                ->select('marches.*', 'categories.name AS categorie', 'domaines.name AS domaine')
-                ->where('marches.id_chef', $id_chef)
-                ->whereBetween('marches.etat', [3, 5])
-                ->get(),
-        ]);
+
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_chef', auth()->user()->id)
+            ->whereBetween('marches.etat', [3, 5])
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
     }
     /**
      * Afficher les marchés terminés
      *
      * @return \Illuminate\Http\Response
      */
-    public function ended($id_chef)
+    public function ended()
     {
-        return view('chef.marchesTermines', [
-            'marches' => DB::table('marches')
-                ->join('categories', 'marches.id_categorie', '=', 'categories.id')
-                ->join('domaines', 'categories.id_domaine', '=', 'domaines.id')
-                ->select('marches.*', 'categories.name AS categorie', 'domaines.name AS domaine')
-                ->where('marches.id_chef', $id_chef)
-                ->where('marches.etat', 6)
-                ->get(),
-        ]);
+
+
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_chef', auth()->user()->id)
+            ->where('marches.etat', 6)
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
     }
 
     /**

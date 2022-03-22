@@ -15,8 +15,8 @@
 
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+        aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
         <span>Utilisateurs</span>
     </a>
@@ -30,17 +30,16 @@
             <a class="collapse-item" href="{{route('entreprises')}}">Entreprises</a>
         </div>
     </div>
-</li> 
+</li>
 
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true"
+        aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-wrench"></i>
         <span>Gestion</span>
     </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Gestion:</h6>
             <a class="collapse-item" href="{{route('RolePermissionEdit')}}">Roles/Permission</a>
@@ -63,14 +62,13 @@
         <i class="fas fa-fw fa-folder"></i>
         <span>Projets</span>
     </a>
-    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-        data-parent="#accordionSidebar">
+    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les Projets:</h6>
-            <a class="collapse-item" href="#">En cours</a>
-            <a class="collapse-item" href="#">Terminer</a>
-            <a class="collapse-item" href="#">Annuler</a>
-            <a class="collapse-item" href="#">Tous les projets</a>
+            <a class="collapse-item" href="{{route('marches_en_cours_admin')}}">En cours</a>
+            <a class="collapse-item" href="{{route('marches_termines_admin')}}">Terminer</a>
+            <a class="collapse-item" href="{{route('marches_fermes_admin')}}">Annuler</a>
+            <a class="collapse-item" href="{{route('tous_marches_admin')}}">Tous les projets</a>
             {{-- <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
             <a class="collapse-item" href="404.html">404 Page</a>
@@ -81,7 +79,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="{{route('Statistique')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Statistiques</span></a>
 </li>

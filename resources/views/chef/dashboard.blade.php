@@ -2,6 +2,9 @@
 @section('navbar')
 
 
+
+
+
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
     <a class="nav-link" href="/statistics">
@@ -15,7 +18,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <hr class="sidebar-divider">
 <li class="nav-item">
-    <a class="nav-link" href="{{route('profile',['id' => Auth::user()->id])}}">
+    <a class="nav-link" href="{{route('profile')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
@@ -35,13 +38,13 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
             <a class="collapse-item" href="{{route('create_project')}}">Créer un nouveau projet</a>
-            <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés
+            <a class="collapse-item" href="{{route('marches_en_cours_chef') }}">Marchés
                 en cours</a>
-            <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés
+            <a class="collapse-item" href="{{route('marches_fermes_chef')}}">Marchés
                 fermés</a>
-            <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés
+            <a class="collapse-item" href="{{route('marches_termines_chef')}}">Marchés
                 terminés</a>
-            <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les
+            <a class=" collapse-item" href="{{route('tous-marches_chef')}}">Tous les
                 marchés</a>
         </div>
     </div>

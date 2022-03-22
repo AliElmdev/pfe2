@@ -10,7 +10,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href={{route('chat_entreprise',$id_marche)}} style="background: #3c8447; color: #ffffff; box-shadow: 0px 0px; border-radius: 10px;
+                <a class="nav-link" href={{route('chats',$id_marche)}} style="background: #3c8447; color: #ffffff; box-shadow: 0px 0px; border-radius: 10px;
                     border-top-left-radius: 0px; border-top-right-radius: 0px; border-width: 1px; border-color:
                     #003b0d;">
                     Messagerie</a>

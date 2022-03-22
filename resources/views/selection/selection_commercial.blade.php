@@ -1,4 +1,9 @@
-@extends('layouts.page')
+@extends('layouts.dashboard')
+
+@section('navbar')
+
+@endsection
+
 @section('content')
 
     <main style="background: rgba(220,53,69,0);margin-top: 0px;">
@@ -39,11 +44,11 @@
                     <tbody>
                         @foreach ($list_reponses_commercials as $list_reponses_commercial)
                             <tr style="border-width: 0px;border-bottom-width: 1px;border-bottom-color: rgb(163,165,167);">
-                            @foreach ($list_reponses_commercial as $application)
+                            @foreach ($list_reponses_commercial as $k=>$application)
                             @if ($loop->first)
-                                <td style="font-weight: bold;">#{{$application}}</td>
+                                <td style="font-weight: bold;">#{{$application}} <span class="text-secondary h6 pl-2">({{$list_qte[$application]}}u)</span></td>
                             @else
-                                <td class="produit1" style="text-align: center;">{{$application}} Dh<i class="fa fa-trophy" style="display: none;"></i></td>
+                                <td class="produit1" style="text-align: center;">{{$application}} Dh/u <i class="fa fa-trophy" style="display: none;"></i></td>
                             @endif
                             @endforeach
                             </tr>
@@ -238,13 +243,13 @@
         $(".min i").hide();
         $(".max").removeClass( "max" );
         $(".min").removeClass( "min" );
-         function getNum(s) {
-             var n = false;
-             if (s.length) {
-                 n = parseInt(s, 10);
-             }
-             return n;
-         }
+        function getNum(s) {
+            var n = false;
+            if (s.length) {
+                n = parseInt(s, 10);
+            }
+            return n;
+        }
 
          function getRowData(t) {
              var r = [],

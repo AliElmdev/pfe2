@@ -66,6 +66,7 @@ class CreateMarcheController extends Controller
             'id_categorie' => $_POST["categ_input"],
             'c_charge' => $file_charge,
             'id_chef' => Auth::id(),
+            'etat' => 1,
         ]);
 
         $marche->save();
@@ -82,7 +83,34 @@ class CreateMarcheController extends Controller
             ]);
             $marche->produit()->save($produit);
         }
-        //dd($request);
+
+        if(isset($_POST["question_input_rfi"])){
+            for($count = 0; $count < count($_POST["question_input_rfi"]); $count++){
+                $question = new Question([
+                    'question' => $_POST["question_input_rfi"][$count],
+                    'description' => $_POST["description_input_rfi"][$count],
+                    'type' => $_POST["type_input_rfi"][$count],
+                    'options' => $_POST["option_input_rfi"][$count],
+                    'section_id' => (int)$_POST["section_input_rfi"][$count],
+                    'marche_id' => $marche->id,
+                ]);
+                $question->save();
+            }       
+        }
+        
+        if(isset($_POST["question_input_rfq"])){
+            for($count = 0; $count < count($_POST["question_input_rfq"]); $count++){
+                $question = new Question([
+                    'question' => $_POST["question_input_rfq"][$count],
+                    'description' => $_POST["description_input_rfq"][$count],
+                    'type' => $_POST["type_input_rfq"][$count],
+                    'options' => $_POST["option_input_rfq"][$count],
+                    'section_id' => (int)$_POST["section_input_rfq"][$count],
+                    'marche_id' => $marche->id,
+                ]);
+                $question->save();
+            }  
+        }
     }
 
     /**

@@ -1,13 +1,21 @@
-@extends('chef.dashboard')
+@extends('layouts.dashboard')
+@section('navbar')
 
-@section('contenuDashboardChef')
+@include('includes.navbar_admin')
+
+@endsection
+
+@section('title')
+@endsection
+
+@section('content')
 <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <div class="container-fluid">
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-uppercase text-primary m-0 fw-bold">Marchés terminés<br></p>
+                            <p class="text-uppercase text-primary m-0 fw-bold">Marchés fermés<br></p>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -40,7 +48,7 @@
                                                 <td>{{$marche->title}}</td>
                                                 <td>{{$marche->domaine}}</td>
                                                 <td>{{$marche->categorie}}</td>
-                                                <td>Terminé</td>
+                                                <td>Fermé</td>
                                                 <td style="width: 10%;"><a href="#"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
                                             </tr>
                                         @endforeach

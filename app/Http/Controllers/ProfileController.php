@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Marche;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
@@ -45,8 +46,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
+        $id = auth()->user()->id;
         return view('profile', [
             'user' => DB::table('users')
                 ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -105,8 +107,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $id = auth()->user()->id;
         Profile::where('user_id', $id)
             ->update(['phone' => $request->input('phone')]);
 

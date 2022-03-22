@@ -345,6 +345,69 @@ class MessageController extends Controller
 
         return  $div;
     }
+
+
+    public function entreprise()
+    {
+        $id_receve =  auth()->user()->id;
+
+
+
+        // list messsage vue
+        $list_messages_vue = DB::table('messages')
+            ->join(
+                'marches',
+                'marches.id',
+                '=',
+                'id_marche'
+            )
+            ->select(
+                'marches.title',
+                'messages.id_marche',
+                'marches.limit_date',
+                DB::raw('count(*) as total')
+            )
+            ->where("messages.recever_id", $id_receve)
+            ->where('Vue', '=', 'Y')
+            ->whereNotNull("entreprise_id")
+            ->groupby('id_marche')
+            ->get();
+
+
+        $list_messages_non_vue = DB::table('messages')
+            ->join('marches', 'marches.id', '=', 'id_marche')
+            ->select(
+                'marches.title',
+                'messages.id_marche',
+                'marches.limit_date',
+                DB::raw('count(*) as total')
+            )
+            ->where("messages.recever_id", $id_receve)
+            ->where('Vue', '=', 'N')
+            ->whereNotNull("entreprise_id")
+            ->groupby('id_marche')
+            ->get();
+
+        $list_messages_postuler = DB::table('postulations')
+            ->join('marches', 'marches.id', '=', 'postulations.marche_id')
+            ->whereNotIn('postulations.marche_id', function ($q) {
+                $q->select('id_marche')->from('messages');
+            })
+            ->select(
+                'marches.title',
+                'marches.id as id_marche',
+                'marches.limit_date',
+                DB::raw('count(*) as total')
+            )
+            ->where("postulations.user_id", $id_receve)
+            ->whereNotNull("postulations.entreprise_id")
+            ->groupby('id_marche')
+            ->get();
+
+
+        return view("entreprise.message_boite", compact(['list_messages_vue', 'list_messages_non_vue', 'list_messages_postuler']));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

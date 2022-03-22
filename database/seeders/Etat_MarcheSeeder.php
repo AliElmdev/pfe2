@@ -25,18 +25,26 @@ class Etat_MarcheSeeder extends Seeder
             ],
             [
                 'id'        => 3,
-                'description' => 'Marché dans la phase de selection base RFI',
+                'description' => 'Marché Afficher',
             ],
             [
                 'id'        => 4,
-                'description' => 'Marché dans la phase de selection base technique',
+                'description' => 'Marché Arréter l\'affichage',
             ],
             [
                 'id'        => 5,
-                'description' => 'Marché dans la phase de selection base commercial',
+                'description' => 'Marché dans la phase de selection base RFI',
             ],
             [
                 'id'        => 6,
+                'description' => 'Marché dans la phase de selection base technique',
+            ],
+            [
+                'id'        => 7,
+                'description' => 'Marché dans la phase de selection base commercial',
+            ],
+            [
+                'id'        => 8,
                 'description' => 'Le marché est gagné par une entreprise',
             ],
         ];

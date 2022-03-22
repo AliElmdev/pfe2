@@ -1,93 +1,7 @@
 @extends('layouts.dashboard')
 @section('navbar')
-<!-- Nav Item - Dashboard -->
-<li class="nav-item">
-    <a class="nav-link" href="index.html">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a>
-</li>
 
-<!-- Divider -->
-<hr class="sidebar-divider">
-
-<!-- Heading -->
-<div class="sidebar-heading">
-    Interface
-</div>
-
-<!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Utilisateurs</span>
-    </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Les utilisateurs:</h6>
-            <a class="collapse-item" href="{{route('users')}}">Tous les utilisateurs</a>
-            <a class="collapse-item" href="{{route('create_user')}}">Créer un Nouvel Utilisateur</a>
-            {{-- <a class="collapse-item" href="#">Chefs de projet</a>
-            <a class="collapse-item" href="#">Responsables d'achat</a> --}}
-            <a class="collapse-item" href="{{route('entreprises')}}">Entreprises</a>
-        </div>
-    </div>
-</li>
-
-<!-- Nav Item - Utilities Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities">
-        <i class="fas fa-fw fa-wrench"></i>
-        <span>Gestion</span>
-    </a>
-    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-        data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Gestion:</h6>
-            <a class="collapse-item" href="{{route('RolePermissionEdit')}}">Roles/Permission</a>
-        </div>
-    </div>
-</li>
-
-<!-- Divider -->
-<hr class="sidebar-divider">
-
-<!-- Heading -->
-<div class="sidebar-heading">
-    Addons
-</div>
-
-<!-- Nav Item - Pages Collapse Menu -->
-<li class="nav-item active">
-    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-        aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Projets</span>
-    </a>
-    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-        data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Les Projets:</h6>
-            <a class="collapse-item" href="#">En cours</a>
-            <a class="collapse-item" href="#">Terminer</a>
-            <a class="collapse-item" href="#">Annuler</a>
-            <a class="collapse-item" href="#">Tous les projets</a>
-            {{-- <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item active" href="blank.html">Blank Page</a> --}}
-        </div>
-    </div>
-</li>
-
-<!-- Nav Item - Charts -->
-<li class="nav-item">
-    <a class="nav-link" href="charts.html">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>Statistiques</span></a>
-</li>
-
+@include('includes.navbar_admin')
 
 @endsection
 
@@ -134,7 +48,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Dépenses( <?php echo "$yearnow" ?> )</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$depenses}}Dh</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -221,7 +135,7 @@
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
@@ -251,19 +165,10 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                </div>
-                <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
-                    </span>
+                <div class="chart-pie mb-2">
+                    <div class="chart-area">
+                        <canvas id="myChart1"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,4 +190,126 @@
     </div>
 </footer>
 <!-- End of Footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{-- <script>
+    const ctx = document.getElementById('myChart1');
+    const myChart = new Chart(ctx, { 
+        type: 'pie',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: 'Nombre d\'entreprises',
+                data: [12, 19, 3, 5, 2, 50],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script> --}}
+<script>
+    var url = "{{url('/StatistiqueEntrepriseInscrits')}}";
+       var Years = new Array();
+       var Labels = new Array();
+       var Prices = new Array();
+       var NbrTotal = 0;
+       $(document).ready(function(){
+         $.get(url, function(response){
+           response.forEach(function(data){
+               Years.push(data.year);
+               Labels.push(data.myChart1);
+               Prices.push(data.data);
+               NbrTotal += data.data;
+           });
+           var ctx = document.getElementById("myChart").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'bar',
+                 data: {
+                     labels:Years,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal + ' )',
+                         data: Prices,
+                         backgroundColor: [
+                            'rgba(2, 187, 103, 0.8)',
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
+
+    var url1 = "{{url('/StatistiqueMarchesCategories')}}";
+       var Categorie1 = new Array();
+       var Prices1 = new Array();
+       var NbrTotal1 = 0;
+       $(document).ready(function(){
+         $.get(url1, function(response){
+           response.forEach(function(data){
+               Categorie1.push(data.categorie);
+               Prices1.push(data.data);
+               NbrTotal1 += data.data;
+           });
+           var ctx = document.getElementById("myChart1").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'doughnut',
+                 data: {
+                     labels:Categorie1,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal1 + ' )',
+                         data: Prices1,
+                         backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
+</script>
 @endsection

@@ -25,7 +25,7 @@ class MarchesTable extends Seeder
         $marches->limit_date = '2022-01-01';
         $marches->affichage_date = '2021-01-01';
         $marches->etat = '1';
-        $marches->c_charge = '#123';
+        $marches->c_charge = '#c.charge';
         $marches->save();
     }
 }

@@ -718,7 +718,7 @@ th {
 </style>
 
 <script>
-      getPagination('#table-id');
+    getPagination('#table-id');
 	$('#maxRows').trigger('change');
 	function getPagination (table){
 
@@ -819,8 +819,7 @@ function FilterkeyWord_all_table() {
 // Count td if you want to search on all table instead of specific column
 
   var count = $('.table').children('tbody').children('tr:first-child').children('td').length; 
-
-        // Declare variables
+  // Declare variables
   var input, filter, table, tr, td, i;
   input = document.getElementById("search_input_all");
   var input_value =     document.getElementById("search_input_all").value;

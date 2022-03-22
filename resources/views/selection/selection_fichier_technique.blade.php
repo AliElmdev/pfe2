@@ -1,4 +1,9 @@
-@extends('layouts.page')
+@extends('layouts.dashboard')
+
+@section('navbar')
+
+@endsection
+
 @section('content')
 <div>
     <div class="container-fluid">

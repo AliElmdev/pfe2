@@ -10,120 +10,156 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <canvas id="myChart" width="100" height="100"></canvas>
-    <canvas id="myChart1" width="100" height="100"></canvas>
-</div>
-<script>
-const ctx = document.getElementById('myChart');
-// const ctx1 = document.getElementById('myChart1');
 
-// const myChart1 = new Chart(ctx1, {
-//     type: 'doughnut',
-//     data: {
-//         labels: [
-//             'Red',
-//             'Blue',
-//             'Yellow',
-//             'hada'
-//         ],
-//         datasets: [{
-//             label: 'My First Dataset',
-//             data: [300, 50, 100,210],
-//             backgroundColor: [
-//             'rgb(255, 99, 132)',
-//             'rgb(54, 162, 235)',
-//             'rgb(255, 205, 86)',
-//             'rgba(255, 159, 64, 0.2)'
-//             ],
-//             hoverOffset: 4
-//         }]
-//     },
-// });
-const myChart = new Chart(ctx, { 
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: 'Nombre d\'entreprises',
-            data: [12, 19, 3, 5, 2, 50],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-</script>
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Dépenses Overview</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie mb-2">
+                    <div class="chart-area">
+                        <canvas id="myChart1" style="height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-     var url = "{{url('/test')}}";
-        var Years = new Array();
-        var Labels = new Array();
-        var Prices = new Array();
-        var NbrTotal = 0;
-        $(document).ready(function(){
-          $.get(url, function(response){
-            response.forEach(function(data){
-                Years.push(data.year);
-                Labels.push(data.myChart1);
-                Prices.push(data.data);
-                NbrTotal += data.data;
-            });
-            var ctx = document.getElementById("myChart1").getContext('2d');
-                var myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                      labels:Years,
-                      datasets: [{
-                          label: 'Nombres Entreprises ( Total : ' + NbrTotal + ' )',
-                          data: Prices,
-                          backgroundColor: [
-                            'blue',
-                          ],
-                          borderWidth: 1
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          yAxes: [{
-                              ticks: {
-                                  beginAtZero:true
-                              }
-                          }]
-                      }
-                  }
-              });
-          });
-        });
+    var url = "{{url('/StatistiqueEntrepriseInscrits')}}";
+       var Years = new Array();
+       var Labels = new Array();
+       var Prices = new Array();
+       var NbrTotal = 0;
+       $(document).ready(function(){
+         $.get(url, function(response){
+           response.forEach(function(data){
+               Years.push(data.year);
+               Labels.push(data.myChart1);
+               Prices.push(data.data);
+               NbrTotal += data.data;
+           });
+           var ctx = document.getElementById("myChart").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'bar',
+                 data: {
+                     labels:Years,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal + ' )',
+                         data: Prices,
+                         backgroundColor: [
+                            'rgba(2, 187, 103, 0.8)',
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
+
+    var url1 = "{{url('/StatistiqueMarchesCategories')}}";
+       var Categorie1 = new Array();
+       var Prices1 = new Array();
+       var NbrTotal1 = 0;
+       $(document).ready(function(){
+         $.get(url1, function(response){
+           response.forEach(function(data){
+               Categorie1.push(data.categorie);
+               Prices1.push(data.data);
+               NbrTotal1 += data.data;
+           });
+           var ctx = document.getElementById("myChart1").getContext('2d');
+               var myChart = new Chart(ctx, {
+                 type: 'doughnut',
+                 data: {
+                     labels:Categorie1,
+                     datasets: [{
+                         label: 'Nombres Entreprises ( Total : ' + NbrTotal1 + ' )',
+                         data: Prices1,
+                         backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                         ],
+                         borderWidth: 1
+                     }]
+                 },
+                 options: {
+                     scales: {
+                         yAxes: [{
+                             ticks: {
+                                 beginAtZero:true
+                             }
+                         }]
+                     }
+                 }
+             });
+         });
+       });
 </script>
-<style>
-    canvas{
-        max-width: 400px;
-        max-height: 400px;
-    }
-    .container{
-        display: flex;
-        justify-content: space-around
-    }
-</style>
 @endsection
