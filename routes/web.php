@@ -156,7 +156,7 @@ Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name(
 Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
 Route::get("/marche/{id_marche?}/message", [MessageController::class, 'enregister_entreprise'])->name('chats');
 Route::get("/marche/boite_message", [MessageController::class, 'index'])->name('chats_chef');
-Route::get("/marche/boite_message", [MessageController::class, 'entreprise'])->name('chats_entreprise');
+Route::get("/marche/boite_messages", [MessageController::class, 'entreprise'])->name('chats_entreprise');
 Route::get("/marche/liste_entreprise/marche{id_marche?}", [MessageController::class, 'show'])->name('chat_entreprise');
 Route::get("/marche/message/marche{id_marche?}/entreprise{entreprise_id?}", [MessageController::class, 'enregister'])->name('chat_chef_entreprise');
 Route::get("/marche/notificationMessage", [MessageController::class, 'notificationMessage'])->name('chats_notification');

@@ -30,6 +30,7 @@
             enctype="multipart/form-data">
             @csrf
             <input type="text" name="marche_id" value="{{$marche[0]->id}}" hidden>
+
             <div class="container" style="padding-right: 0px; padding-left: 0px;">
                 <div style="
                         background: #ffffff;
