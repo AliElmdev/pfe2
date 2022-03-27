@@ -10,6 +10,7 @@ use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
 use App\Http\Controllers\CreateUsersController;
 use App\Http\Controllers\EcMarcheCreationController;
+use App\Http\Controllers\Entreprise\GestionMarchesEntreprisesController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
@@ -128,6 +129,12 @@ Route::get("/marches_fermes", [GestionMarchesAdminController::class, "closed"])-
 Route::get("/marches_termines", [GestionMarchesAdminController::class, "ended"])->name("marches_termines_admin");
 Route::get("/tous_les_marches", [GestionMarchesAdminController::class, "index"])->name("tous_marches_admin");
 
+// Gestion marchées entreprise
+Route::get("/marches_rfi", [GestionMarchesEntreprisesController::class, "rfi"])->name("marches_rfi_entreprise");
+Route::get("/marches_rfq", [GestionMarchesEntreprisesController::class, "rfq"])->name("marches_rfq_entreprise");
+Route::get("/marches_termines", [GestionMarchesEntreprisesController::class, "ended"])->name("marches_termines_entreprise");
+Route::get("/tous_les_marches", [GestionMarchesEntreprisesController::class, "index"])->name("tous_marches_entreprise");
+
 //Statistiques
 Route::get("/Statistique", [StatistiqueController::class, "index"])->name("Statistique");
 //admin statistiques
@@ -140,6 +147,8 @@ Route::post("/AddRoleUser/new", [RolePermissionEditController::class, "storerole
 Route::get("/AddRoleUser", [RolePermissionEditController::class, "indexroleuser"])->name("AddRoleUser");
 Route::post("/AddRolePermission/new", [RolePermissionEditController::class, "storerolepermission"])->name("AddRolePermissionNew");
 Route::get("/AddRolePermission", [RolePermissionEditController::class, "indexrolepermission"])->name("AddRolePermission");
+
+//profile
 Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile");
 Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile");
 

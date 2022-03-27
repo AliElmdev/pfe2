@@ -15,48 +15,44 @@ class GestionMarchesEntreprisesController extends Controller
      */
     public function index()
     {
-        return view('admin.tousmarches',[
+        $id_entreprise = DB::table('entreprise_users')->where('user_id',auth()->user()->id)->first('entreprise_id');
+        return view('Entreprise.tousmarches',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->join('postulations', 'postulations.marche_id', '=', 'marches.id')
+                ->where('postulations.entreprise_id',$id_entreprise->entreprise_id)
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->get(),
+        ]); 
+    }
+
+    public function rfi()
+    {
+        $id_entreprise = DB::table('entreprise_users')->where('user_id',auth()->user()->id)->first('entreprise_id');
+        return view('entreprise.marchesEnCoursRfi',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->join('postulations', 'postulations.marche_id', '=', 'marches.id')
+                ->where('postulations.entreprise_id',$id_entreprise->entreprise_id)
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->where('marches.etat',5)
                 ->get(),
         ]);
     }
 
-    public function current()
+    public function rfq()
     {
-        return view('admin.marchesEnCours',[
+        $id_entreprise = DB::table('entreprise_users')->where('user_id',auth()->user()->id)->first('entreprise_id');
+        return view('entreprise.marchesEnCoursRfq',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->join('postulations', 'postulations.marche_id', '=', 'marches.id')
+                ->where('postulations.entreprise_id',$id_entreprise->entreprise_id )
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->whereBetween('marches.etat',[1,7])
-                ->get(),
-        ]);
-    }
-
-
-    public function closed()
-    {
-        return view('admin.marchesFermee',[
-            'marches' => DB::table('marches')
-                ->join('categories','marches.id_categorie','=','categories.id')
-                ->join('domaines','categories.id_domaine','=','domaines.id')
-                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->where('marches.etat',0)
-                ->get(),
-        ]);
-    }
-
-    public function ended()
-    {
-        return view('admin.marchesTermines',[
-            'marches' => DB::table('marches')
-                ->join('categories','marches.id_categorie','=','categories.id')
-                ->join('domaines','categories.id_domaine','=','domaines.id')
-                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->where('marches.etat',8)
+                ->whereBetween('marches.etat',[6,7])
                 ->get(),
         ]);
     }
