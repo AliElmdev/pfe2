@@ -5,7 +5,7 @@
         @include('includes.navbar_chef')
     @elseif(Auth::user()->hasRole('achat'))
         @include('includes.navbar_achat')
-    @elseif(Auth::user()->hasRole('entreprise'))
+    @elseif(Auth::user()->hasRole('user'))
         @include('includes.navbar_entreprise')
     @endif
 @endsection
@@ -57,6 +57,22 @@
                                     <div class="progress-bar bg-primary" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
                                 </div>
                                 <h4 class="small fw-bold">Tous les marchés<span class="float-end">{{$marchesAllAchat}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-info" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                            </div>
+                            @endif
+                            @if(Auth::user()->hasRole('user'))
+                            <div class="card-body">
+                                <h4 class="small fw-bold">Marchés en cours RFI<span class="float-end">{{$marcheRFI}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-danger" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Marchés en cours RFQ<span class="float-end">{{$marcheRFQ}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-warning" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Tous les marchés<span class="float-end">{{$marcheAllEntreprise}}</span></h4>
                                 <div class="progress progress-sm mb-3">
                                     <div class="progress-bar bg-info" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
                                 </div>

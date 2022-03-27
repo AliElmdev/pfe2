@@ -23,7 +23,7 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mon organisation:</h6>
-            <a class="collapse-item" href="#">Mon profil</a>
+            <a class="collapse-item" href="{{route('profile',['id' => Auth::user()->id])}}">Mon profil</a>
             <a class="collapse-item" href="#">Organisation</a>
         </div>
     </div>
