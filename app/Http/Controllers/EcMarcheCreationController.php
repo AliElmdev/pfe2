@@ -19,9 +19,9 @@ class EcMarcheCreationController extends Controller
      */
     public function showEtatZero()
     {
-        $marches = Marche::where('etat',1)->get();
-        return view('achat.MarchesEnCoursCreation',compact(["marches"]));
-        
+        $marches = Marche::where('etat', 1)->get();
+        return view('achat.MarchesEnCoursCreation', compact(["marches"]));
+
         // return view('achat.MarchesEnCoursCreation',[
         //    'marches' => Marche::where('etat',0)->get()
         // ]);
@@ -37,20 +37,21 @@ class EcMarcheCreationController extends Controller
     {
         // $val = DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id as id_section_rfq")->get();
         // dd($val);
-        return view('achat.AchatCreateMarche',[
+        return view('achat.AchatCreateMarche', [
             'marche' => Marche::find($id),
-            'produits' => Produit::where('marche_id',$id)->get(),
+            'produits' => Produit::where('marche_id', $id)->get(),
             'questions' => Question::all(),
-            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select('questions.id','questions.question')->get(),
-            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select('questions.id','questions.question')->get(),
-            'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select("nom_section","sections.id")->get(),
-            'sections_RFQ' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select("nom_section","sections.id")->get(),
-            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->where('marche_id',$id)->get(),
-            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->where('marche_id',$id)->get(), 
+            'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFI')->select('questions.id', 'questions.question')->get(),
+            'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFQ')->select('questions.id', 'questions.question')->get(),
+            'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFI')->select("nom_section", "sections.id")->get(),
+            'sections_RFQ' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFQ')->select("nom_section", "sections.id")->get(),
+            'questions_RFI_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFI')->where('marche_id', $id)->get(),
+            'questions_RFQ_marche' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section', 'RFQ')->where('marche_id', $id)->get(),
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $id = $_POST['marche_id'];
 
         $marche = Marche::find($id);
@@ -60,8 +61,8 @@ class EcMarcheCreationController extends Controller
         $marche->id_achat = Auth::user()->id;
         $marche->save();
 
-        if(isset($_POST["question_input_rfi"])){
-            for($count = 0; $count < count($_POST["question_input_rfi"]); $count++){
+        if (isset($_POST["question_input_rfi"])) {
+            for ($count = 0; $count < count($_POST["question_input_rfi"]); $count++) {
                 $question = new Question([
                     'question' => $_POST["question_input_rfi"][$count],
                     'description' => $_POST["description_input_rfi"][$count],
@@ -71,11 +72,11 @@ class EcMarcheCreationController extends Controller
                     'marche_id' => $_POST["marche_id"],
                 ]);
                 $question->save();
-            }       
+            }
         }
-        
-        if(isset($_POST["question_input_rfq"])){
-            for($count = 0; $count < count($_POST["question_input_rfq"]); $count++){
+
+        if (isset($_POST["question_input_rfq"])) {
+            for ($count = 0; $count < count($_POST["question_input_rfq"]); $count++) {
                 $question = new Question([
                     'question' => $_POST["question_input_rfq"][$count],
                     'description' => $_POST["description_input_rfq"][$count],
@@ -85,9 +86,89 @@ class EcMarcheCreationController extends Controller
                     'marche_id' => $_POST["marche_id"],
                 ]);
                 $question->save();
-            }  
+            }
         }
-            
+
         return redirect('/Marches-en-cours-creation');
-    }    
+    }
+
+
+
+
+
+
+    // //////
+    public function index()
+    {
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_achat', auth()->user()->id)
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
+    }
+    public function closed()
+    {
+
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_achat', auth()->user()->id)
+            ->whereBetween('marches.etat', [2, 5])
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
+    }
+    /**
+     * Afficher les marchés terminés
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ended()
+    {
+
+
+        $marches = DB::table('Marches')
+            ->join('etat_marches', 'etat_marches.id', '=', 'Marches.etat')
+            ->join('categories', 'marches.id_categorie', '=', 'categories.id')
+            ->select(
+                'marches.id as id',
+                'marches.description as description',
+                'marches.affichage_date as date_affichage',
+                'marches.title as titre',
+                'marches.etat as etat_num',
+                'etat_marches.description as etat',
+                'marches.limit_date as date',
+                'categories.name as categ'
+            )
+            ->groupBy('Marches.id')
+            ->where('marches.id_achat', auth()->user()->id)
+            ->where('marches.etat', 6)
+            ->get();
+
+        return view('chef.marche_information', compact(['marches']));
+    }
 }

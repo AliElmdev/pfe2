@@ -216,7 +216,7 @@ class PostulationController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
+     *c
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

@@ -66,7 +66,9 @@ Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::
 Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation");
 Route::get("/Marches-en-cours-creation/{id}", [EcMarcheCreationController::class, 'show'])->name("marcheUnitEnCoursCreations");
 Route::post("/Marches-en-cours-creation-valider", [EcMarcheCreationController::class, 'store'])->name("marcheUnitEnCoursCreation");
-
+Route::get("/Marches-achat", [EcMarcheCreationController::class, 'index'])->name("marchesAchat");
+Route::get("/Marches-en-cours-achat", [EcMarcheCreationController::class, 'index'])->name("marchesAchatEnCours");
+Route::get("/Marches-en-fermer-achat", [EcMarcheCreationController::class, 'index'])->name("marchesAchatTerminer");
 Auth::routes();
 
 //Selection
@@ -127,6 +129,11 @@ Route::get("/marches_en_cours", [GestionMarchesAdminController::class, "current"
 Route::get("/marches_fermes", [GestionMarchesAdminController::class, "closed"])->name("marches_fermes_admin");
 Route::get("/marches_termines", [GestionMarchesAdminController::class, "ended"])->name("marches_termines_admin");
 Route::get("/tous_les_marches", [GestionMarchesAdminController::class, "index"])->name("tous_marches_admin");
+// Gestion marchées achat
+
+Route::get("/marches-fermes", [Gestion_Marches_ChefController::class, "closed"])->name("marches_fermes_chef");
+Route::get("/marches-termines", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef");
+Route::get("/tous-les-marches", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef");
 
 //Statistiques
 Route::get("/Statistique", [StatistiqueController::class, "index"])->name("Statistique");
@@ -153,7 +160,7 @@ Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name(
 
 
 // mesggagerie controller 
-Route::get('/marche/{id_marche}/postulation', [PostulationController::class, 'show'])->name('postulation');
+
 Route::get("/marche/{id_marche?}/message", [MessageController::class, 'enregister_entreprise'])->name('chats');
 Route::get("/marche/boite_message", [MessageController::class, 'index'])->name('chats_chef');
 Route::get("/marche/boite_messages", [MessageController::class, 'entreprise'])->name('chats_entreprise');
@@ -167,6 +174,6 @@ Route::get("/marche/notificationMessage", [MessageController::class, 'notificati
 
 Route::get('/marche/inforamationmarches/marche{id_marche}', [Gestion_Marches_ChefController::class, 'show'])->name('modifierMarche');
 
-Route::post('/marche/inforamationmarches/marche{id_marche}', [Gestion_Marches_ChefController::class, 'update'])->name('modification_marches');
+Route::post('/marche/modifier marche {id_marche}', [Gestion_Marches_ChefController::class, 'update'])->name('modification_marches');
 Route::get("/Ouverture", [OuvertureController::class, "index"])->name("Ouverture")->middleware();
 Route::get("/ouverture-marche/{id}", [OuvertureMarcheController::class, "index"])->name("ouvertureMarche");

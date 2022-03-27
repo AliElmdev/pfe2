@@ -13,7 +13,7 @@
 <!-- Nav Item - Pages Collapse Menu -->
 <hr class="sidebar-divider">
 <li class="nav-item">
-    <a class="nav-link" href="{{route('profile',['id' => Auth::user()->id])}}">
+    <a class="nav-link" href="{{route('profile')}}">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Mon compte</span></a>
 </li>
@@ -29,10 +29,10 @@
     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
-            <a class="collapse-item" href="/Marches-en-cours-creation">En cours de creation</a>
-            <a class="collapse-item" href="utilities-color.html">En cours</a>
-            <a class="collapse-item" href="utilities-border.html">Terminer</a>
-            <a class="collapse-item" href="utilities-border.html">Tous les projets</a>
+            <a class="collapse-item" href={{route('marcheEnCoursCreation')}}>En cours de creation</a>
+            <a class="collapse-item" href={{route('marchesAchat')}}>En cours</a>
+            <a class="collapse-item" href={{route('marchesAchatEnCours')}}>Terminer</a>
+            <a class="collapse-item" href={{route('marchesAchatTerminer')}}>Tous les projets</a>
         </div>
     </div>
 </li>

@@ -26,7 +26,7 @@
             </li>
         </ul>
 
-        <form style="max-width:100%" action="{{route('postulation',$marche[0]->id)}}" method="POST"
+        <form style="max-width:100%" action="{{route('postulations',$marche[0]->id)}}" method="POST"
             enctype="multipart/form-data">
             @csrf
             <input type="text" name="marche_id" value="{{$marche[0]->id}}" hidden>
