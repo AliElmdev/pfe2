@@ -60,7 +60,11 @@
         <div class="form-group mb-3">
             <label class="form-label" for="email-input">Categorie</label>
             <select class="custom-select" name="categ_input">
-                <optgroup label="This is a group"><option value="1" selected="">This is item 1</option><option value="1">This is item 2</option><option value="1">This is item 3</option></optgroup>
+                <optgroup label="Categories">
+                @foreach ($categories as $categorie)
+                    <option value={{$categorie->id}}>{{$categorie->name}}</option>
+                @endforeach
+            </optgroup>
             </select>
         </div>
         <div class="form-group mb-3"><label class="form-label" for="textarea-input">Cachier des charges</label><input class="form-control bg-white" type="file" id="textarea-input" name="file_charge" /></div>

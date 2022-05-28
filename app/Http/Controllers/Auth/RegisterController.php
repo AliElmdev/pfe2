@@ -142,7 +142,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $role = config('roles.models.role')::where('name', '=', 'admin')->first();  //choose the default role upon user creation.
+        $role = config('roles.models.role')::where('name', '=', 'user')->first();  //choose the default role upon user creation.
         $user->attachRole($role);
 
         $profile = new Profile([

@@ -14,6 +14,80 @@ use Illuminate\Support\Facades\Auth;
 class EcMarcheCreationController extends Controller
 {
     /**
+     * Tous les marchés du achat
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $id_achat = Auth::user()->id;
+        return view('achat.tousmarches',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->where('marches.id_achat',$id_achat)
+                ->get(),
+        ]);
+    }
+
+    /**
+     * Afficher les marchés en cours
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function current()
+    {
+        $id_achat = Auth::user()->id;
+        return view('achat.marchesEnCours',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->where('marches.id_achat',$id_achat)
+                ->whereBetween('marches.etat',[1,2])
+                ->get(),
+        ]);
+    }
+
+    /**
+     * Afficher les marchés fermés
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function closed()
+    {
+        $id_achat = Auth::user()->id;
+        return view('achat.marchesFermee',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->where('marches.id_achat',$id_achat)
+                ->whereBetween('marches.etat',[3,5])
+                ->get(),
+        ]);
+    }
+    /**
+     * Afficher les marchés terminés
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ended()
+    {
+        $id_achat = Auth::user()->id;
+        return view('achat.marchesTermines',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->where('marches.id_achat',$id_achat)
+                ->where('marches.etat',6)
+                ->get(),
+        ]);
+    }
+    
+    /**
      * 
      * @return \Illuminate\Http\Response
      */

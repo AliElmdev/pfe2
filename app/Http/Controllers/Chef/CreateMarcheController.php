@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreMarcheRequest;
+use App\Models\Categorie;
 use App\Models\Marche;
 use App\Models\Produit;
 use App\Models\Question;
@@ -22,6 +23,7 @@ class CreateMarcheController extends Controller
     {
         return view('chef.create_project',[
             'questions' => Question::all(),
+            'categories' => Categorie::all(),
             'questions_RFI' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select('questions.id','questions.question')->get(),
             'questions_RFQ' => DB::table('questions')->join('sections', 'questions.section_id', '=', 'sections.id')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFQ')->select('questions.id','questions.question')->get(),
             'sections_RFI' => DB::table('sections')->join('b_sections', 'sections.b_section_id', '=', 'b_sections.id')->where('type_section','RFI')->select("nom_section","sections.id")->get(),
