@@ -42,14 +42,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($list_reponses_commercials as $list_reponses_commercial)
+                        @foreach ($list_reponses_commercials as $kk=>$list_reponses_commercial)
                             <tr style="border-width: 0px;border-bottom-width: 1px;border-bottom-color: rgb(163,165,167);">
                             @foreach ($list_reponses_commercial as $k=>$application)
                             @if ($loop->first)
-                                <td style="font-weight: bold;">#{{$application}} <span class="text-secondary h6 pl-2">({{$list_qte[$application]}}u)</span></td>
-                            @else
-                                <td class="produit1" style="text-align: center;">{{$application}} Dh/u <i class="fa fa-trophy" style="display: none;"></i></td>
+                                <td style="font-weight: bold;">#{{$kk}} <span class="text-secondary h6 pl-2">({{$list_qte[$kk]}}u)</span></td>
                             @endif
+                                <td class="produit1" style="text-align: center;">{{$application}} Dh/u <i class="fa fa-trophy" style="display: none;"></i></td>
                             @endforeach
                             </tr>
                         @endforeach
