@@ -20,6 +20,13 @@ class SelectionFichier_TechniqueController extends Controller
      */
     public function index($id)
     {
+        $nbr_restant = Postulation::where('marche_id',$id)->where('etat',3)->count();
+        if($nbr_restant == 0){
+            $marche = Marche::find($id);
+            $marche->etat = 7;
+            $marche->save();
+            return redirect()->route('ouvertureMarche',$id);
+        }
         return view('selection.selection_fichier_technique',[
             'marche' => Marche::find($id),
             'entreprises' => DB::table('postulations')
