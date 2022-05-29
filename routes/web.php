@@ -110,21 +110,21 @@ Route::get("/selection_Fichier_Technique/{id_marche}", [SelectionFichier_Techniq
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}", [SelectionFichier_TechniqueController::class, "show"])->name("selection_fichierTechnique_details")->middleware('auth');
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}/accept", [SelectionFichier_TechniqueController::class, "accept"])->name("selection_fichierTechnique_accept")->middleware('auth');
 Route::get("/selection_Fichier_Technique/{id_marche}/{id_entreprise}-{id_postulation}/refuse", [SelectionFichier_TechniqueController::class, "refuse"])->name("selection_fichierTechnique_refuse")->middleware('auth');
+// Gestion marchées admin
+Route::get("/marches_en_cours_admin", [GestionMarchesAdminController::class, "current"])->name("marches_en_cours_admin")->middleware('auth');
+Route::get("/marches_fermes_admin", [GestionMarchesAdminController::class, "closed"])->name("marches_fermes_admin")->middleware('auth');
+Route::get("/marches_termines_admin", [GestionMarchesAdminController::class, "ended"])->name("marches_termines_admin")->middleware('auth');
+Route::get("/tous_les_marches_admin", [GestionMarchesAdminController::class, "index"])->name("tous_marches_admin")->middleware('auth');
 // Gestion marchées chef
 Route::get("/marches-en-cours-{id_chef}", [Gestion_Marches_ChefController::class, "current"])->name("marches_en_cours_chef")->middleware('auth');
 Route::get("/marches-fermes-{id_chef}", [Gestion_Marches_ChefController::class, "closed"])->name("marches_fermes_chef")->middleware('auth');
 Route::get("/marches-termines-{id_chef}", [Gestion_Marches_ChefController::class, "ended"])->name("marches_termines_chef")->middleware('auth');
 Route::get("/tous-les-marches-{id_chef}", [Gestion_Marches_ChefController::class, "index"])->name("tous-marches_chef")->middleware('auth');
-// Gestion marchées admin
-Route::get("/marches_en_cours", [GestionMarchesAdminController::class, "current"])->name("marches_en_cours_admin")->middleware('auth');
-Route::get("/marches_fermes", [GestionMarchesAdminController::class, "closed"])->name("marches_fermes_admin")->middleware('auth');
-Route::get("/marches_termines", [GestionMarchesAdminController::class, "ended"])->name("marches_termines_admin")->middleware('auth');
-Route::get("/tous_les_marches", [GestionMarchesAdminController::class, "index"])->name("tous_marches_admin")->middleware('auth');
 // Gestion marchées achat
-Route::get("/marches_en_cours", [EcMarcheCreationController::class, "current"])->name("marches_en_cours_achat")->middleware('auth');
-Route::get("/marches_fermes", [EcMarcheCreationController::class, "closed"])->name("marches_fermes_achat")->middleware('auth');
-Route::get("/marches_termines", [EcMarcheCreationController::class, "ended"])->name("marches_termines_achat")->middleware('auth');
-Route::get("/tous_les_marches", [EcMarcheCreationController::class, "index"])->name("tous_marches_achat")->middleware('auth');
+Route::get("/marches_en_cours_achat", [EcMarcheCreationController::class, "current"])->name("marches_en_cours_achat")->middleware('auth');
+Route::get("/marches_fermes_achat", [EcMarcheCreationController::class, "closed"])->name("marches_fermes_achat")->middleware('auth');
+Route::get("/marches_termines_achat", [EcMarcheCreationController::class, "ended"])->name("marches_termines_achat")->middleware('auth');
+Route::get("/tous_les_marches_achat", [EcMarcheCreationController::class, "index"])->name("tous_marches_achat")->middleware('auth');
 
 
 //Statistiques
@@ -143,8 +143,10 @@ Route::get("/profile{id}", [ProfileController::class, "show"])->name("profile")-
 Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name("modifierProfile")->middleware('auth');
 
 //statistiques
-Route::get("/statistics/{id}", [StatisticsMarchesController::class, "index"])->name("statisticsInfo")->middleware('auth');
-Route::get("/statistics", [StatisticsMarchesController::class, "indexx"])->name("statistics")->middleware('auth');
+Route::get("/statistics_chef/{id}", [StatisticsMarchesController::class, "data_chef"])->name("statisticsInfo_chef")->middleware('auth');
+Route::get("/statistics_chef", [StatisticsMarchesController::class, "home_chef"])->name("statistics_chef")->middleware('auth');
+Route::get("/statistics_achat/{id}", [StatisticsMarchesController::class, "data_achat"])->name("statisticsInfo_achat")->middleware('auth');
+Route::get("/statistics_achat", [StatisticsMarchesController::class, "home_achat"])->name("statistics_achat")->middleware('auth');
 
 Route::get("/Ouverture", [OuvertureController::class, "index"])->name("Ouverture")->middleware('auth');
 Route::get("/ouverture-marche/{id}", [OuvertureMarcheController::class, "index"])->name("ouvertureMarche")->middleware('auth');

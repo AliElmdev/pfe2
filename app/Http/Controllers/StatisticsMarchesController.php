@@ -14,7 +14,7 @@ class StatisticsMarchesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function data_chef($id)
     {
         $enCours =  Marche::where('id_chef',$id)
             ->whereBetween('etat',[1,2])
@@ -36,9 +36,36 @@ class StatisticsMarchesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexx()
+    public function home_chef()
     {
         return  view('chef.statistics');
+    }
+
+    public function data_achat($id)
+    {
+        $enCours =  Marche::where('id_achat',$id)
+            ->whereBetween('etat',[1,2])
+            ->count();
+        $ferme =  Marche::where('id_achat',$id)
+            ->whereBetween('etat',[3,5])
+            ->count();
+        $termine = Marche::where('id_achat',$id)
+            ->where('etat',6)
+            ->count();
+        $all =  Marche::where('id_achat',$id)
+        ->count();
+        $data[] = ['enCours' => $enCours, 'ferme' => $ferme, 'termine' => $termine, 'all' => $all];
+        return response()->json($data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function home_achat()
+    {
+        return  view('achat.statistics');
     }
 
     /**

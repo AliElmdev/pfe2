@@ -1,11 +1,6 @@
-@extends('layouts.dashboard')
-@section('navbar')
+@extends('achat.dashboard')
 
-@include('includes.navbar_chef')
-
-@endsection
-
-@section('title')
+@section('contenuDashboardAchat')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
     canvas{
@@ -17,10 +12,6 @@
         justify-content: space-around
     }
 </style>
-
-@endsection
-
-@section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Mon espace de contrôle</h1>
     <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -130,7 +121,7 @@
 </script>
 
 <script>
-var url = "{{route('statisticsInfo_chef',['id' => Auth::user()->id])}}";
+var url = "{{route('statisticsInfo_achat',['id' => Auth::user()->id])}}";
 var enCours;
 var ferme;
 var termine;
