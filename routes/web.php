@@ -10,6 +10,7 @@ use App\Http\Controllers\MarcheController;
 use App\Http\Controllers\Chef\CreateMarcheController;
 use App\Http\Controllers\CreateUsersController;
 use App\Http\Controllers\EcMarcheCreationController;
+use App\Http\Controllers\Entreprise\GestionMarchesEntreprisesController;
 use App\Http\Controllers\MarcheUnitereController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Entreprise\PostulationController;
@@ -124,6 +125,12 @@ Route::get("/marches_en_cours_achat", [EcMarcheCreationController::class, "curre
 Route::get("/marches_fermes_achat", [EcMarcheCreationController::class, "closed"])->name("marches_fermes_achat")->middleware('auth');
 Route::get("/marches_termines_achat", [EcMarcheCreationController::class, "ended"])->name("marches_termines_achat")->middleware('auth');
 Route::get("/tous_les_marches_achat", [EcMarcheCreationController::class, "index"])->name("tous_marches_achat")->middleware('auth');
+// Gestion marchées entreprise
+Route::get("/marches_rfi", [GestionMarchesEntreprisesController::class, "rfi"])->name("marches_rfi")->middleware('auth');
+Route::get("/marches_rfq", [GestionMarchesEntreprisesController::class, "rfq"])->name("marches_rfq")->middleware('auth');
+Route::get("/marches_gagner", [GestionMarchesEntreprisesController::class, "gagner"])->name("marches_gagner")->middleware('auth');
+Route::get("/tous_les_marches", [GestionMarchesEntreprisesController::class, "tous"])->name("tous_marches_achat")->middleware('auth');
+Route::get("/marches_refuser", [GestionMarchesEntreprisesController::class, "refuser"])->name("marches_refuser")->middleware('auth');
 
 
 //Statistiques

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Entreprise;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GestionMarchesEntreprisesController extends Controller
@@ -13,50 +14,78 @@ class GestionMarchesEntreprisesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function refuser()
     {
-        return view('admin.tousmarches',[
+        $user = Auth::user();
+        return view('entreprise.marchesRefuser',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('postulations','marches.id','=','postulations.marche_id')
+                ->where('postulations.user_id',$user->id)
+                ->where('postulations.etat',0)
                 ->join('domaines','categories.id_domaine','=','domaines.id')
-                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine','postulations.etat as post_etat')
                 ->get(),
         ]);
     }
 
-    public function current()
+    public function tous()
     {
-        return view('admin.marchesEnCours',[
+        $user = Auth::user();
+        return view('entreprise.tousmarches',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->whereBetween('marches.etat',[1,7])
+                ->join('postulations','marches.id','=','postulations.marche_id')
+                ->where('postulations.user_id',$user->id)
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine','postulations.etat as post_etat')
                 ->get(),
         ]);
     }
 
 
-    public function closed()
+    public function rfi()
     {
-        return view('admin.marchesFermee',[
+        $user = Auth::user();
+        return view('entreprise.marchesRfi',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
-                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->where('marches.etat',0)
+                ->join('postulations','marches.id','=','postulations.marche_id')
+                ->where('postulations.user_id',$user->id)
+                ->where('postulations.etat',2)
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine','postulations.etat as post_etat')
                 ->get(),
         ]);
     }
 
-    public function ended()
+    public function rfq()
     {
-        return view('admin.marchesTermines',[
+        $user = Auth::user();
+        return view('entreprise.marchesRfq',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
-                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
-                ->where('marches.etat',8)
+                ->join('postulations','marches.id','=','postulations.marche_id')
+                ->where('postulations.user_id',$user->id)
+                ->whereBetween('postulations.etat',[3,4])
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine','postulations.etat as post_etat')
+                ->get(),
+        ]);
+    }
+
+    public function gagner()
+    {
+        $user = Auth::user();
+        return view('entreprise.marchesGagner',[
+            'marches' => DB::table('marches')
+                ->join('categories','marches.id_categorie','=','categories.id')
+                ->join('domaines','categories.id_domaine','=','domaines.id')
+                ->join('postulations','marches.id','=','postulations.marche_id')
+                ->where('postulations.user_id',$user->id)
+                ->where('postulations.etat',5)
+                ->select('marches.*','categories.name AS categorie','domaines.name AS domaine','postulations.etat as post_etat')
                 ->get(),
         ]);
     }
