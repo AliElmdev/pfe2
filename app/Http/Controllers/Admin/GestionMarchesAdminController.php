@@ -15,7 +15,7 @@ class GestionMarchesAdminController extends Controller
      */
     public function index()
     {
-        return view('entreprise.tousmarches',[
+        return view('admin.tousmarches',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
@@ -26,7 +26,7 @@ class GestionMarchesAdminController extends Controller
 
     public function current()
     {
-        return view('entreprise.marchesEnCours',[
+        return view('admin.marchesEnCours',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
@@ -39,7 +39,7 @@ class GestionMarchesAdminController extends Controller
 
     public function closed()
     {
-        return view('entreprise.marchesFermee',[
+        return view('admin.marchesFermee',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')
@@ -51,7 +51,7 @@ class GestionMarchesAdminController extends Controller
 
     public function ended()
     {
-        return view('entreprise.marchesTermines',[
+        return view('admin.marchesTermines',[
             'marches' => DB::table('marches')
                 ->join('categories','marches.id_categorie','=','categories.id')
                 ->join('domaines','categories.id_domaine','=','domaines.id')

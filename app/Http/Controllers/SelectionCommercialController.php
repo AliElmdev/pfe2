@@ -179,6 +179,7 @@ class SelectionCommercialController extends Controller
                 $list_qte[$produit->id] = $produit->qte;
             }
         }
+        dd($list_reponses_commercials);
         //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
         return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price","id","list_qte"]));
     }

@@ -9,6 +9,7 @@ use App\Models\EntrepriseUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class ValiderInscriptionController extends Controller
 {
@@ -71,8 +72,9 @@ class ValiderInscriptionController extends Controller
         if(isset($entreprise) && $entreprise->confirm == 0){
             $entreprise->confirm = 1;
             $entreprise->save();
-            Mail::to($user->email)->send(new TestMail($entreprise,$user));
+            // Mail::to($user->email)->send(new TestMail($entreprise,$user));
         }
+        return Redirect::route('Home');
     }
   
     /**

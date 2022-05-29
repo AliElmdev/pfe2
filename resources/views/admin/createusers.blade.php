@@ -45,7 +45,7 @@
                         @endforeach 
                     </select>
                 </div>
-                <div class="titre_services">
+                <div class="titre_services" hidden>
                     <div class="ml-1">Titre Services : </div>
                     <select name="titre_services" class="form-select titre_services text-capitalize" aria-label="Default select example">
                         @foreach ($titre_services as $titre_service)

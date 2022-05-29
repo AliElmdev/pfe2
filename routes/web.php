@@ -51,8 +51,8 @@ Route::get('/all_users', function () {
 
 
 
-Route::get('/ValiderInscription/{id}', [ValiderInscriptionController::class, "index"])->name("ValiderInscription")->middleware('auth');
-Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::class, "edit"])->middleware('auth');
+Route::get('/ValiderInscription/{id}', [ValiderInscriptionController::class, "index"])->name("ValiderInscription");
+Route::get('/ValiderInscription/{id}/{valider}', [ValiderInscriptionController::class, "edit"]);
 
 //Creation marche achat
 Route::get("/Marches-en-cours-creation", [EcMarcheCreationController::class, 'showEtatZero'])->name("marcheEnCoursCreation")->middleware('auth');
@@ -93,9 +93,9 @@ Route::get("/create_project", [CreateMarcheController::class, "index"])->name("c
 Route::post("/create_project", [CreateMarcheController::class, "store"])->name("create_project")->middleware('auth');
 
 Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
-Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration')->middleware('auth');
-Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches")->middleware('auth');
-Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere")->middleware('auth');
+Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
+Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
 
 // postulation marches
 
@@ -144,7 +144,7 @@ Route::post("/profile{id}modifier", [ProfileController::class, "update"])->name(
 //statistiques
 Route::get("/statistics_chef/{id}", [StatisticsMarchesController::class, "data_chef"])->name("statisticsInfo_chef")->middleware('auth');
 Route::get("/statistics_chef", [StatisticsMarchesController::class, "home_chef"])->name("statistics_chef")->middleware('auth');
-Route::get("/statistics_achat/{id}", [StatisticsMarchesController::class, "data_achat"])->name("statisticsInfo_chef")->middleware('auth');
+Route::get("/statistics_achat/{id}", [StatisticsMarchesController::class, "data_achat"])->name("statisticsInfo_achat")->middleware('auth');
 Route::get("/statistics_achat", [StatisticsMarchesController::class, "home_achat"])->name("statistics_achat")->middleware('auth');
 
 Route::get("/Ouverture", [OuvertureController::class, "index"])->name("Ouverture")->middleware('auth');
