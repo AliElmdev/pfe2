@@ -18,6 +18,13 @@ class Selection_RFIController extends Controller
      */
     public function index($id)
     {
+        $nbr_restant = Postulation::where('marche_id',$id)->where('etat',2)->count();
+        if($nbr_restant == 0){
+            $marche = Marche::find($id);
+            $marche->etat = 6;
+            $marche->save();
+            return redirect()->route('ouvertureMarche',$id);
+        }
         return view('selection.selection_rfi',[
             'marche' => Marche::find($id),
             'entreprises' => DB::table('postulations')

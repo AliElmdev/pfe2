@@ -75,7 +75,6 @@ Route::get('/postulation/{id}', [PostulationController::class, "show"])->name("p
 Route::post('/postulation/{id}', [PostulationController::class, "store"])->name("postulation")->middleware('auth');
 
 
-
 //Create Users
 Route::get("/create_user", [CreateUsersController::class, "index"])->name("create_user")->middleware('auth');
 Route::post("/create_user", [CreateUsersController::class, "store"])->name("create_user_store")->middleware('auth');

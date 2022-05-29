@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="d-flex flex-wrap justify-content-around">
-        <div class="list-group">
+        <div class="list-group" style="min-width: 40%">
             <div class="list-group-item active text-center">
                 <b class="list-group-item-heading">RFI</b>
                 {{-- <p class="list-group-item-text">
@@ -87,7 +87,7 @@
             </a>
             @endforeach
         </div>
-        <div class="list-group">
+        <div class="list-group" style="min-width: 40%">
             <div class="list-group-item active text-center">
                 <b class="list-group-item-heading">RFQ</b>
                 {{-- <p class="list-group-item-text">

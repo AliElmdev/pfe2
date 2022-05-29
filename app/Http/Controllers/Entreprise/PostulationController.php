@@ -113,7 +113,7 @@ class PostulationController extends Controller
             $postulation->marche_id = $_POST['marche_id'];
             $postulation->user_id = $user_id;
             $postulation->entreprise_id = $entreprise_id->entreprise_id;
-            $postulation->etat = 1;
+            $postulation->etat = 2;
             $postulation->questions_id = $reponses_question->id;
             $postulation->commercials_id = $reponses_commercial->id;
             //etat postulation

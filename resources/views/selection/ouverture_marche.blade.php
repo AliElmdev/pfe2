@@ -76,12 +76,12 @@
                                 <h6 class="text-primary fw-bold m-0">Ouverture du marché</h6>
                             </div>
                             <div class="card-body">
-                                    @if ($marche->etat == 3)
+                                    @if ($marche->etat == 5)
                                     <div style="border: 1px solid #4e73df;border-radius: 3px;padding: 3%;margin-bottom: 2%;">
                                         <h4 class="small fw-bold">Sélection RFI<span class="float-end" style="color: var(--bs-red);">En Cours</span></h4>
                                         <a href="{{route('selection_rfi',['id_marche'=>$marche->id])}}"><button class="btn btn-primary goTo" style="background: rgb(255,255,255);color: #4e73df;">Ouvrir<i class="far fa-arrow-alt-circle-right" style="margin-left: 5px;"></i></button></a>
                                     </div>
-                                    @elseif($marche->etat == 4)
+                                    @elseif($marche->etat == 6)
                                     <div style="border: 1px solid #4e73df;border-radius: 3px;padding: 3%;margin-bottom: 2%;">
                                         <h4 class="small fw-bold">Sélection RFI<span class="float-end" style="color: var(--bs-red);">Complété</span></h4>
                                         <button class="btn btn-primary goTo" style="background: rgb(255,255,255);color: #4e73df;" disabled>Ouvrir<i class="far fa-arrow-alt-circle-right" style="margin-left: 5px;"></i></button>
@@ -90,7 +90,7 @@
                                         <h4 class="small fw-bold">Sélection Technique<span class="float-end" style="color: var(--bs-red);">En Cours</span></h4>
                                         <a href="{{route('selection_fichierTechnique',['id_marche'=>$marche->id])}}"><button class="btn btn-primary goTo" data-bss-hover-animate="rubberBand" type="button" style="background: rgb(255,255,255);color: #4e73df;">Ouvrir<i class="far fa-arrow-alt-circle-right" style="margin-left: 5px;"></i></button></a>
                                     </div>
-                                    @elseif($marche->etat == 5)
+                                    @elseif($marche->etat == 7)
                                     <div style="border: 1px solid #4e73df;border-radius: 3px;padding: 3%;margin-bottom: 2%;">
                                         <h4 class="small fw-bold">Sélection RFI<span class="float-end" style="color: var(--bs-red);">Complété</span></h4>
                                         <button class="btn btn-primary goTo" style="background: rgb(255,255,255);color: #4e73df;" disabled>Ouvrir<i class="far fa-arrow-alt-circle-right" style="margin-left: 5px;"></i></button>
@@ -103,7 +103,7 @@
                                         <h4 class="small fw-bold">Sélection Commerciale<span class="float-end" style="color: var(--bs-red);">En Cours</span></h4>
                                         <a  href="{{route('selection_commercial',['id'=>$marche->id])}}"><button class="btn btn-primary goTo" data-bss-hover-animate="rubberBand" type="button" style="background: rgb(255,255,255);color: #4e73df;">Ouvrir<i class="far fa-arrow-alt-circle-right" style="margin-left: 5px;"></i></button></a>
                                     </div>
-                                    @elseif($marche->etat < 3)
+                                    @elseif($marche->etat < 5)
                                     <div class="text-center" style="background: #ed7a6b; color: rgb(255, 255, 255); border-radius: 5px; padding-top: 1px;padding-bottom: 1px;">
                                         <p style="color: white; font-weight: border; margin-top: 1px;">La phase de sélection n'a pas encore commencé</p>
                                     </div>

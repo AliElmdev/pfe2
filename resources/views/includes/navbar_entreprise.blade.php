@@ -40,9 +40,9 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Mes projets:</h6>
-            <a class="collapse-item" href="utilities-color.html">En cours</a>
-            <a class="collapse-item" href="utilities-border.html">Terminer</a>
-            <a class="collapse-item" href="utilities-border.html">Tous les projets</a>
+            <a class="collapse-item" href="#">En cours</a>
+            <a class="collapse-item" href="#">Terminer</a>
+            <a class="collapse-item" href="#">Tous les projets</a>
         </div>
     </div>
 </li>
