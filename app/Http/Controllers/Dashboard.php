@@ -55,10 +55,10 @@ class Dashboard extends Controller
             return view('entreprise.dashboard',compact(["NbrContrats","NbrRfi","NbrRfq","listofrfi","listofrfq"]));
         }
         if ($user->hasRole('chef')) {
-            return redirect()-> route('statistics');
+            return redirect()-> route('statistics_chef');
         }
         if ($user->hasRole('achat')) {
-            return view('achat.dashboard');
+            return redirect()-> route('statistics_achat');
         }
         return view('homepage');
     }

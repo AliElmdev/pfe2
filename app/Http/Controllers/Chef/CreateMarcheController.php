@@ -113,6 +113,7 @@ class CreateMarcheController extends Controller
                 $question->save();
             }  
         }
+        return back();
     }
 
     /**

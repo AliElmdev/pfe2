@@ -18,7 +18,7 @@ class MarcheController extends Controller
     {
         $list_categories = Categorie::all();
         $list_domaines = Domaine::all();
-        $list_marches = Marche::all();
+        $list_marches = Marche::where('etat',3)->get();
         $catg = Categorie::all()->keyBy('id');
         return view("Marches", compact(["list_categories", "list_domaines", "list_marches","catg"]));
     }

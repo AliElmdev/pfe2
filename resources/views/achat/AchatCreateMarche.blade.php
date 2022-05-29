@@ -1,5 +1,5 @@
 @extends('achat.dashboard')
-@section('contenu')
+@section('contenuDashboardAchat')
     <div style="margin: 25px;padding: 20px;">
         <div>
             <section id="sectCre" style="text-align: center;">

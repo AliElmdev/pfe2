@@ -48,7 +48,8 @@ class PostulationController extends Controller
 
     public function store(Request $request)
     {
-        // reponse_qst[]
+        if (auth()->user()->hasRole('user')) {
+        //reponse_qst[]
         $user_id = auth()->user()->id;
         $entreprise_id = EntrepriseUser::where('user_id','=',$user_id)->first('entreprise_id');
         $postulations = Postulation::where('user_id',$user_id)->where('marche_id',$_POST['marche_id'])->first();
@@ -168,6 +169,9 @@ class PostulationController extends Controller
         }
 
         return redirect()->route('postulation',$_POST['marche_id']);
+    }else{
+        return back();
+    }
     }
 
     /**
@@ -178,17 +182,21 @@ class PostulationController extends Controller
      */
     public function show($id)
     {
-        $b_sections = B_section::All();
-        $marche = Marche::where('id', $id)->get();
-        $produits = Produit::where('marche_id', $id)->get();
+        if (auth()->user()->hasRole('user')) {
+            $b_sections = B_section::All();
+            $marche = Marche::where('id', $id)->get();
+            $produits = Produit::where('marche_id', $id)->get();
 
-        $postulations = Postulation::where('marche_id', $id)->where('user_id',auth()->user()->id)->first();
-        if($postulations !=null){
-            $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id)->get();
-            $reponses_commercial = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)->get();
-            return view("entreprise.postuler", compact(["b_sections","marche","produits","reponses_question","reponses_commercial"]));
+            $postulations = Postulation::where('marche_id', $id)->where('user_id',auth()->user()->id)->first();
+            if($postulations !=null){
+                $reponses_question = Reponse_question::where('reponses_question_id',$postulations->questions_id)->get();
+                $reponses_commercial = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)->get();
+                return view("entreprise.postuler", compact(["b_sections","marche","produits","reponses_question","reponses_commercial"]));
+            }else{
+                return view("entreprise.postuler", compact(["b_sections","marche","produits"]));
+            }
         }else{
-            return view("entreprise.postuler", compact(["b_sections","marche","produits"]));
+            return back();
         }
     }
 

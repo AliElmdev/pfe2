@@ -95,10 +95,6 @@ class EcMarcheCreationController extends Controller
     {
         $marches = Marche::where('etat',1)->get();
         return view('achat.MarchesEnCoursCreation',compact(["marches"]));
-        
-        // return view('achat.MarchesEnCoursCreation',[
-        //    'marches' => Marche::where('etat',0)->get()
-        // ]);
     }
 
     /**

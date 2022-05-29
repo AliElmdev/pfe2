@@ -2,49 +2,16 @@
 
 @section('navbar')
     @if(Auth::user()->hasRole('chef'))
-    <li class="nav-item">
-        <a class="nav-link" href="/statistics">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Tableau de bord</span></a>
-    </li>
-    
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-    
-    <!-- Nav Item - Pages Collapse Menu -->
-    <hr class="sidebar-divider">
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('profile',['id' => Auth::user()->id])}}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Mon compte</span></a>
-    </li>
-    
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Mes Projets</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Mes projets:</h6>
-                <a class="collapse-item" href="{{route('create_project')}}">Créer un nouveau projet</a>
-                <a class="collapse-item" href="{{route('marches_en_cours_chef',['id_chef' => Auth::user()->id])}}">Marchés en cours</a>
-                <a class="collapse-item" href="{{route('marches_fermes_chef',['id_chef' => Auth::user()->id])}}">Marchés fermés</a>
-                <a class="collapse-item" href="{{route('marches_termines_chef',['id_chef' => Auth::user()->id])}}">Marchés terminés</a>
-                <a class="collapse-item" href="{{route('tous-marches_chef',['id_chef' => Auth::user()->id])}}">Tous les marchés</a>
-            </div>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" href="/">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Page d'acceuil</span></a>
-    </li>
-    
+    @include('includes.navbar_chef')    
+    @endif
+    @if(Auth::user()->hasRole('user'))
+    @include('includes.navbar_entreprise')    
+    @endif
+    @if(Auth::user()->hasRole('achat'))
+    @include('includes.navbar_achat')    
+    @endif
+    @if(Auth::user()->hasRole('admin'))
+    @include('includes.navbar_admin')    
     @endif
 
 
@@ -84,6 +51,26 @@
                             @endif
 
                             @if(Auth::user()->hasRole('achat'))
+                            <div class="card-body">
+                                <h4 class="small fw-bold">Marchés en cours<span class="float-end">{{$marchesEnCoursAchat}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-danger" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Marchés fermés<span class="float-end">{{$marchesFermesAchat}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-warning" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Marchés terminés<span class="float-end">{{$marchesTerminesAchat}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-primary" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                                <h4 class="small fw-bold">Tous les marchés<span class="float-end">{{$marchesAllAchat}}</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                    <div class="progress-bar bg-info" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
+                                </div>
+                            </div>
+                            @endif
+                            @if(Auth::user()->hasRole('user'))
                             <div class="card-body">
                                 <h4 class="small fw-bold">Marchés en cours<span class="float-end">{{$marchesEnCoursAchat}}</span></h4>
                                 <div class="progress progress-sm mb-3">

@@ -1,5 +1,5 @@
 @extends('achat.dashboard')
-@section('contenu')
+@section('contenuDashboardAchat')
 <h1 style="text-align: center;">Projets en cours de création</h1>
 <div class="container">
     @foreach ($marches as $marche)

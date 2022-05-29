@@ -17,13 +17,13 @@ class StatisticsMarchesController extends Controller
     public function data_chef($id)
     {
         $enCours =  Marche::where('id_chef',$id)
-            ->whereBetween('etat',[1,2])
+            ->whereBetween('etat',[1,7])
             ->count();
         $ferme =  Marche::where('id_chef',$id)
-            ->whereBetween('etat',[3,5])
+            ->where('etat',0)
             ->count();
         $termine = Marche::where('id_chef',$id)
-            ->where('etat',6)
+            ->where('etat',8)
             ->count();
         $all =  Marche::where('id_chef',$id)
         ->count();
@@ -44,13 +44,13 @@ class StatisticsMarchesController extends Controller
     public function data_achat($id)
     {
         $enCours =  Marche::where('id_achat',$id)
-            ->whereBetween('etat',[1,2])
+            ->whereBetween('etat',[1,7])
             ->count();
         $ferme =  Marche::where('id_achat',$id)
-            ->whereBetween('etat',[3,5])
+            ->where('etat',0)
             ->count();
         $termine = Marche::where('id_achat',$id)
-            ->where('etat',6)
+            ->where('etat',8)
             ->count();
         $all =  Marche::where('id_achat',$id)
         ->count();
