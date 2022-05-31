@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contrat;
 use App\Models\Entreprise;
 use App\Models\EntrepriseUser;
+use App\Models\Marche;
 use App\Models\Postulation;
 use App\Models\Produit;
 use App\Models\Reponse_commercial;
@@ -48,8 +49,17 @@ class SelectionCommercialController extends Controller
                 $data = $this->best_prixqualite_produit($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
+                $post = Postulation::all();
+                foreach($post as $postu){
+                    $postu->etat_old = $postu->etat;
+                    $postu->etat = 0;
+                    $postu->save();
+                }
                 foreach($data_decode as $v){
                     $postulations = Postulation ::where('marche_id',$request->marche_id)->where('entreprise_id',$v->entreprise_id)->first();
+                    $postulations->etat_old = 5;
+                    $postulations->etat = 5;
+                    $postulations->save();
                     $contrat = new Contrat();
                     $contrat->id_produits = $v->produit_id;
                     $contrat->id_marche = $request->marche_id;
@@ -59,14 +69,22 @@ class SelectionCommercialController extends Controller
                     $contrat->etat = 0;
                     $contrat->save();
                 }
-                return $data;
             }elseif($request->type_filtrage == 'marche'){
                 $data = $this->best_prixqualite_marche($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
                 $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
+                $post = Postulation::all();
+                foreach($post as $postu){
+                    $postu->etat_old = $postu->etat;
+                    $postu->etat = 0;
+                    $postu->save();
+                }
                 $postulations = Postulation ::where('marche_id',$request->marche_id)
                                             ->where('entreprise_id',$data_decode->entreprise_id)->first();
+                $postulations->etat_old = 5;
+                $postulations->etat = 5;
+                $postulations->save();
                 foreach($produits as $produit){
                     $prix = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)
                                                 ->join('produits', 'produits.id','=','produit_id') 
@@ -82,16 +100,24 @@ class SelectionCommercialController extends Controller
                     $contrat->etat = 0;
                     $contrat->save();
                 }
-                return $data;
             }
         }elseif($request->type_selections == 'moinschere'){
             if($request->type_filtrage == 'produit'){
                 $data = $this->min_prix_produit($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
+                $post = Postulation::all();
+                foreach($post as $postu){
+                    $postu->etat_old = $postu->etat;
+                    $postu->etat = 0;
+                    $postu->save();
+                }
                 foreach($data_decode as $v){
                     $postulations = Postulation ::where('marche_id',$request->marche_id)
                                                 ->where('entreprise_id',$v->id)->first();
+                    $postulations->etat_old = 5;
+                    $postulations->etat = 5;
+                    $postulations->save();
                     $contrat = new Contrat();
                     $contrat->id_produits = $v->produit_id;
                     $contrat->id_marche = $request->marche_id;
@@ -101,15 +127,23 @@ class SelectionCommercialController extends Controller
                     $contrat->etat = 0;
                     $contrat->save();
                 }
-                return $data;
             }elseif($request->type_filtrage == 'marche'){
                 
                 $data = $this->min_prix_marche($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
                 $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
+                $post = Postulation::all();
+                foreach($post as $postu){
+                    $postu->etat_old = $postu->etat;
+                    $postu->etat = 0;
+                    $postu->save();
+                }
                 $postulations = Postulation ::where('marche_id',$request->marche_id)
                                             ->where('entreprise_id',$data_decode->entreprise_id)->first();
+                $postulations->etat_old = 5;
+                $postulations->etat = 5;
+                $postulations->save();
                 foreach($produits as $produit){
                     $prix = Reponse_commercial::where('reponses_commercial_id',$postulations->commercials_id)
                                                 ->join('produits', 'produits.id','=','produit_id') 
@@ -125,9 +159,12 @@ class SelectionCommercialController extends Controller
                     $contrat->etat = 0;
                     $contrat->save();
                 }
-                return $data;
             }
         }
+        $marche = Marche::where('id',$request->marche_id)->first();
+        $marche->etat = 8;
+        $marche->save();
+        return back();
     }
 
     /**
@@ -179,9 +216,9 @@ class SelectionCommercialController extends Controller
                 $list_qte[$produit->id] = $produit->qte;
             }
         }
-        // dd($list_qte);
+        $marche = Marche::where('id',$id)->first();
         //return view("selection.selection_commercial", compact(["list_entreprises","list_reponses_commercials"]));
-        return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price","id","list_qte"]));
+        return view("selection.selection_commercial", compact(["list_reponses_commercials","list_entreprises","total_price","id","list_qte","marche"]));
     }
 
     /**

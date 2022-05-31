@@ -96,7 +96,9 @@
 
                 </tbody>
             </table>
+            @if ($marche->etat == 7)
             <div class="text-center"><button class="btn btn-success mb-5 send" style="display: none" type="submit">Confirmer</button></div>
+            @endif
         </div>
     </form>
     </main>

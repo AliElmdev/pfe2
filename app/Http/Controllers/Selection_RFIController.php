@@ -73,6 +73,7 @@ class Selection_RFIController extends Controller
         $id = $_GET['id_postulation'];
         $id_marche = $_GET['id_marche'];
         $postulation = Postulation::find($id);
+        $postulation->etat_old = $postulation->etat;
         $postulation->etat = 0;
         $postulation->save();
         return redirect(route('selection_rfi',['id_marche' => $id_marche]));
