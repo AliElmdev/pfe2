@@ -138,7 +138,7 @@ class SelectionCommercialController extends Controller
      */
     public function show($id)
     {
-        $postulations = Postulation ::where('marche_id',$id)->get();
+        $postulations = Postulation ::where('marche_id',$id)->where('etat','<>',0)->get();
         $list_entreprises = [];
         $list_reponses_commercials = [];
         $list_qte = [];
@@ -203,11 +203,13 @@ class SelectionCommercialController extends Controller
         foreach($produits as $produit){
             $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
             ->where('postulations.marche_id','=',$id)
+            ->where('postulations.etat','<>',0)
             ->where('produit_id','=',$produit->id)
             ->selectRaw('Min(prix) as prix')->first();
 
             $prix_minn = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
             ->where('postulations.marche_id','=',$id)
+            ->where('postulations.etat','<>',0)
             ->join('produits', 'produits.id','=','produit_id') 
             ->where('produit_id','=',$produit->id)
             ->where('prix','=',$prix_min->prix)
@@ -225,6 +227,7 @@ class SelectionCommercialController extends Controller
         $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
         ->join('produits', 'produits.id','=','produit_id') 
         ->where('postulations.marche_id','=',$id)
+        ->where('postulations.etat','<>',0)
         ->groupby('user_id') 
         ->selectRaw('sum(prix*qte) as prix_total, entreprise_id as entreprise_id , produits.marche_id')
         ->orderby('prix_total')
@@ -240,6 +243,7 @@ class SelectionCommercialController extends Controller
             $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
             ->join('produits', 'produits.id','=','produit_id') 
             ->where('postulations.marche_id','=',$id)
+            ->where('postulations.etat','<>',0)
             ->where('produit_id','=',$produit->id)
             ->selectRaw('max(note/(prix*qte)) as prix_quality,prix,note')
             ->groupby('prix','note')
@@ -248,6 +252,7 @@ class SelectionCommercialController extends Controller
             $prix_minn = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
             ->join('produits', 'produits.id','=','produit_id') 
             ->where('postulations.marche_id','=',$id)
+            ->where('postulations.etat','<>',0)
             ->where('produit_id','=',$produit->id)
             ->where('prix','=',$prix_min->prix)
             ->where('note','=',$prix_min->note)
@@ -287,6 +292,7 @@ class SelectionCommercialController extends Controller
         $prix_min = Reponse_commercial::join('postulations', 'reponses_commercial_id', '=', 'postulations.commercials_id')
         ->join('produits', 'produits.id','=','produit_id') 
         ->where('postulations.marche_id','=',$id)
+        ->where('postulations.etat','<>',0)
         ->selectRaw('sum(prix*qte) as prix_total,sum(note) as note_total, entreprise_id, produits.marche_id')
         ->groupby('entreprise_id') 
         //->selectRaw('note/prix as qua_pr')
