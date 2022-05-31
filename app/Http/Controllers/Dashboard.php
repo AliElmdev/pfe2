@@ -60,6 +60,9 @@ class Dashboard extends Controller
         if ($user->hasRole('achat')) {
             return redirect()-> route('statistics_achat');
         }
+        if ($user->hasRole('responsable')) {
+            return redirect()-> route('Ouverture');
+        }
         return view('homepage');
     }
 

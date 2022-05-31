@@ -47,8 +47,9 @@
                             @foreach ($list_reponses_commercial as $k=>$application)
                             @if ($loop->first)
                                 <td style="font-weight: bold;">#{{$kk}} <span class="text-secondary h6 pl-2">({{$list_qte[$kk]}}u)</span></td>
-                            @endif
+                            @else
                                 <td class="produit1" style="text-align: center;">{{$application}} Dh/u <i class="fa fa-trophy" style="display: none;"></i></td>
+                            @endif
                             @endforeach
                             </tr>
                         @endforeach

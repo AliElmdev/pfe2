@@ -48,6 +48,12 @@ class RolesTableSeeder extends Seeder
                 'description' => 'Reponsable d\'achat',
                 'level'       => 3,
             ],
+            [
+                'name'        => 'Responsable',
+                'slug'        => 'responsable',
+                'description' => 'Responsable d\'ouverture de marches',
+                'level'       => 4,
+            ],
         ];
 
         /*
