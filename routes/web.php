@@ -96,6 +96,7 @@ Route::post("/create_project", [CreateMarcheController::class, "store"])->name("
 Route::get("/dashboard", [Dashboard::class, "index"])->name("dashboard")->middleware('auth');
 Route::post('/registration', [RegisterController::class, 'create_cost'])->name('registration');
 Route::get("/opportuinities", [MarcheController::class, "index"])->name("Marches");
+Route::get("/marchesuivie/{id}", [MarcheController::class, "show"])->name("marchesuivie");
 Route::get("/opportuinitie/{id_marche}", [MarcheUnitereController::class, 'show'])->name("marchesunitere");
 
 // postulation marches
@@ -129,7 +130,7 @@ Route::get("/tous_les_marches_achat", [EcMarcheCreationController::class, "index
 Route::get("/marches_rfi", [GestionMarchesEntreprisesController::class, "rfi"])->name("marches_rfi")->middleware('auth');
 Route::get("/marches_rfq", [GestionMarchesEntreprisesController::class, "rfq"])->name("marches_rfq")->middleware('auth');
 Route::get("/marches_gagner", [GestionMarchesEntreprisesController::class, "gagner"])->name("marches_gagner")->middleware('auth');
-Route::get("/tous_les_marches", [GestionMarchesEntreprisesController::class, "tous"])->name("tous_marches_achat")->middleware('auth');
+Route::get("/tous_les_marches", [GestionMarchesEntreprisesController::class, "tous"])->name("tous_marches_entreprise")->middleware('auth');
 Route::get("/marches_refuser", [GestionMarchesEntreprisesController::class, "refuser"])->name("marches_refuser")->middleware('auth');
 
 

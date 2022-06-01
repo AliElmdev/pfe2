@@ -41,7 +41,7 @@
                                                 <td>{{$marche->domaine}}</td>
                                                 <td>{{$marche->categorie}}</td>
                                                 <td>Fermé</td>
-                                                <td style="width: 10%;"><a href="#"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
+                                                <td style="width: 10%;"><a href="{{route('marchesuivie',$marche->id)}}"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Models\Domaine;
 use App\Models\Marche;
+use App\Models\Postulation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarcheController extends Controller
 {
@@ -52,7 +54,36 @@ class MarcheController extends Controller
      */
     public function show($id)
     {
-        //
+        // $marche = Marche::where('id',$id)->first();
+        // return view("chef.marchesuivie", compact(["marche"]));
+
+        if (Auth::user()->hasRole('chef')){
+            $marche = Marche::where('id',$id)->first();
+            if($marche->etat < 5){
+                $marche->etat = 5;
+                $marche->save();
+            }
+            return view('chef.marchesuivie',[
+                "marche" => Marche::find($id),
+                "nbrRFI" => Postulation::where('marche_id',$id)->where('etat','>=',2)->orWhere('etat_old','>=',2)->count(), // Nombre des entreprises dans l'etape de RFI
+                "nbrTechnique" => Postulation::where('marche_id',$id)->where('etat','>=',3)->orWhere('etat_old','>=',3)->count(), // Nombre des entreprises dans l'etape de technique
+                "nbrCommerciale" => Postulation::where('marche_id',$id)->where('etat','>=',4)->orWhere('etat_old','>=',4)->count(), // Nombre des entreprises dans l'etape de commerciale
+                "entreprisegagnant" => Postulation::where('marche_id',$id)->where('etat','>=',5)->orWhere('etat_old','>=',5)->count(), // Nombre des entreprises dans l'etape de commerciale
+            ]);
+        }else if(Auth::user()->hasRole('achat')){
+            $marche = Marche::where('id',$id)->first();
+            if($marche->etat < 5){
+                $marche->etat = 5;
+                $marche->save();
+            }
+            return view('achat.marchesuivie',[
+                "marche" => Marche::find($id),
+                "nbrRFI" => Postulation::where('marche_id',$id)->where('etat','>=',2)->orWhere('etat_old','>=',2)->count(), // Nombre des entreprises dans l'etape de RFI
+                "nbrTechnique" => Postulation::where('marche_id',$id)->where('etat','>=',3)->orWhere('etat_old','>=',3)->count(), // Nombre des entreprises dans l'etape de technique
+                "nbrCommerciale" => Postulation::where('marche_id',$id)->where('etat','>=',4)->orWhere('etat_old','>=',4)->count(), // Nombre des entreprises dans l'etape de commerciale
+                "entreprisegagnant" => Postulation::where('marche_id',$id)->where('etat','>=',5)->orWhere('etat_old','>=',5)->count(), // Nombre des entreprises dans l'etape de commerciale
+            ]);
+        }
     }
 
     /**

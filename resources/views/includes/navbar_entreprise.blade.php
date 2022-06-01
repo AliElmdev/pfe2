@@ -44,7 +44,7 @@
             <a class="collapse-item" href="{{route('marches_rfq')}}">RFQ</a>
             <a class="collapse-item" href="{{route('marches_refuser')}}">Refuser</a>
             <a class="collapse-item" href="{{route('marches_gagner')}}">Gagner</a>
-            <a class="collapse-item" href="{{route('tous_marches_achat')}}">Tous les projets</a>
+            <a class="collapse-item" href="{{route('tous_marches_entreprise')}}">Tous les projets</a>
         </div>
     </div>
 </li>

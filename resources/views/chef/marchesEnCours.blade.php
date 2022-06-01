@@ -41,11 +41,21 @@
                                                 <td>{{$marche->domaine}}</td>
                                                 <td>{{$marche->categorie}}</td>
                                                 @if ($marche->etat == 1)
-                                                    <td>Non Lancer</td>
+                                                    <td>En cours de confirmation</td>
                                                 @elseif($marche->etat ==  2)
-                                                    <td>Lancer</td>
+                                                    <td>Valider par le responsable</td>
+                                                @elseif($marche->etat ==  3)
+                                                    <td>En cours d'affichage</td>
+                                                @elseif($marche->etat ==  4)
+                                                    <td>Affichage terminer</td>
+                                                @elseif($marche->etat ==  5)
+                                                    <td>RFI</td>
+                                                @elseif($marche->etat ==  6)
+                                                    <td>Selection Technique</td>
+                                                @elseif($marche->etat ==  7)
+                                                    <td>Selection Commercial</td>
                                                 @endif
-                                                <td style="width: 10%;"><a href="#"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
+                                                <td style="width: 10%;"><a href="{{route('marchesuivie',$marche->id)}}"><button class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button></a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

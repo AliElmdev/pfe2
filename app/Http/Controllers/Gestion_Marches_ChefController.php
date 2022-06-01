@@ -38,7 +38,7 @@ class Gestion_Marches_ChefController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_chef',$id_chef)
-                ->whereBetween('marches.etat',[1,2])
+                ->whereBetween('marches.etat',[1,7])
                 ->get(),
         ]);
     }
@@ -56,7 +56,7 @@ class Gestion_Marches_ChefController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_chef',$id_chef)
-                ->whereBetween('marches.etat',[3,5])
+                ->where('marches.etat',0)
                 ->get(),
         ]);
     }
@@ -73,7 +73,7 @@ class Gestion_Marches_ChefController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_chef',$id_chef)
-                ->where('marches.etat',6)
+                ->where('marches.etat',8)
                 ->get(),
         ]);
     }

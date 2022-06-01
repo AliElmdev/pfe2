@@ -163,7 +163,7 @@ class SelectionCommercialController extends Controller
         }
         $marche = Marche::where('id',$request->marche_id)->first();
         $marche->etat = 8;
-        $marche->save();
+        $marche->save(); 
         return back();
     }
 

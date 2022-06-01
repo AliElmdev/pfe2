@@ -45,7 +45,7 @@ class EcMarcheCreationController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_achat',$id_achat)
-                ->whereBetween('marches.etat',[1,2])
+                ->whereBetween('marches.etat',[1,7])
                 ->get(),
         ]);
     }
@@ -64,7 +64,7 @@ class EcMarcheCreationController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_achat',$id_achat)
-                ->whereBetween('marches.etat',[3,5])
+                ->where('marches.etat',0)
                 ->get(),
         ]);
     }
@@ -82,7 +82,7 @@ class EcMarcheCreationController extends Controller
                 ->join('domaines','categories.id_domaine','=','domaines.id')
                 ->select('marches.*','categories.name AS categorie','domaines.name AS domaine')
                 ->where('marches.id_achat',$id_achat)
-                ->where('marches.etat',6)
+                ->where('marches.etat',8)
                 ->get(),
         ]);
     }
