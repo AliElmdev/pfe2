@@ -49,7 +49,7 @@ class SelectionCommercialController extends Controller
                 $data = $this->best_prixqualite_produit($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
-                $post = Postulation::all();
+                $post = Postulation::where('marche_id',$request->marche_id)->where('etat',4)->get();
                 foreach($post as $postu){
                     $postu->etat_old = $postu->etat;
                     $postu->etat = 0;
@@ -74,7 +74,7 @@ class SelectionCommercialController extends Controller
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
                 $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
-                $post = Postulation::all();
+                $post = Postulation::where('marche_id',$request->marche_id)->where('etat',4)->get();
                 foreach($post as $postu){
                     $postu->etat_old = $postu->etat;
                     $postu->etat = 0;
@@ -106,7 +106,7 @@ class SelectionCommercialController extends Controller
                 $data = $this->min_prix_produit($request->marche_id);
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
-                $post = Postulation::all();
+                $post = Postulation::where('marche_id',$request->marche_id)->where('etat',4)->get();
                 foreach($post as $postu){
                     $postu->etat_old = $postu->etat;
                     $postu->etat = 0;
@@ -133,7 +133,7 @@ class SelectionCommercialController extends Controller
                 $data_decode = $data->getContent();
                 $data_decode = json_decode($data_decode);
                 $produits = Produit::where('marche_id',$request->marche_id)->select('id')->get();
-                $post = Postulation::all();
+                $post = Postulation::where('marche_id',$request->marche_id)->where('etat',4)->get();
                 foreach($post as $postu){
                     $postu->etat_old = $postu->etat;
                     $postu->etat = 0;

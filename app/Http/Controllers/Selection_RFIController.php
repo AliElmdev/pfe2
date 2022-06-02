@@ -87,7 +87,7 @@ class Selection_RFIController extends Controller
      */
     public function show($id_marche,$id_entreprise,$id_postulation)
     {
-        $reponses_questions = Postulation::where('marche_id',$id_marche)->where('',);
+        $reponses_questions = Postulation::where('marche_id',$id_marche)->where('entreprise_id',$id_entreprise)->first();
 
         return view('selection.selection_rfi_details',[
             'marche' => Marche::find($id_marche),
@@ -96,36 +96,42 @@ class Selection_RFIController extends Controller
             // Section :Dossier Fournisseur - Données Saisies - Section avec questions VM
             'reponses_section1' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',1)->get(),
             // Section : Dossier Fournisseur - Pièces jointes - Section avec questions VM
             'reponses_section2' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',2)->get(),
             // Section : Management HSE- section avec VM
             'reponses_section3' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',3)->get(),
              // Section : SITUATION FINANCIAIRE 
             'reponses_section4' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',4)->get(),
             // Section : EXPERIENCE ET REFERENCES  
             'reponses_section5' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',5)->get(),
             // Section : CERTIFICATION 
             'reponses_section6' => DB::table('questions')
                 ->join('reponse_questions','questions.id','=','reponse_questions.question_id')
+                ->Where('reponses_question_id',$reponses_questions->questions_id)
                 ->select('question','reponse','type')
                 ->where('questions.marche_id',$id_marche)
                 ->where('questions.section_id',6)->get(),

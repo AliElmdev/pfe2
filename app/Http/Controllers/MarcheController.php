@@ -59,10 +59,6 @@ class MarcheController extends Controller
 
         if (Auth::user()->hasRole('chef')){
             $marche = Marche::where('id',$id)->first();
-            if($marche->etat < 5){
-                $marche->etat = 5;
-                $marche->save();
-            }
             return view('chef.marchesuivie',[
                 "marche" => Marche::find($id),
                 "nbrRFI" => Postulation::where('marche_id',$id)->where('etat','>=',2)->orWhere('etat_old','>=',2)->count(), // Nombre des entreprises dans l'etape de RFI
@@ -72,10 +68,6 @@ class MarcheController extends Controller
             ]);
         }else if(Auth::user()->hasRole('achat')){
             $marche = Marche::where('id',$id)->first();
-            if($marche->etat < 5){
-                $marche->etat = 5;
-                $marche->save();
-            }
             return view('achat.marchesuivie',[
                 "marche" => Marche::find($id),
                 "nbrRFI" => Postulation::where('marche_id',$id)->where('etat','>=',2)->orWhere('etat_old','>=',2)->count(), // Nombre des entreprises dans l'etape de RFI
