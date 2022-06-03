@@ -52,7 +52,7 @@
                 </nav>
                     <a href="{{ route('login') }}" style="color:white" class="get-started-btn scrollto">Connectez-vous</a>
             @else  
-                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Mon Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">tableau de bord </a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
