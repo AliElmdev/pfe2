@@ -29,17 +29,29 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
-        <div class="container"><img src="/assets/img/SST_logo.png" style="width: 86px;"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('Home') }}"><strong>accueil</strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('Faq') }}">FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('Marches') }}">Opportuinities</a></li>
-                    @guest
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">S'inscrire</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Se connecter</a></li>
-                    @else 
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center">
+            <h1 class="logo me-auto">
+                <a href="index.html">
+                    E-Supply Online<span>.</span>
+                </a>
+            </h1>
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="{{ route('Home') }}">Acceuil</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('Home') }}#devenirFournisseur">Devenir Fournisseur</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('Home') }}#faq">FAQ</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('Home') }}#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('Marches') }}">Opportunités</a></li>
+            
+            
+            @guest
+                    <li><a class="nav-link scrollto" href="{{ route('register') }}">S'inscrire</a></li>
+                </ul> 
+                </nav>
+                    <a href="{{ route('login') }}" style="color:white" class="get-started-btn scrollto">Connectez-vous</a>
+            @else  
                     <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Mon Dashboard</a></li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -58,11 +70,11 @@
                             </form>
                         </div>
                     </li>
-                    @endguest
                 </ul>
-            </div>
+            </nav>
+            @endguest
         </div>
-    </nav>
+    </header>
     @yield('content')
     <footer id="footer">
 
@@ -81,11 +93,11 @@
                     <div class="col-lg-2 col-md-6 footer-links">
                         <h4>Liens utiles</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#hero">Acceuil</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#devenirFournisseur">Devenir Fournisseur</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Opportunités</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#faq">FAQ</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#contact">Contact</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ route('Home') }}">Acceuil</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ route('Home') }}#devenirFournisseur">Devenir Fournisseur</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ route('Marches') }}">Opportunités</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ route('Home') }}#faq">FAQ</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{{ route('Home') }}#contact">Contact</a></li>
                         </ul>
                     </div>
                 </div>
