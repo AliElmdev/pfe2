@@ -56,7 +56,16 @@
             <div class="card-body">
                 <div>
                     <div class="cont">
-                        <h6 style="margin-right: 3%;">Document CAU<br></h6><button class="btn btn-primary" type="button" style="background: rgb(227,65,65);"><i class="fa fa-download"></i></button>
+                        <h6 style="margin-right: 3%;">Document CAU<br></h6><a href="/{{$entreprise->doc_cau}}" download="/{{$entreprise->doc_cau}}"><button class="btn btn-primary" type="button" style="background: rgb(227,65,65);"><i class="fa fa-download"></i></button></a>
+                    </div>
+                    <div class="cont">
+                        <h6 style="margin-right: 3%;">Document Statut<br></h6><a href="/{{$entreprise->doc_status_entreprise}}" download="/{{$entreprise->doc_status_entreprise}}"><button class="btn btn-primary" type="button" style="background: rgb(227,65,65);"><i class="fa fa-download"></i></button></a>
+                    </div>
+                    <div class="cont">
+                        <h6 style="margin-right: 3%;">Document Registre<br></h6><a href="/{{$entreprise->doc_registre}}" download="/{{$entreprise->doc_registre}}"><button class="btn btn-primary" type="button" style="background: rgb(227,65,65);"><i class="fa fa-download"></i></button>
+                    </div>
+                    <div class="cont">
+                        <h6 style="margin-right: 3%;">Document CPC<br></h6><a href="/{{$entreprise->doc_cpc}}" download="/{{$entreprise->doc_cpc}}"><button class="btn btn-primary" type="button" style="background: rgb(227,65,65);"><i class="fa fa-download"></i></button>
                     </div>
                 </div>
             </div>

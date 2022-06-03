@@ -6,6 +6,7 @@ use App\Models\Marche;
 use App\Models\Produit;
 use App\Models\Question;
 use App\Models\Section;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -126,7 +127,15 @@ class EcMarcheCreationController extends Controller
         $marche = Marche::find($id);
         $marche->affichage_date = $_POST['dateAffichage'];
         $marche->limit_date = $_POST['dateLimite'];
-        $marche->etat = 2;
+
+        $mytime = Carbon::now();
+        $time = $mytime->toDateString();
+        if($time >= $marche->affichage_date){
+            $marche->etat = 3;
+        }else{
+            $marche->etat = 2;
+        }
+        
         $marche->id_achat = Auth::user()->id;
         $marche->save();
 

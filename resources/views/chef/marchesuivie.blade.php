@@ -18,7 +18,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
                                         <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Postulations</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$nbrRFI+$nbrTechnique+$nbrCommerciale}}</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span>{{$nbrRFI}}</span></div>
                                     </div>
                                 </div>
                             </div>
